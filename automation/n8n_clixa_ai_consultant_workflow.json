@@ -1,0 +1,229 @@
+{
+  "name": "CLIXA Group - AI Consultative WhatsApp Agent (Consulting & Formations)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "clixa-ai-whatsapp",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "node-1",
+      "name": "Webhook WhatsApp Incoming",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [100, 300]
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "clixa-ai-whatsapp",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "node-2",
+      "name": "Meta Webhook Verification",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [100, 100]
+    },
+    {
+      "parameters": {
+        "jsCode": "const query = $input.item.json.query || {};\nif (query['hub.verify_token'] === 'CLIXA_SECRET_TOKEN_2026') {\n  return [{ json: { text: query['hub.challenge'] } }];\n}\nreturn [{ json: { text: 'Forbidden' } }];"
+      },
+      "id": "node-3",
+      "name": "Verify Challenge Token",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [320, 100]
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.item.json.body || $input.item.json;\nlet from = '';\nlet messageText = '';\nlet senderName = '';\n\nif (body.senderData && body.messageData) {\n  from = body.senderData.chatId;\n  senderName = body.senderData.senderName || '';\n  messageText = body.messageData.textMessageData?.textMessage || body.messageData.extendedTextMessageData?.text || '';\n} else if (body.entry && body.entry[0]?.changes[0]?.value?.messages) {\n  const msg = body.entry[0].changes[0].value.messages[0];\n  from = msg.from;\n  messageText = msg.text?.body || '';\n}\n\nif (!messageText || body.typeWebhook === 'outgoingMessageReceived') {\n  return [];\n}\n\nreturn [{\n  json: {\n    from,\n    senderName,\n    messageText,\n    sessionId: from || 'default_session',\n    adminPhone: '212661344054@c.us'\n  }\n}];"
+      },
+      "id": "node-4",
+      "name": "Extract Message & Sender",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [320, 300]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.messageText }}",
+        "options": {
+          "systemMessage": "Tu es l'Assistant Virtuel et Consultant Senior chez CLIXA GROUP (CLIXA CONSULTING www.clixa.ma & CLIXA INSTITUTE / SkillAfrique www.clixa.africa).\n\nOBJECTIF DU DIRECTEUR :\nNe réponds JAMAIS comme un robot. Mène une vraie discussion d'expert pour conseiller le client ou le renseigner sur nos formations et nos missions de conseil. Dès que le besoin est clair, propose-lui d'échanger directement avec l'administration lors d'un appel téléphonique de 20 minutes et bloque un créneau libre.\n\nCONNAISSANCES OFFICIELLES DES FORMATIONS (www.clixa.africa) :\n- 12 programmes exécutifs certifiants : DAF (Directeur Administratif et Financier), Préparation PMP® PMI, Directeur Contrôle de Gestion, Directeur Audit Interne, Directeur Industriel, Directeur de Production, Directeur de Maintenance, Directeur QHSE, Directeur de Projets, Directeur Commercial, Directeur Marketing, DRH.\n- Dates de rentrée : 19 et 20 Septembre 2026.\n- Horaires & Format : 32h à 35h (8 séances en direct live le week-end / soirées) en classe virtuelle à distance où qu'on soit, et présentiel sur les campus Agadir, Abidjan et Dakar.\n- Tarif : 470 € (environ 5 000 MAD / 310 000 FCFA), payable en 1x, 2x ou 3 fois sans frais.\n\nCONNAISSANCES CONSEIL (www.clixa.ma) :\n- Intégration ERP Odoo V17, Développement Web & Digital, AMOA SI, Facturation électronique, FP&A.\n\nRÈGLE DE RENDEZ-VOUS :\nPropose 2 créneaux ouverts (ex: Demain 11h ou 15h30). Quand le créneau est choisi, demande Nom, Entreprise/Poste et Téléphone, et confirme officiellement."
+        }
+      },
+      "id": "node-5",
+      "name": "AI Consultant Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [580, 300]
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-flash-latest",
+        "options": {
+          "temperature": 0.3
+        }
+      },
+      "id": "node-6",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [500, 520]
+    },
+    {
+      "parameters": {
+        "sessionKey": "={{ $('Extract Message & Sender').item.json.sessionId }}"
+      },
+      "id": "node-7",
+      "name": "Window Buffer Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [680, 520]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.green-api.com/waInstanceYOUR_INSTANCE_ID/sendMessage/YOUR_API_TOKEN",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "chatId",
+              "value": "={{ $('Extract Message & Sender').item.json.from }}"
+            },
+            {
+              "name": "message",
+              "value": "={{ $json.output }}"
+            }
+          ]
+        }
+      },
+      "id": "node-8",
+      "name": "Send AI Response to WhatsApp",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [920, 240]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.green-api.com/waInstanceYOUR_INSTANCE_ID/sendMessage/YOUR_API_TOKEN",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "chatId",
+              "value": "212661344054@c.us"
+            },
+            {
+              "name": "message",
+              "value": "={{ '🚨 [ALERTE DIRECTION CLIXA]\\nNouveau message / RDV de : ' + $('Extract Message & Sender').item.json.from + '\\n\\n💬 Réponse du Bot :\\n' + $json.output }}"
+            }
+          ]
+        }
+      },
+      "id": "node-9",
+      "name": "Alert Administration (06 61 34 40 54)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [920, 420]
+    }
+  ],
+  "connections": {
+    "Webhook WhatsApp Incoming": {
+      "main": [
+        [
+          {
+            "node": "Extract Message & Sender",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Meta Webhook Verification": {
+      "main": [
+        [
+          {
+            "node": "Verify Challenge Token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Message & Sender": {
+      "main": [
+        [
+          {
+            "node": "AI Consultant Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Consultant Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Consultant Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Consultant Agent": {
+      "main": [
+        [
+          {
+            "node": "Send AI Response to WhatsApp",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Alert Administration (06 61 34 40 54)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

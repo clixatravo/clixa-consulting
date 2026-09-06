@@ -1,0 +1,289 @@
+{
+  "name": "CLIXA Consulting - WhatsApp Automated Booking Bot",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "clixa-whatsapp",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "1",
+      "name": "Webhook WhatsApp Incoming",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [100, 300]
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "clixa-whatsapp",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "2",
+      "name": "Meta Verification Handshake",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [100, 100]
+    },
+    {
+      "parameters": {
+        "jsCode": "const query = $input.item.json.query;\nif (query && query['hub.verify_token'] === 'CLIXA_SECRET_TOKEN_2026') {\n  return [{ json: { text: query['hub.challenge'] } }];\n}\nreturn [{ json: { text: 'Forbidden' } }];"
+      },
+      "id": "3",
+      "name": "Verify Challenge Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [320, 100]
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.item.json.body || {};\nlet from = '';\nlet messageText = '';\n\ntry {\n  if (body.entry && body.entry[0]?.changes[0]?.value?.messages) {\n    const msg = body.entry[0].changes[0].value.messages[0];\n    from = msg.from;\n    messageText = msg.text?.body || '';\n  }\n} catch (e) {}\n\n// Détection réservation automatique provenant du site web CLIXA\nconst isWebBooking = messageText.includes('📅 Date souhaitée') && messageText.includes('⏰ Créneau horaire');\n\nlet appointment = null;\nif (isWebBooking) {\n  const dayMatch = messageText.match(/📅 Date souhaitée\\s*:\\s*(.+)/i);\n  const timeMatch = messageText.match(/⏰ Créneau horaire\\s*:\\s*(.+)/i);\n  const topicMatch = messageText.match(/💼 Thématique\\s*:\\s*(.+)/i);\n  const nameMatch = messageText.match(/👤 Nom & Prénom\\s*:\\s*(.+)/i);\n  const companyMatch = messageText.match(/🏢 Entreprise\\s*:\\s*(.+)/i);\n  const phoneMatch = messageText.match(/📞 Mon numéro\\s*:\\s*(.+)/i);\n\n  appointment = {\n    day: dayMatch ? dayMatch[1].trim() : 'Demain',\n    time: timeMatch ? timeMatch[1].trim() : '11:00',\n    topic: topicMatch ? topicMatch[1].trim() : 'Conseil & ERP',\n    name: nameMatch ? nameMatch[1].trim() : 'Client CLIXA',\n    company: companyMatch ? companyMatch[1].trim() : 'Non renseigné',\n    phone: phoneMatch ? phoneMatch[1].trim() : from\n  };\n}\n\nreturn [{\n  json: {\n    from,\n    messageText,\n    isWebBooking,\n    appointment,\n    adminPhone: '00212661344054'\n  }\n}];"
+      },
+      "id": "4",
+      "name": "Parse Message & Lead Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [320, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.isWebBooking }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "5",
+      "name": "Is Website Booking?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [540, 300]
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "primary",
+          "mode": "list"
+        },
+        "start": "={{ new Date().toISOString() }}",
+        "end": "={{ new Date(Date.now() + 30*60*1000).toISOString() }}",
+        "summary": "=📞 RDV CLIXA : {{ $json.appointment.name }} ({{ $json.appointment.topic }})",
+        "description": "=Client : {{ $json.appointment.name }}\nTéléphone : {{ $json.appointment.phone }}\nEntreprise : {{ $json.appointment.company }}\nCréneau : {{ $json.appointment.day }} à {{ $json.appointment.time }}"
+      },
+      "id": "6",
+      "name": "Google Calendar - Bloquer Créneau",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1,
+      "position": [780, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/YOUR_PHONE_NUMBER_ID/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_WHATSAPP_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "messaging_product",
+              "value": "whatsapp"
+            },
+            {
+              "name": "to",
+              "value": "={{ $('Parse Message & Lead Data').item.json.from }}"
+            },
+            {
+              "name": "type",
+              "value": "text"
+            },
+            {
+              "name": "text.body",
+              "value": "=✅ *Votre rendez-vous téléphonique avec CLIXA est bien confirmé !*\n\n📅 Date : {{ $('Parse Message & Lead Data').item.json.appointment.day }}\n⏰ Créneau : {{ $('Parse Message & Lead Data').item.json.appointment.time }}\n💼 Projet : {{ $('Parse Message & Lead Data').item.json.appointment.topic }}\n👤 Nom : {{ $('Parse Message & Lead Data').item.json.appointment.name }}\n\nUn consultant senior de notre administration vous contactera précisément à l'heure convenue au {{ $('Parse Message & Lead Data').item.json.appointment.phone }}.\n\n*CLIXA CONSULTING* • www.clixa.ma"
+            }
+          ]
+        }
+      },
+      "id": "7",
+      "name": "WhatsApp - Confirmer au Client",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1020, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/YOUR_PHONE_NUMBER_ID/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_WHATSAPP_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "messaging_product",
+              "value": "whatsapp"
+            },
+            {
+              "name": "to",
+              "value": "00212661344054"
+            },
+            {
+              "name": "type",
+              "value": "text"
+            },
+            {
+              "name": "text.body",
+              "value": "=🚨 *NOUVEAU RENDEZ-VOUS PLANIFIÉ (CLIXA BOT)*\n\n👤 Client : {{ $('Parse Message & Lead Data').item.json.appointment.name }}\n🏢 Entreprise : {{ $('Parse Message & Lead Data').item.json.appointment.company }}\n📞 Téléphone à appeler : {{ $('Parse Message & Lead Data').item.json.appointment.phone }}\n💼 Projet : {{ $('Parse Message & Lead Data').item.json.appointment.topic }}\n⏰ Date convenue : {{ $('Parse Message & Lead Data').item.json.appointment.day }} à {{ $('Parse Message & Lead Data').item.json.appointment.time }}\n\n⚠️ Action : L'administration doit appeler ce prospect au créneau convenu."
+            }
+          ]
+        }
+      },
+      "id": "8",
+      "name": "WhatsApp - Alerter l'Administration",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1240, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/YOUR_PHONE_NUMBER_ID/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_WHATSAPP_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "messaging_product",
+              "value": "whatsapp"
+            },
+            {
+              "name": "to",
+              "value": "={{ $json.from }}"
+            },
+            {
+              "name": "type",
+              "value": "text"
+            },
+            {
+              "name": "text.body",
+              "value": "Bonjour et bienvenue chez *CLIXA CONSULTING* 👋\nCabinet de conseil en Transformation, ERP Odoo et Systèmes d'Information.\n\nJe suis l'assistant automatique de l'administration. Comment pouvons-nous vous accompagner ?\n\n1️⃣ *Intégration d'ERP Odoo*\n2️⃣ *Développement Web & Solutions Digitales*\n3️⃣ *Assistance à Maîtrise d'Ouvrage (AMOA)*\n4️⃣ *Facturation Électronique & Process*\n5️⃣ *Planifier un échange téléphonique avec la direction*\n\n👉 *Répondez simplement par le chiffre (1, 2, 3, 4 ou 5)*"
+            }
+          ]
+        }
+      },
+      "id": "9",
+      "name": "WhatsApp - Menu d'Accueil Interactif",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [780, 420]
+    }
+  ],
+  "connections": {
+    "Webhook WhatsApp Incoming": {
+      "main": [
+        [
+          {
+            "node": "Parse Message & Lead Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Meta Verification Handshake": {
+      "main": [
+        [
+          {
+            "node": "Verify Challenge Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse Message & Lead Data": {
+      "main": [
+        [
+          {
+            "node": "Is Website Booking?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Website Booking?": {
+      "main": [
+        [
+          {
+            "node": "Google Calendar - Bloquer Créneau",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "WhatsApp - Menu d'Accueil Interactif",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Calendar - Bloquer Créneau": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp - Confirmer au Client",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp - Confirmer au Client": {
+      "main": [
+        [
+          {
+            "node": "WhatsApp - Alerter l'Administration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

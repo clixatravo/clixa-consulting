@@ -1,0 +1,28 @@
+{
+  "brand": "CLIXA CONSULTING",
+  "defaultCountryCode": "+212",
+  "adminNotifications": {
+    "phone": "00212661344054",
+    "email": "contact@clixa.ma"
+  },
+  "messages": {
+    "welcomeNewUser": "Bonjour et bienvenue chez *CLIXA CONSULTING* 👋\nCabinet de conseil en Transformation, ERP Odoo et Systèmes d'Information.\n\nJe suis l'assistant automatique de l'administration. Comment pouvons-nous vous accompagner ?\n\n1️⃣ *Intégration d'ERP Odoo* (Finance, Ventes, Stocks...)\n2️⃣ *Développement Web & Solutions Digitales*\n3️⃣ *Assistance à Maîtrise d'Ouvrage (AMOA)*\n4️⃣ *Facturation Électronique & Process*\n5️⃣ *Planifier directement un appel avec la direction*\n\n👉 *Répondez simplement par le chiffre (1, 2, 3, 4 ou 5)*",
+
+    "serviceDetails": {
+      "1": "🌟 *Intégration d'ERP Odoo*\nCLIXA déploie et adapte Odoo à vos processus réels : comptabilité analytique, CRM, achats, logistique multi-sites et reporting temps réel.\n\nSouhaitez-vous planifier un échange téléphonique de 20 minutes avec notre responsable de pôle ERP ?",
+      "2": "🌐 *Développement Web & Communication Digitale*\nNous concevons des portails web d'entreprise sur-mesure, extranets clients, automatisations de flux et stratégies de marque.\n\nSouhaitez-vous convenir d'un rendez-vous téléphonique avec l'administration ?",
+      "3": "🎯 *Assistance à Maîtrise d'Ouvrage (AMOA)*\nNous sécurisons vos projets SI : cadrage des besoins, rédaction du cahier des charges, sélection des éditeurs/intégrateurs et pilotage de la recette.\n\nSouhaitez-vous planifier un échange de cadrage avec un consultant senior ?",
+      "4": "📑 *Facturation Électronique & Process*\nAccompagnement complet pour la mise en conformité de vos circuits de facturation, cartographie des flux et interopérabilité ERP.\n\nSouhaitez-vous réserver un créneau d'audit téléphonique ?"
+    },
+
+    "askSlotProposal": "📅 *Voici les créneaux disponibles pour votre échange téléphonique avec l'administration :*\n\n🔹 *Choix A* : Demain entre 11h00 et 11h30\n🔹 *Choix B* : Demain entre 15h00 et 15h30\n🔹 *Choix C* : Après-demain entre 10h30 et 11h00\n\n👉 *Répondez par A, B ou C (ou précisez un jour/horaire qui vous convient mieux)*",
+
+    "askContactDetails": "Merci ! Afin que l'administration puisse enregistrer votre rendez-vous dans le planning et vous appeler à l'heure exacte, merci de renseigner :\n\n👤 *Votre Nom & Prénom*\n🏢 *Le nom de votre Société*\n📞 *Le meilleur numéro pour vous joindre*",
+
+    "appointmentConfirmed": "✅ *Votre rendez-vous téléphonique est confirmé !*\n\n📅 *Créneau réservé* : {{DATE_TIME}}\n💼 *Thématique* : {{TOPIC}}\n👤 *Contact* : {{CLIENT_NAME}} ({{COMPANY}})\n📞 *Numéro de rappel* : {{PHONE}}\n\nUn consultant senior de notre administration vous contactera précisément à l'heure convenue.\n\n_En cas d'imprévu, vous pouvez nous écrire directement ici pour modifier votre créneau._\n\n*CLIXA CONSULTING* • www.clixa.ma",
+
+    "adminAlertNotification": "🚨 *NOUVEAU RENDEZ-VOUS PLANIFIÉ (CLIXA BOT)*\n\n👤 *Client* : {{CLIENT_NAME}}\n🏢 *Entreprise* : {{COMPANY}}\n📞 *Téléphone à appeler* : {{PHONE}}\n💼 *Projet* : {{TOPIC}}\n⏰ *Date & Heure convenue* : {{DATE_TIME}}\n\n⚠️ *Action requise* : L'administration doit appeler ce prospect à l'heure exacte.",
+
+    "fallbackHuman": "Merci pour votre message. Un membre de notre administration a été alerté et reviendra vers vous très rapidement sur ce numéro.\n\nPour une urgence, vous pouvez joindre directement le bureau Maroc au +212 6 61 34 40 54 ou Paris au +33 7 53 97 01 86."
+  }
+}

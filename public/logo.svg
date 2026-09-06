@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="50%" stop-color="#0284C7" />
+      <stop offset="100%" stop-color="#1E3A8A" />
+    </linearGradient>
+    <linearGradient id="grad2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0EA5E9" />
+      <stop offset="100%" stop-color="#06B6D4" />
+    </linearGradient>
+  </defs>
+  <!-- Geometric C/X dynamic node -->
+  <rect x="4" y="4" width="40" height="40" rx="12" fill="#0F172A" stroke="#1E293B" stroke-width="2"/>
+  <path d="M14 16L24 24L14 32" stroke="url(#grad2)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M34 16L24 24L34 32" stroke="url(#grad1)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="24" cy="24" r="3.5" fill="#38BDF8"/>
+</svg>

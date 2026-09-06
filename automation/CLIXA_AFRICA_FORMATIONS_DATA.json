@@ -1,0 +1,126 @@
+{
+  "institute": {
+    "name": "CLIXA Institute / SkillAfrique",
+    "website": "https://www.clixa.africa/",
+    "email": "contact@clixa.africa",
+    "admissionsWhatsapp": "+212669303467",
+    "adminWhatsapp": "+212661344054",
+    "campuses": ["Agadir (Maroc)", "Abidjan (Côte d'Ivoire)", "Dakar (Sénégal)", "Classe Virtuelle (En ligne)"],
+    "nextCohortDate": "19 & 20 Septembre 2026",
+    "standardPrice": "470 € (environ 5 000 MAD / 310 000 FCFA)",
+    "paymentTerms": "Paiement en 1x, 2x ou 3x sans frais",
+    "duration": "32 heures à 35 heures (8 séances interactives en direct)",
+    "pedagogy": "Classes virtuelles live, cohortes interactives, cas pratiques réels, délivrance d'un diplôme officiel certifiant"
+  },
+  "specialisations": [
+    {
+      "filiere": "Finance & Contrôle",
+      "formations": [
+        {
+          "titre": "Directeur Administratif et Financier (DAF)",
+          "duree": "32h (8 séances)",
+          "date": "19 septembre 2026",
+          "prix": "470 €",
+          "focus": "Posture DAF, pilotage financier, cash management, contrôle de gestion & financement."
+        },
+        {
+          "titre": "Directeur Contrôle de Gestion",
+          "duree": "32h (8 séances)",
+          "date": "19 septembre 2026",
+          "prix": "470 €",
+          "focus": "Pilotage de la performance, finance, business partnering et aide à la décision."
+        },
+        {
+          "titre": "Directeur Audit Interne",
+          "duree": "32h (8 séances)",
+          "date": "19 septembre 2026",
+          "prix": "470 €",
+          "focus": "Gouvernance & assurance, audit fondé sur les risques, data & comité d'audit."
+        }
+      ]
+    },
+    {
+      "filiere": "Management & Projet",
+      "formations": [
+        {
+          "titre": "Préparation à la certification PMP® (Project Management Institute)",
+          "duree": "35h (8 sessions live + examen blanc PMBOK v8)",
+          "date": "20 septembre 2026",
+          "prix": "470 €",
+          "focus": "Méthodologie PMI internationale, gestion agile et prédictive des projets, passage de l'examen PMP."
+        },
+        {
+          "titre": "Directeur de Projets",
+          "duree": "32h (8 séances)",
+          "date": "19 septembre 2026",
+          "prix": "470 €",
+          "focus": "Gouvernance de projets & portefeuille, PMO, delivery, maîtrise des risques & comités de pilotage."
+        }
+      ]
+    },
+    {
+      "filiere": "Industrie & Opérations",
+      "formations": [
+        {
+          "titre": "Directeur Industriel",
+          "duree": "32h (8 séances)",
+          "date": "19 septembre 2026",
+          "prix": "470 €",
+          "focus": "Stratégie industrielle, performance multi-sites, CAPEX, supply chain & excellence opérationnelle."
+        },
+        {
+          "titre": "Directeur de Production",
+          "duree": "32h (8 séances)",
+          "date": "19 septembre 2026",
+          "prix": "470 €",
+          "focus": "Performance des opérations, gestion des flux, capacité, qualité, réduction des coûts & management terrain."
+        },
+        {
+          "titre": "Directeur de Maintenance",
+          "duree": "32h (8 séances)",
+          "date": "19 septembre 2026",
+          "prix": "470 €",
+          "focus": "Fiabilité & disponibilité des actifs, stratégie de maintenance, GMAO, coûts & arrêts techniques."
+        },
+        {
+          "titre": "Directeur QHSE (Qualité, Hygiène, Sécurité, Environnement)",
+          "duree": "32h (8 séances)",
+          "date": "19 septembre 2026",
+          "prix": "470 €",
+          "focus": "Système de management intégré (SMI), normes ISO, santé-sécurité, environnement & conformité réglementaire."
+        }
+      ]
+    },
+    {
+      "filiere": "Commercial & Marketing",
+      "formations": [
+        {
+          "titre": "Directeur Commercial",
+          "duree": "32h (8 séances)",
+          "date": "19 septembre 2026",
+          "prix": "470 €",
+          "focus": "Stratégie & exécution commerciale, gestion du pipeline, grands comptes B2B, forecast & performance."
+        },
+        {
+          "titre": "Directeur Marketing",
+          "duree": "32h (8 séances)",
+          "date": "19 septembre 2026",
+          "prix": "470 €",
+          "focus": "Stratégie de marché, positionnement, acquisition digitale, construction de marque & ROI marketing."
+        }
+      ]
+    },
+    {
+      "filiere": "Capital Humain",
+      "formations": [
+        {
+          "titre": "Directeur des Ressources Humaines (DRH)",
+          "duree": "32h (8 séances)",
+          "date": "20 septembre 2026",
+          "prix": "470 €",
+          "focus": "Stratégie RH & capital humain, organisation, rétention des talents, people analytics & dialogue social."
+        }
+      ]
+    }
+  ]
+}

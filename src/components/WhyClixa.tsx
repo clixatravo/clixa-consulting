@@ -9,8 +9,9 @@ interface WhyClixaProps {
 export const WhyClixa: React.FC<WhyClixaProps> = ({ onOpenConsultation }) => {
   return (
     <section id="pourquoi" className="py-24 bg-slate-950 relative overflow-hidden">
-      {/* Background glow */}
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 blur-[120px] rounded-full pointer-events-none" />
+      {/* Background glow: lightweight on mobile, rich on desktop */}
+      <div className="hidden sm:block absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/10 blur-[120px] rounded-full pointer-events-none transform-gpu" />
+      <div className="sm:hidden absolute bottom-0 right-1/4 w-48 h-48 bg-blue-500/10 blur-xl rounded-full pointer-events-none transform-gpu" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         

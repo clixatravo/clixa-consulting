@@ -9,10 +9,11 @@ interface HeroProps {
 export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center pt-24 sm:pt-32 pb-16 sm:pb-20 overflow-hidden bg-slate-950">
-      {/* Background radial glow and subtle matrix grid */}
+      {/* Background radial glow: lightweight on mobile, rich on desktop */}
       <div className="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none" />
-      <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[850px] h-[520px] bg-sky-500/10 blur-[130px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none" />
+      <div className="hidden sm:block absolute top-10 left-1/2 -translate-x-1/2 w-[850px] h-[520px] bg-sky-500/10 blur-[130px] rounded-full pointer-events-none transform-gpu" />
+      <div className="hidden sm:block absolute bottom-10 right-10 w-[400px] h-[400px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none transform-gpu" />
+      <div className="sm:hidden absolute top-12 left-1/2 -translate-x-1/2 w-64 h-64 bg-sky-500/15 blur-2xl rounded-full pointer-events-none transform-gpu" />
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         
@@ -129,8 +130,11 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
                   <img
                     src={pillar.image}
                     alt={pillar.title}
+                    width={800}
+                    height={447}
+                    decoding="async"
+                    fetchPriority="high"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"
-                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/30 to-transparent" />
                   

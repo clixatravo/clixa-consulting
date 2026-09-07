@@ -101,7 +101,7 @@ export const CORE_PILLARS = [
     subtitle: "Système de gestion intégré & sur-mesure",
     desc: "Déploiement complet et paramétrage d'Odoo adapté à vos processus : Finance, CRM, Ventes, Achats, Stocks, Facturation et Tableaux de bord.",
     icon: "Database",
-    image: "/images/erp-odoo.jpg",
+    image: "/images/erp-odoo.webp",
     color: "from-blue-600 to-cyan-500",
     badge: "Pôle Majeur ERP"
   },
@@ -111,7 +111,7 @@ export const CORE_PILLARS = [
     subtitle: "Présence de marque & outils web sur-mesure",
     desc: "Conception de sites web professionnels haut de gamme, plateformes métiers, automatisation de flux et stratégie de communication digitale à fort impact.",
     icon: "Globe",
-    image: "/images/web-digital.jpg",
+    image: "/images/web-digital.webp",
     color: "from-sky-500 to-indigo-600",
     badge: "Pôle Digital & Web"
   },
@@ -121,7 +121,7 @@ export const CORE_PILLARS = [
     subtitle: "Sécurisation de vos projets technologiques",
     desc: "Faire le pont entre vos enjeux métiers et les solutions SI : cadrage des besoins, spécifications, consultation des prestataires et pilotage de la recette.",
     icon: "Layers",
-    image: "/images/amoa-si.jpg",
+    image: "/images/amoa-si.webp",
     color: "from-indigo-600 to-blue-700",
     badge: "Pôle AMOA & SI"
   },
@@ -139,7 +139,7 @@ export const EXPERTISES: ExpertiseItem[] = [
     color: "from-blue-600 to-cyan-600",
     badge: "Offre Phare • ERP Odoo",
     isFlagship: true,
-    image: "/images/erp-odoo.jpg",
+    image: "/images/erp-odoo.webp",
     items: [
       "Conseil, cadrage et intégration Odoo",
       "Finance & comptabilité analytique",
@@ -160,7 +160,7 @@ export const EXPERTISES: ExpertiseItem[] = [
     color: "from-sky-500 to-blue-600",
     badge: "Offre Phare • Web & Com",
     isFlagship: true,
-    image: "/images/web-digital.jpg",
+    image: "/images/web-digital.webp",
     items: [
       "Sites web professionnels corporate et vitrines prestige",
       "Plateformes digitales, portails clients & extranets",
@@ -180,7 +180,7 @@ export const EXPERTISES: ExpertiseItem[] = [
     color: "from-indigo-500 to-blue-700",
     badge: "Offre Phare • AMOA SI",
     isFlagship: true,
-    image: "/images/amoa-si.jpg",
+    image: "/images/amoa-si.webp",
     items: [
       "Cadrage stratégique des besoins métiers",
       "Analyse fonctionnelle et cartographie des exigences",

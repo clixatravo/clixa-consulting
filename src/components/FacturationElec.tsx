@@ -11,8 +11,9 @@ export const FacturationElec: React.FC<FacturationElecProps> = ({ onOpenConsulta
 
   return (
     <section id="facturation" className="py-24 bg-slate-900/50 border-t border-slate-850 relative overflow-hidden">
-      {/* Subtle glow decoration */}
-      <div className="absolute top-1/2 left-0 w-72 h-72 bg-sky-500/10 blur-[100px] rounded-full pointer-events-none" />
+      {/* Subtle glow decoration: lightweight on mobile, rich on desktop */}
+      <div className="hidden sm:block absolute top-1/2 left-0 w-72 h-72 bg-sky-500/10 blur-[100px] rounded-full pointer-events-none transform-gpu" />
+      <div className="sm:hidden absolute top-1/2 left-0 w-40 h-40 bg-sky-500/10 blur-xl rounded-full pointer-events-none transform-gpu" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         

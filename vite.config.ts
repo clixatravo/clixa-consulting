@@ -8,6 +8,17 @@ export default defineConfig({
     react(),
     tailwindcss()
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        // React change rarement : le sortir du bundle applicatif permet au
+        // navigateur de le garder en cache d'une mise en ligne a l'autre.
+        manualChunks: {
+          react: ['react', 'react-dom'],
+        },
+      },
+    },
+  },
   server: {
     host: '0.0.0.0',
     port: 5173,

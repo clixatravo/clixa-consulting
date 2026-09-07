@@ -128,7 +128,33 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!--
+      Polices variables : une plage de graisses (400..800) fait servir par
+      Google un SEUL fichier par famille couvrant toutes les graisses, au lieu
+      des 9 fichiers que demandait la liste explicite 300;400;500;600;700 +
+      500;600;700;800. Inter 300 n'etait d'ailleurs jamais utilise.
+
+      La feuille est chargee sans bloquer le premier rendu : media="print"
+      la sort du chemin critique, onload la reactive. Le <noscript> couvre
+      les navigateurs sans JS.
+    -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Plus+Jakarta+Sans:wght@600..800&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Plus+Jakarta+Sans:wght@600..800&display=swap"
+      media="print"
+      onload="this.media='all';this.onload=null;"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Plus+Jakarta+Sans:wght@600..800&display=swap"
+      />
+    </noscript>
 
   </head>
   <body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-cyan-500 selection:text-white">

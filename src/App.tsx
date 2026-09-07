@@ -12,9 +12,12 @@ import { FacturationElec } from './components/FacturationElec';
 import { SolutionsDigitales } from './components/SolutionsDigitales';
 import { AuditExpress } from './components/AuditExpress';
 import { ComparisonTable } from './components/ComparisonTable';
+import { AuditFlash } from './components/AuditFlash';
 import { Methodologie } from './components/Methodologie';
 import { Engagements } from './components/Engagements';
+import { TeamPedigree } from './components/TeamPedigree';
 import { WhyClixa } from './components/WhyClixa';
+import { LeadMagnet } from './components/LeadMagnet';
 import { FAQSection } from './components/FAQSection';
 import { CTASection } from './components/CTASection';
 import { Footer } from './components/Footer';
@@ -78,14 +81,23 @@ export const App: React.FC = () => {
         {/* 7.5. Tableau Comparatif : Pourquoi CLIXA vs Intégrateurs Classiques */}
         <ComparisonTable onOpenConsultation={handleOpenConsultation} />
 
+        {/* 7.8. Pack Diagnostic Flash 48H */}
+        <AuditFlash onOpenConsultation={handleOpenConsultation} />
+
         {/* 8. Proven 4-Step Methodology */}
         <Methodologie onOpenConsultation={handleOpenConsultation} />
 
         {/* 9. Service Guarantees & Commitments */}
         <Engagements />
 
+        {/* 9.5. Profil des Consultants & Charte Déontologique */}
+        <TeamPedigree onOpenConsultation={handleOpenConsultation} />
+
         {/* 10. Why CLIXA: Hybrid Alignment */}
         <WhyClixa onOpenConsultation={handleOpenConsultation} />
+
+        {/* 10.5. Téléchargement du Livre Blanc Exécutif 2026 */}
+        <LeadMagnet onOpenConsultation={handleOpenConsultation} />
 
         {/* 11. FAQ Stratégique pour Dirigeants */}
         <FAQSection onOpenConsultation={handleOpenConsultation} />

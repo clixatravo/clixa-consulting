@@ -10,6 +10,7 @@ import { Testimonials } from './components/Testimonials';
 import { RoiCalculator } from './components/RoiCalculator';
 import { FacturationElec } from './components/FacturationElec';
 import { SolutionsDigitales } from './components/SolutionsDigitales';
+import { TechStack } from './components/TechStack';
 import { AuditExpress } from './components/AuditExpress';
 import { ComparisonTable } from './components/ComparisonTable';
 import { AuditFlash } from './components/AuditFlash';
@@ -74,6 +75,9 @@ export const App: React.FC = () => {
 
         {/* 6. Digital Solutions */}
         <SolutionsDigitales onOpenConsultation={handleOpenConsultation} />
+
+        {/* 6.5. Technologies Maîtrisées & Écosystème */}
+        <TechStack onOpenConsultation={handleOpenConsultation} />
 
         {/* 7. Diagnostic / Mini-Audit Express Interactif */}
         <AuditExpress onOpenConsultation={handleOpenConsultation} />

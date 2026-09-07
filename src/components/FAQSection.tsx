@@ -7,7 +7,14 @@ interface FAQSectionProps {
 }
 
 export const FAQSection: React.FC<FAQSectionProps> = ({ onOpenConsultation }) => {
+  const [selectedCategory, setSelectedCategory] = useState<string>('Toutes');
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  const categories = ['Toutes', ...Array.from(new Set(FAQ_ITEMS.map(i => i.category)))];
+
+  const filteredItems = selectedCategory === 'Toutes'
+    ? FAQ_ITEMS
+    : FAQ_ITEMS.filter(i => i.category === selectedCategory);
 
   const toggleAccordion = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -18,10 +25,10 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ onOpenConsultation }) =>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="text-center mb-14">
+        <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-xs font-semibold text-sky-400 mb-3">
             <HelpCircle className="w-3.5 h-3.5" />
-            <span>Foire Aux Questions</span>
+            <span>Foire Aux Questions Stratégiques</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">
@@ -33,9 +40,29 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ onOpenConsultation }) =>
           </p>
         </div>
 
+        {/* Category Filter Pills */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => {
+                setSelectedCategory(cat);
+                setOpenIndex(0);
+              }}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                selectedCategory === cat
+                  ? 'bg-sky-500 text-white shadow-md shadow-sky-500/25 ring-1 ring-sky-400'
+                  : 'bg-slate-950/80 text-slate-400 hover:text-white hover:bg-slate-900 border border-slate-800'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
         {/* FAQ Accordion List */}
         <div className="space-y-3.5 mb-12">
-          {FAQ_ITEMS.map((item, idx) => {
+          {filteredItems.map((item, idx) => {
             const isOpen = openIndex === idx;
             return (
               <div

@@ -337,9 +337,19 @@ export const FAQ_ITEMS: FAQItem[] = [
     answer: "Selon la taille de votre entreprise et le périmètre retenu (3 à 8 modules), un déploiement standard dure entre 2 et 4 mois. Notre méthodologie itérative en 4 phases (Comprendre, Concevoir, Déployer, Sécuriser) permet de mettre en production de premières briques fonctionnelles dès les premières semaines pour un ROI rapide."
   },
   {
+    category: "Facturation Électronique",
+    question: "Comment préparez-vous notre entreprise à l'obligation de Facturation Électronique 2026 ?",
+    answer: "Nous réalisons un audit de conformité de vos flux de facturation entrants et sortants. Nous configurons ensuite Odoo et vos outils pour générer des factures électroniques conformes aux exigences de la DGI au Maroc et aux formats certifiés (Factur-X, UBL, plateformes PDP/PPF) en France, tout en automatisant le rapprochement comptable."
+  },
+  {
     category: "AMOA & Méthode",
     question: "En quoi consiste l'intervention de CLIXA en Assistance à Maîtrise d'Ouvrage (AMOA) ?",
-    answer: "Nous agissons en tant que tiers de confiance indépendant aux côtés de votre Direction Générale. Nous traduisons vos besoins métiers en exigences techniques claires, rédigeons le cahier des charges, sélectionnons et coordonnons les intégrateurs, et menons les tests de recette fonctionnelle pour sécuriser votre investissement de bout en bout."
+    answer: "Nous agissons en tant que tiers de confiance indépendant aux côtés de votre Direction Générale. Nous traduisons vos besoins métiers en exigences techniques claires, rédigeons le cahier des charges, sélectionnons et coordonnons les prestataires ou intégrateurs, et menons les tests de recette fonctionnelle pour sécuriser votre investissement de bout en bout."
+  },
+  {
+    category: "Données & Sécurité",
+    question: "Comment se déroule la migration de nos données comptables et historiques sans perte ?",
+    answer: "La reprise des données est une phase critique que nous sécurisons rigoureusement : nettoyage préalable des fichiers clients, articles et balances d'ouverture, scripts d'injection contrôlés, validation croisée avec votre expert-comptable ou DAF, et bascule à date fixe avec tests préalables en environnement miroir."
   },
   {
     category: "Présence & Disponibilité",
@@ -347,12 +357,17 @@ export const FAQ_ITEMS: FAQItem[] = [
     answer: "Absolument. Avec nos bureaux à Casablanca et à Paris, nous combinons présence physique dans vos locaux pour les étapes clés (ateliers de cadrage, formations, comités de pilotage) et suivi opérationnel agile pour garantir réactivité et proximité culturelle."
   },
   {
+    category: "Propriété & Liberté",
+    question: "Sommes-nous propriétaires de nos données et de nos développements avec Odoo ?",
+    answer: "Oui, à 100%. Vos bases de données et vos personnalisations vous appartiennent intégralement. Nous refusons tout verrouillage technologique : nous documentons chaque flux pour que votre entreprise reste pleinement souveraine de son outil de gestion."
+  },
+  {
     category: "Accompagnement au Changement",
     question: "Comment garantissez-vous que nos équipes adopteront le nouvel outil ?",
     answer: "L'outil n'est qu'un moyen ; le succès réside dans l'adhésion des utilisateurs. Nous impliquons vos collaborateurs dès le diagnostic initial, adaptons l'ergonomie à leurs habitudes de travail, rédigeons des modes opératoires simplifiés et assurons un accompagnement post-démarrage ('hypercare') jusqu'à l'autonomie totale."
   },
   {
-    category: "Coût & Modalités",
+    category: "Tarifs & Modalités",
     question: "Comment sont facturées vos prestations de conseil et d'intégration ?",
     answer: "Nous privilégions des engagements clairs au forfait avec livrables contractuels garantis, évitant toute surprise budgétaire. Avant toute mission, nous réalisons un échange de cadrage gratuit afin d'établir un devis détaillé et une feuille de route réaliste."
   }

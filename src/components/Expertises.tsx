@@ -63,22 +63,23 @@ export const Expertises: React.FC<ExpertisesProps> = ({ onOpenConsultation }) =>
         <div className="flex flex-wrap justify-center items-center gap-2 mb-12">
           <button
             onClick={() => setActiveTab('all')}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+            className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center gap-2 ${
               activeTab === 'all'
-                ? 'bg-sky-500 text-white shadow-md shadow-sky-500/25'
-                : 'bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-850 border border-slate-800'
+                ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/25 ring-1 ring-sky-400'
+                : 'bg-slate-900/90 text-slate-400 hover:text-white hover:bg-slate-850 border border-slate-800'
             }`}
           >
-            Toutes nos offres ({EXPERTISES.length})
+            <span className={`w-1.5 h-1.5 rounded-full ${activeTab === 'all' ? 'bg-white' : 'bg-slate-500'}`} />
+            <span>Toutes nos offres ({EXPERTISES.length})</span>
           </button>
           {EXPERTISES.map((exp) => (
             <button
               key={exp.id}
               onClick={() => setActiveTab(exp.id)}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+              className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center gap-2 ${
                 activeTab === exp.id
-                  ? 'bg-sky-500 text-white shadow-md shadow-sky-500/25'
-                  : 'bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-850 border border-slate-800'
+                  ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/25 ring-1 ring-sky-400'
+                  : 'bg-slate-900/90 text-slate-400 hover:text-white hover:bg-slate-850 border border-slate-800'
               }`}
             >
               {exp.isFlagship && <Star className="w-3 h-3 text-amber-400 fill-amber-400" />}
@@ -92,12 +93,15 @@ export const Expertises: React.FC<ExpertisesProps> = ({ onOpenConsultation }) =>
           {filteredExpertises.map((expertise) => (
             <div
               key={expertise.id}
-              className={`flex flex-col rounded-2xl p-7 sm:p-9 transition-all duration-300 shadow-xl group relative overflow-hidden ${
+              className={`flex flex-col rounded-2xl p-7 sm:p-9 transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-sky-500/5 group relative overflow-hidden ${
                 expertise.isFlagship
-                  ? 'bg-gradient-to-b from-slate-900 to-slate-950 border border-sky-500/40 shadow-sky-500/5'
-                  : 'bg-slate-900/70 border border-slate-800/90 hover:border-slate-700'
+                  ? 'bg-gradient-to-b from-slate-900 to-slate-950 border border-sky-500/40 hover:border-sky-400/70'
+                  : 'bg-slate-900/70 border border-slate-800/90 hover:border-sky-500/40'
               }`}
             >
+              {/* Top Accent Line */}
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-sky-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
               {/* Optional Real Photo Header */}
               {expertise.image && (
                 <div className="relative h-48 -mx-7 -mt-7 sm:-mx-9 sm:-mt-9 mb-6 overflow-hidden bg-slate-950">
@@ -125,7 +129,7 @@ export const Expertises: React.FC<ExpertisesProps> = ({ onOpenConsultation }) =>
               {/* Card Header */}
               <div className="flex items-start justify-between gap-4 mb-5">
                 <div className="flex items-center gap-3.5">
-                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 shadow-inner group-hover:border-sky-500/30 transition-colors">
+                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 shadow-inner group-hover:border-sky-500/40 group-hover:bg-slate-900 transition-all">
                     {getIcon(expertise.id)}
                   </div>
                   <div>
@@ -149,10 +153,10 @@ export const Expertises: React.FC<ExpertisesProps> = ({ onOpenConsultation }) =>
                 {expertise.description}
               </p>
 
-              {/* Bullet points list */}
-              <div className="space-y-2.5 mb-8 flex-1">
+              {/* Bullet points list styled */}
+              <div className="space-y-2 mb-8 flex-1">
                 {expertise.items.map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
+                  <div key={idx} className="flex items-start gap-2.5 p-2 rounded-lg bg-slate-950/40 border border-slate-850/50 text-xs sm:text-sm text-slate-300 hover:border-slate-800 transition-colors">
                     <CheckCircle2 className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
                     <span>{item}</span>
                   </div>
@@ -161,7 +165,7 @@ export const Expertises: React.FC<ExpertisesProps> = ({ onOpenConsultation }) =>
 
               {/* Role Quote if available */}
               {expertise.roleQuote && (
-                <div className="mb-6 p-4 rounded-xl bg-slate-950/80 border-l-2 border-sky-400 text-xs sm:text-sm text-slate-300 italic flex items-start gap-2.5">
+                <div className="mb-6 p-4 rounded-xl bg-slate-950/90 border-l-2 border-sky-400 text-xs sm:text-sm text-slate-300 italic flex items-start gap-2.5 shadow-inner">
                   <Quote className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
                   <span>{expertise.roleQuote}</span>
                 </div>
@@ -171,7 +175,7 @@ export const Expertises: React.FC<ExpertisesProps> = ({ onOpenConsultation }) =>
               <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
                 <button
                   onClick={() => onOpenConsultation(expertise.title)}
-                  className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-sky-400 hover:text-sky-300 transition-colors group/btn cursor-pointer"
+                  className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-sky-400 hover:text-sky-300 transition-colors group/btn cursor-pointer py-1"
                 >
                   <span>Échanger avec un consultant</span>
                   <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />

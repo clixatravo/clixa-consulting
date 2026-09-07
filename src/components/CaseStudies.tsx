@@ -35,36 +35,39 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onOpenConsultation }) 
             <div
               key={item.id}
               onClick={() => setSelectedCase(idx)}
-              className={`p-7 sm:p-8 rounded-2xl border transition-all duration-300 flex flex-col justify-between cursor-pointer ${
+              className={`p-7 sm:p-8 rounded-2xl border transition-all duration-300 flex flex-col justify-between cursor-pointer relative overflow-hidden group ${
                 selectedCase === idx
                   ? 'bg-gradient-to-b from-slate-900 to-slate-950 border-sky-500/60 shadow-2xl shadow-sky-500/10 -translate-y-1'
-                  : 'bg-slate-950/70 border-slate-800/80 hover:bg-slate-900/60 hover:border-slate-700'
+                  : 'bg-slate-950/80 border-slate-800/90 hover:bg-slate-900/60 hover:border-sky-500/40'
               }`}
             >
+              {/* Top Accent Line */}
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-sky-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
               <div>
                 {/* Tag & Sector */}
                 <div className="flex items-center justify-between gap-2 mb-4">
                   <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-sky-400 bg-sky-500/10 px-2.5 py-1 rounded-md border border-sky-500/20">
                     {item.tag}
                   </span>
-                  <div className="flex items-center gap-1 text-slate-500 text-xs">
-                    <MapPin className="w-3 h-3" />
+                  <div className="flex items-center gap-1.5 text-slate-400 text-xs font-medium">
+                    <span>{item.location.includes('Maroc') ? '🇲🇦' : '🇫🇷'}</span>
                     <span>{item.location.split('•')[0]}</span>
                   </div>
                 </div>
 
                 {/* Big Metric Box */}
-                <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800 mb-6">
-                  <div className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">
+                <div className="p-4 rounded-xl bg-slate-900/95 border border-slate-800 group-hover:border-sky-500/30 transition-colors mb-6 shadow-inner">
+                  <div className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-cyan-300 to-blue-400">
                     {item.metric}
                   </div>
-                  <div className="text-xs text-slate-300 font-medium mt-1">
+                  <div className="text-xs text-slate-300 font-semibold mt-1">
                     {item.metricLabel}
                   </div>
                 </div>
 
                 {/* Title & Client Context */}
-                <h3 className="text-xl font-bold text-white mb-2 leading-snug">
+                <h3 className="text-xl font-bold text-white mb-2 leading-snug group-hover:text-sky-300 transition-colors">
                   {item.title}
                 </h3>
 
@@ -75,13 +78,13 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onOpenConsultation }) 
 
                 {/* Challenge & Solution */}
                 <div className="space-y-3 mb-6 text-xs text-slate-300">
-                  <div className="p-3 rounded-lg bg-slate-950 border border-slate-800/80">
-                    <span className="font-semibold text-rose-400 block mb-1">Le Défi :</span>
-                    <p className="text-slate-400">{item.challenge}</p>
+                  <div className="p-3.5 rounded-xl bg-slate-950 border border-slate-850">
+                    <span className="font-semibold text-rose-400 block mb-1">Le Défi Initial :</span>
+                    <p className="text-slate-400 leading-relaxed">{item.challenge}</p>
                   </div>
-                  <div className="p-3 rounded-lg bg-slate-950 border border-slate-800/80">
+                  <div className="p-3.5 rounded-xl bg-slate-950 border border-sky-950/60">
                     <span className="font-semibold text-sky-400 block mb-1">Intervention CLIXA :</span>
-                    <p className="text-slate-400">{item.solution}</p>
+                    <p className="text-slate-400 leading-relaxed">{item.solution}</p>
                   </div>
                 </div>
 
@@ -103,7 +106,7 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onOpenConsultation }) 
                     e.stopPropagation();
                     onOpenConsultation(`Cas d'usage: ${item.title}`);
                   }}
-                  className="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-semibold text-white bg-slate-850 hover:bg-sky-600 border border-slate-700 hover:border-sky-500 transition-all cursor-pointer"
+                  className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-bold text-white bg-slate-900 hover:bg-gradient-to-r hover:from-sky-500 hover:to-blue-600 border border-slate-700 hover:border-transparent transition-all cursor-pointer shadow-sm active:scale-[0.98]"
                 >
                   <span>Échanger sur un projet similaire</span>
                   <ArrowRight className="w-3.5 h-3.5" />

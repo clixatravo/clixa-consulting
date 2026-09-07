@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { TrustBanner } from './components/TrustBanner';
 import { AboutBanner } from './components/AboutBanner';
 import { Expertises } from './components/Expertises';
 import { CaseStudies } from './components/CaseStudies';
@@ -39,6 +40,9 @@ export const App: React.FC = () => {
       <main className="flex-1">
         {/* 1. Hero Section based strictly on user recommendation */}
         <Hero onOpenConsultation={handleOpenConsultation} />
+
+        {/* 1.5. Institutional Credibility & Trust Markers */}
+        <TrustBanner />
 
         {/* 2. Brand Positioning & 4 Intersecting Dimensions */}
         <AboutBanner />

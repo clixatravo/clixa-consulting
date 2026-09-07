@@ -1,13 +1,13 @@
 import React from 'react';
-import { Target, Sparkles } from 'lucide-react';
+import { Target, Sparkles, TrendingUp, Workflow, Database, Globe } from 'lucide-react';
 import { BRAND } from '../data/content';
 
 export const AboutBanner: React.FC = () => {
   const pillars = [
-    { title: "Finance", desc: "Pilotage, rentabilité & modélisation", border: "border-sky-500/30", bg: "from-sky-500/10 to-transparent" },
-    { title: "Processus", desc: "Cartographie & optimisation ciblée", border: "border-cyan-500/30", bg: "from-cyan-500/10 to-transparent" },
-    { title: "Systèmes d'Information", desc: "AMOA, ERP Odoo & architecture SI", border: "border-blue-500/30", bg: "from-blue-500/10 to-transparent" },
-    { title: "Digital", desc: "Automatisation, outils & plateformes", border: "border-indigo-500/30", bg: "from-indigo-500/10 to-transparent" },
+    { title: "Finance", desc: "Pilotage, rentabilité & modélisation", icon: TrendingUp, border: "border-sky-500/30", bg: "from-sky-500/10 to-transparent", text: "text-sky-400" },
+    { title: "Processus", desc: "Cartographie & optimisation ciblée", icon: Workflow, border: "border-cyan-500/30", bg: "from-cyan-500/10 to-transparent", text: "text-cyan-400" },
+    { title: "Systèmes d'Information", desc: "AMOA, ERP Odoo & architecture SI", icon: Database, border: "border-blue-500/30", bg: "from-blue-500/10 to-transparent", text: "text-blue-400" },
+    { title: "Digital", desc: "Automatisation, outils & plateformes", icon: Globe, border: "border-indigo-500/30", bg: "from-indigo-500/10 to-transparent", text: "text-indigo-400" },
   ];
 
   return (
@@ -60,16 +60,28 @@ export const AboutBanner: React.FC = () => {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                {pillars.map((item, idx) => (
-                  <div
-                    key={idx}
-                    className={`p-4 rounded-xl bg-gradient-to-br ${item.bg} border ${item.border} hover:border-sky-400/50 transition-colors`}
-                  >
-                    <div className="text-xs text-slate-400 font-mono mb-1">0{idx + 1}</div>
-                    <div className="font-bold text-white text-base mb-1">{item.title}</div>
-                    <div className="text-xs text-slate-300 leading-snug">{item.desc}</div>
-                  </div>
-                ))}
+                {pillars.map((item, idx) => {
+                  const Icon = item.icon;
+                  return (
+                    <div
+                      key={idx}
+                      className={`p-4 rounded-xl bg-gradient-to-br ${item.bg} border ${item.border} hover:border-sky-400/50 transition-all duration-300 group flex flex-col justify-between`}
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-[10px] text-slate-400 font-mono">0{idx + 1}</span>
+                        <div className={`p-1.5 rounded-lg bg-slate-950/80 border border-slate-800 ${item.text}`}>
+                          <Icon className="w-3.5 h-3.5" />
+                        </div>
+                      </div>
+                      <div className="font-bold text-white text-sm sm:text-base mb-1 group-hover:text-sky-300 transition-colors">
+                        {item.title}
+                      </div>
+                      <div className="text-xs text-slate-300 leading-snug">
+                        {item.desc}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
 
               <div className="mt-6 pt-4 border-t border-slate-800/80 text-center">

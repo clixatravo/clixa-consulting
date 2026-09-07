@@ -94,6 +94,29 @@ export const BRAND = {
   addressFrance: "Paris, France",
 };
 
+export const KEY_METRICS = [
+  {
+    value: "+98%",
+    label: "Satisfaction Dirigeants",
+    sublabel: "Adoption & déploiements réussis",
+  },
+  {
+    value: "15+ Ans",
+    label: "Expertise SI & Finance",
+    sublabel: "Parcours Big4 & intégration",
+  },
+  {
+    value: "100%",
+    label: "Conformité Fiscale",
+    sublabel: "DGI Maroc & DGFIP France",
+  },
+  {
+    value: "+35%",
+    label: "Gain de Productivité",
+    sublabel: "Automatisation des processus",
+  },
+];
+
 export const CORE_PILLARS = [
   {
     num: "01",
@@ -103,7 +126,8 @@ export const CORE_PILLARS = [
     icon: "Database",
     image: "/images/erp-odoo.webp",
     color: "from-blue-600 to-cyan-500",
-    badge: "Pôle Majeur ERP"
+    badge: "Pôle Majeur ERP",
+    deliverables: ["Finance & Analytique", "CRM & Ventes", "Stocks & Logistique", "Reporting Temps Réel"]
   },
   {
     num: "02",
@@ -113,7 +137,8 @@ export const CORE_PILLARS = [
     icon: "Globe",
     image: "/images/web-digital.webp",
     color: "from-sky-500 to-indigo-600",
-    badge: "Pôle Digital & Web"
+    badge: "Pôle Digital & Web",
+    deliverables: ["Sites Vitrines Prestige", "Extranets Clients", "Automatisation API", "Image de Marque"]
   },
   {
     num: "03",
@@ -123,7 +148,8 @@ export const CORE_PILLARS = [
     icon: "Layers",
     image: "/images/amoa-si.webp",
     color: "from-indigo-600 to-blue-700",
-    badge: "Pôle AMOA & SI"
+    badge: "Pôle AMOA & SI",
+    deliverables: ["Cahier des Charges", "Audit de l'Existant", "Pilotage Prestataires", "Recette & Go-Live"]
   },
 ];
 

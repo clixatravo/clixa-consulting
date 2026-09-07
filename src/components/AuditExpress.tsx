@@ -84,33 +84,37 @@ export const AuditExpress: React.FC<AuditExpressProps> = ({ onOpenConsultation }
         </div>
 
         {/* Diagnostic Card Container */}
-        <div className="rounded-3xl bg-slate-900/90 border border-slate-800 shadow-2xl p-6 sm:p-10 relative">
+        <div className="rounded-3xl bg-slate-900/90 border border-slate-800/90 hover:border-sky-500/30 transition-colors shadow-2xl p-6 sm:p-10 relative overflow-hidden">
+          {/* Top Accent Line */}
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent" />
           
           {!isCompleted ? (
             <div>
               {/* Step indicator */}
-              <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-800">
+              <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-800/80">
                 <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-sky-400 animate-pulse" />
-                  <span className="text-xs font-mono font-bold uppercase text-sky-400">
-                    Question {currentStep + 1} sur {AUDIT_QUESTIONS.length}
+                  <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse" />
+                  <span className="text-xs font-mono font-bold uppercase text-cyan-400">
+                    Étape {currentStep + 1} sur {AUDIT_QUESTIONS.length}
                   </span>
                 </div>
 
-                <div className="flex gap-1.5">
-                  {AUDIT_QUESTIONS.map((_, idx) => (
-                    <div
-                      key={idx}
-                      className={`w-8 h-1.5 rounded-full transition-colors ${
-                        idx <= currentStep ? 'bg-sky-500' : 'bg-slate-800'
-                      }`}
-                    />
-                  ))}
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-1.5">
+                    {AUDIT_QUESTIONS.map((_, idx) => (
+                      <div
+                        key={idx}
+                        className={`w-10 h-1.5 rounded-full transition-all duration-300 ${
+                          idx <= currentStep ? 'bg-cyan-400 shadow-sm shadow-cyan-400/50' : 'bg-slate-800'
+                        }`}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
 
               {/* Current Question */}
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-6">
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-6 leading-snug">
                 {AUDIT_QUESTIONS[currentStep].question}
               </h3>
 
@@ -120,12 +124,12 @@ export const AuditExpress: React.FC<AuditExpressProps> = ({ onOpenConsultation }
                   <button
                     key={oIdx}
                     onClick={() => handleSelectOption(option.points)}
-                    className="w-full text-left p-4 sm:p-5 rounded-2xl bg-slate-950/70 border border-slate-800/80 hover:border-sky-500/60 hover:bg-slate-900/90 transition-all flex items-start gap-4 group cursor-pointer"
+                    className="w-full text-left p-4 sm:p-5 rounded-2xl bg-slate-950/70 border border-slate-800/80 hover:border-cyan-400/60 hover:bg-slate-900/90 transition-all flex items-start gap-4 group cursor-pointer shadow-sm active:scale-[0.99]"
                   >
-                    <div className="w-6 h-6 rounded-full border border-slate-700 flex items-center justify-center text-xs font-bold text-slate-400 group-hover:border-sky-400 group-hover:text-sky-400 shrink-0 mt-0.5 transition-colors">
+                    <div className="w-7 h-7 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-xs font-bold text-slate-400 group-hover:border-cyan-400 group-hover:bg-cyan-500/10 group-hover:text-cyan-300 shrink-0 mt-0.5 transition-all shadow-inner">
                       {String.fromCharCode(65 + oIdx)}
                     </div>
-                    <span className="text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors">
+                    <span className="text-sm sm:text-base text-slate-200 group-hover:text-white transition-colors pt-0.5 leading-relaxed">
                       {option.text}
                     </span>
                   </button>

@@ -8,7 +8,7 @@ interface ComparisonTableProps {
 
 export const ComparisonTable: React.FC<ComparisonTableProps> = ({ onOpenConsultation }) => {
   return (
-    <section id="comparatif" className="py-24 bg-slate-900/40 border-t border-slate-850 relative">
+    <section id="comparatif" className="py-24 bg-slate-900/40 border-t border-slate-850 relative scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}

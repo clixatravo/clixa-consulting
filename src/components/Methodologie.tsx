@@ -10,7 +10,7 @@ export const Methodologie: React.FC<MethodologieProps> = ({ onOpenConsultation }
   const [activeStep, setActiveStep] = useState<number>(0);
 
   return (
-    <section id="methode" className="py-24 bg-slate-900/40 border-t border-slate-850 relative">
+    <section id="methode" className="py-24 bg-slate-900/40 border-t border-slate-850 relative scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}

@@ -15,7 +15,7 @@ export const AuditFlash: React.FC<AuditFlashProps> = ({ onOpenConsultation }) =>
   ];
 
   return (
-    <section id="audit-flash" className="py-24 bg-slate-950 border-t border-slate-850 relative overflow-hidden">
+    <section id="audit-flash" className="py-24 bg-slate-950 border-t border-slate-850 relative overflow-hidden scroll-mt-24">
       {/* Glow */}
       <div className="hidden sm:block absolute top-1/2 left-1/3 w-80 h-80 bg-amber-500/10 blur-[130px] rounded-full pointer-events-none transform-gpu" />
 

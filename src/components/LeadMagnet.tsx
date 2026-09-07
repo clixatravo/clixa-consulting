@@ -25,7 +25,7 @@ export const LeadMagnet: React.FC<LeadMagnetProps> = ({ onOpenConsultation }) =>
   )}`;
 
   return (
-    <section id="guide-dirigeant" className="py-24 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-t border-slate-850 relative overflow-hidden">
+    <section id="guide-dirigeant" className="py-24 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border-t border-slate-850 relative overflow-hidden scroll-mt-24">
       {/* Background glow */}
       <div className="hidden sm:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[350px] bg-sky-500/10 blur-[130px] rounded-full pointer-events-none transform-gpu" />
 

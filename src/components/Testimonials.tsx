@@ -8,7 +8,7 @@ interface TestimonialsProps {
 
 export const Testimonials: React.FC<TestimonialsProps> = ({ onOpenConsultation }) => {
   return (
-    <section id="temoignages" className="py-24 bg-slate-950 border-t border-slate-850 relative overflow-hidden">
+    <section id="temoignages" className="py-24 bg-slate-950 border-t border-slate-850 relative overflow-hidden scroll-mt-24">
       {/* Subtle background glow */}
       <div className="hidden sm:block absolute top-1/2 right-10 w-96 h-96 bg-sky-500/10 blur-[120px] rounded-full pointer-events-none transform-gpu" />
 

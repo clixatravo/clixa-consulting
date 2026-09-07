@@ -42,7 +42,7 @@ export const Expertises: React.FC<ExpertisesProps> = ({ onOpenConsultation }) =>
     : EXPERTISES.filter(item => item.id === activeTab);
 
   return (
-    <section id="expertises" className="py-24 bg-slate-950 relative">
+    <section id="expertises" className="py-24 bg-slate-950 relative scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}

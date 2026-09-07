@@ -60,7 +60,7 @@ export const AuditExpress: React.FC<AuditExpressProps> = ({ onOpenConsultation }
 
   const diagnostic = getDiagnostic();
   return (
-    <section id="diagnostic" className="py-24 bg-slate-950 border-t border-slate-850 relative overflow-hidden">
+    <section id="diagnostic" className="py-24 bg-slate-950 border-t border-slate-850 relative overflow-hidden scroll-mt-24">
       {/* Background subtle radial glow: lightweight on mobile, rich on desktop */}
       <div className="hidden sm:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[350px] bg-sky-500/10 blur-[140px] rounded-full pointer-events-none transform-gpu" />
       <div className="sm:hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-60 h-40 bg-sky-500/10 blur-2xl rounded-full pointer-events-none transform-gpu" />

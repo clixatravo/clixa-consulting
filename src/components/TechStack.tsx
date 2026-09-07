@@ -42,7 +42,7 @@ export const TechStack: React.FC<TechStackProps> = ({ onOpenConsultation }) => {
   ];
 
   return (
-    <section id="technologies" className="py-24 bg-slate-950 border-t border-slate-850 relative overflow-hidden">
+    <section id="technologies" className="py-24 bg-slate-950 border-t border-slate-850 relative overflow-hidden scroll-mt-24">
       {/* Background glow */}
       <div className="hidden sm:block absolute top-1/2 right-1/4 w-96 h-96 bg-blue-500/10 blur-[130px] rounded-full pointer-events-none transform-gpu" />
 

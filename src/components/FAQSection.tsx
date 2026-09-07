@@ -21,7 +21,7 @@ export const FAQSection: React.FC<FAQSectionProps> = ({ onOpenConsultation }) =>
   };
 
   return (
-    <section id="faq" className="py-24 bg-slate-900/30 border-t border-slate-850 relative">
+    <section id="faq" className="py-24 bg-slate-900/30 border-t border-slate-850 relative scroll-mt-24">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}

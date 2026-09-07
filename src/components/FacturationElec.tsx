@@ -10,7 +10,7 @@ export const FacturationElec: React.FC<FacturationElecProps> = ({ onOpenConsulta
   const [selectedStep, setSelectedStep] = useState<number>(0);
 
   return (
-    <section id="facturation" className="py-24 bg-slate-900/50 border-t border-slate-850 relative overflow-hidden">
+    <section id="facturation" className="py-24 bg-slate-900/50 border-t border-slate-850 relative overflow-hidden scroll-mt-24">
       {/* Subtle glow decoration: lightweight on mobile, rich on desktop */}
       <div className="hidden sm:block absolute top-1/2 left-0 w-72 h-72 bg-sky-500/10 blur-[100px] rounded-full pointer-events-none transform-gpu" />
       <div className="sm:hidden absolute top-1/2 left-0 w-40 h-40 bg-sky-500/10 blur-xl rounded-full pointer-events-none transform-gpu" />

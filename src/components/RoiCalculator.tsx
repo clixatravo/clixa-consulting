@@ -24,7 +24,7 @@ export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ onOpenConsultation
   };
 
   return (
-    <section id="simulateur-roi" className="py-24 bg-slate-950 border-t border-slate-850 relative overflow-hidden">
+    <section id="simulateur-roi" className="py-24 bg-slate-950 border-t border-slate-850 relative overflow-hidden scroll-mt-24">
       {/* Background glow */}
       <div className="hidden sm:block absolute top-1/3 left-10 w-96 h-96 bg-cyan-500/10 blur-[130px] rounded-full pointer-events-none transform-gpu" />
 

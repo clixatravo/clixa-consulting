@@ -98,3 +98,26 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* ---------------------------------------------------------------
+   Performance mobile
+   La page fait ~26 000 px et 1 500 nœuds : les 12 sections étaient
+   toutes mises en page et peintes au chargement. content-visibility
+   laisse le navigateur ignorer celles qui sont hors écran, sans
+   aucun changement visuel. Le mot-clé `auto` de contain-intrinsic-size
+   mémorise la hauteur réelle une fois la section rendue, ce qui évite
+   les sauts de barre de défilement.
+   --------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  main > section[id] {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
+  }
+}
+
+/* Le bouton WhatsApp flottant masquait la fin du pied de page sur mobile. */
+@media (max-width: 640px) {
+  footer {
+    padding-bottom: 6.5rem;
+  }
+}

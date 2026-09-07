@@ -102,9 +102,15 @@ export const Expertises: React.FC<ExpertisesProps> = ({ onOpenConsultation }) =>
               {expertise.image && (
                 <div className="relative h-48 -mx-7 -mt-7 sm:-mx-9 sm:-mt-9 mb-6 overflow-hidden bg-slate-950">
                   <picture>
+                    {/* 640w pour mobile, 1200w au-dela : evite de telecharger
+                        une image 1200px pour un emplacement de ~340px. */}
                     <source
-                      srcSet={expertise.image?.replace(/\.jpg$/, '.webp')}
                       type="image/webp"
+                      sizes="(max-width: 640px) 92vw, 400px"
+                      srcSet={
+                        `${expertise.image?.replace(/\.jpg$/, '-800.webp')} 800w, ` +
+                        `${expertise.image?.replace(/\.jpg$/, '.webp')} 1200w`
+                      }
                     />
                     <img
                       src={expertise.image}

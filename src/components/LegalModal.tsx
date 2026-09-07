@@ -1,8 +1,44 @@
 import React, { useEffect } from 'react';
 import { X, Scale, ShieldCheck } from 'lucide-react';
-import { BRAND } from '../data/content';
+import { BRAND, LEGAL, type LegalEntity } from '../data/content';
 
 export type LegalTab = 'mentions' | 'confidentialite';
+
+/** N'affiche la ligne que si la valeur est renseignée : mieux vaut ne rien
+ *  publier qu'une mention légale approximative. */
+const Line: React.FC<{ label: string; value: string | null | undefined }> = ({ label, value }) =>
+  value ? (
+    <div className="flex flex-col sm:flex-row sm:gap-2">
+      <span className="text-slate-500 shrink-0 sm:w-52">{label}</span>
+      <span className="text-slate-200">{value}</span>
+    </div>
+  ) : null;
+
+const EntityBlock: React.FC<{ entity: LegalEntity }> = ({ entity }) => (
+  <div className="space-y-1.5">
+    <Line label="Dénomination sociale" value={entity.denomination} />
+    <Line label="Forme juridique" value={entity.formeJuridique} />
+    <Line label="Capital social" value={entity.capitalSocial} />
+    <Line label="Siège social" value={entity.adresse} />
+    {entity.identifiants.map((id) => (
+      <Line key={id.label} label={id.label} value={id.value} />
+    ))}
+    <Line label="N° TVA intracommunautaire" value={entity.tvaIntracom} />
+    <Line label="Directeur de la publication" value={entity.directeurPublication} />
+  </div>
+);
+
+/** Champs obligatoires encore vides — l'alerte n'est visible qu'en développement. */
+const missingFields = (e: LegalEntity): string[] => {
+  const missing: string[] = [];
+  if (!e.formeJuridique) missing.push('forme juridique');
+  if (!e.adresse) missing.push('adresse du siège');
+  if (!e.identifiants.length) missing.push('identifiants officiels (RC / ICE ou SIREN)');
+  if (!e.directeurPublication) missing.push('directeur de la publication');
+  return missing;
+};
+
+
 
 interface LegalModalProps {
   isOpen: boolean;
@@ -87,45 +123,104 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, tab, onChangeTab
         <div className="p-5 sm:p-7 space-y-5 max-h-[65vh] overflow-y-auto">
           {tab === 'mentions' ? (
             <>
-              <div className="p-3 rounded-xl bg-amber-950/30 border border-amber-800/50 text-[11px] text-amber-300">
-                À compléter par CLIXA : forme juridique, capital social, RC / ICE (Maroc) ou SIREN
-                (France), adresse complète du siège et nom du directeur de la publication.
-              </div>
+              {import.meta.env.DEV && missingFields(LEGAL.entitePrincipale).length > 0 && (
+                <div className="p-3 rounded-xl bg-amber-950/30 border border-amber-800/50 text-[11px] text-amber-300">
+                  <strong className="block mb-1">Visible en développement uniquement</strong>
+                  Mentions incomplètes — à renseigner dans <code>src/data/content.ts</code> (objet{' '}
+                  <code>LEGAL</code>) : {missingFields(LEGAL.entitePrincipale).join(', ')}.
+                </div>
+              )}
 
               <Section title="Éditeur du site">
+                <EntityBlock entity={LEGAL.entitePrincipale} />
+                <p className="pt-1">
+                  Email : {BRAND.contactEmail} — Téléphone Maroc : {BRAND.phoneMarocDisplay} —
+                  Téléphone France : {BRAND.phoneFranceDisplay}.
+                </p>
+              </Section>
+
+              {LEGAL.entiteSecondaire && (
+                <Section title="Établissement secondaire">
+                  <EntityBlock entity={LEGAL.entiteSecondaire} />
+                </Section>
+              )}
+
+              <Section title="Activité">
                 <p>
-                  {BRAND.name} — cabinet de conseil en transformation, digitalisation et performance.
-                  <br />
-                  Bureaux : {BRAND.addressMaroc} et {BRAND.addressFrance}.
-                  <br />
-                  Email : {BRAND.contactEmail} — Tél. Maroc : {BRAND.phoneMarocDisplay} — Tél. France :{' '}
-                  {BRAND.phoneFranceDisplay}.
+                  {BRAND.name} exerce une activité de conseil en organisation, transformation
+                  digitale et performance : intégration d'ERP Odoo, assistance à maîtrise d'ouvrage
+                  (AMOA), développement web, facturation électronique et pilotage financier.
                 </p>
               </Section>
 
               <Section title="Hébergement">
                 <p>
-                  Site hébergé par Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis —
-                  vercel.com
+                  Le site est hébergé par <strong className="text-slate-200">Vercel Inc.</strong>,
+                  340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis — vercel.com. Les
+                  notifications de contact transitent par Resend (Plus Cinquante Inc.).
                 </p>
               </Section>
 
               <Section title="Propriété intellectuelle">
                 <p>
-                  L'ensemble des contenus de ce site (textes, visuels, logo, méthodologies,
-                  architecture) est la propriété exclusive de {BRAND.name}. Toute reproduction ou
-                  représentation, totale ou partielle, sans autorisation écrite préalable est
-                  interdite.
+                  L'ensemble des éléments composant ce site — textes, visuels, photographies, logo,
+                  charte graphique, méthodologies et architecture — est protégé par le droit
+                  d'auteur et demeure la propriété exclusive de {BRAND.name} ou de ses ayants droit.
+                </p>
+                <p>
+                  Toute reproduction, représentation, adaptation ou exploitation, totale ou
+                  partielle, par quelque procédé que ce soit et sur quelque support que ce soit,
+                  sans autorisation écrite préalable, est interdite et constitue une contrefaçon
+                  sanctionnée par les articles L.335-2 et suivants du Code de la propriété
+                  intellectuelle en France et par la loi 2-00 relative aux droits d'auteur au Maroc.
                 </p>
               </Section>
 
-              <Section title="Responsabilité">
+              <Section title="Limitation de responsabilité">
                 <p>
-                  Les informations publiées sont fournies à titre indicatif et n'ont pas valeur
-                  d'engagement contractuel. Les indicateurs de performance présentés dans les cas
-                  clients sont issus de missions réelles et varient selon les contextes.
+                  Les informations diffusées sur ce site sont fournies à titre indicatif et n'ont
+                  aucune valeur contractuelle. Elles ne sauraient constituer un conseil personnalisé
+                  en gestion, en fiscalité ou en investissement : seule une mission formalisée par
+                  un contrat engage {BRAND.name}.
+                </p>
+                <p>
+                  Les indicateurs de performance présentés dans les cas clients sont issus de
+                  missions réelles et dépendent du contexte propre à chaque organisation ; ils ne
+                  constituent pas une garantie de résultat. {BRAND.name} s'efforce d'assurer
+                  l'exactitude et la mise à jour des informations publiées, sans pouvoir en garantir
+                  l'exhaustivité, et décline toute responsabilité quant à l'usage qui en serait
+                  fait.
                 </p>
               </Section>
+
+              <Section title="Liens externes">
+                <p>
+                  Ce site peut renvoyer vers des sites tiers (WhatsApp, réseaux sociaux, éditeurs
+                  logiciels). {BRAND.name} n'exerce aucun contrôle sur leur contenu et ne saurait
+                  être tenue responsable de leurs pratiques en matière de données personnelles.
+                </p>
+              </Section>
+
+              <Section title="Droit applicable et litiges">
+                <p>
+                  Les présentes mentions sont soumises au droit marocain. Tout litige relatif à
+                  l'utilisation du site relève de la compétence des tribunaux du lieu du siège
+                  social, sauf disposition légale impérative contraire — notamment, pour les
+                  consommateurs résidant dans l'Union européenne, les règles protectrices de leur
+                  droit national.
+                </p>
+              </Section>
+
+              <Section title="Signalement">
+                <p>
+                  Pour toute réclamation portant sur un contenu de ce site, écrivez à{' '}
+                  {BRAND.contactEmail}. Nous nous engageons à répondre sous 15 jours ouvrés.
+                </p>
+              </Section>
+
+              <p className="text-[11px] text-slate-500 pt-2 border-t border-slate-800">
+                Dernière mise à jour : {LEGAL.derniereMaJ}
+              </p>
             </>
           ) : (
             <>

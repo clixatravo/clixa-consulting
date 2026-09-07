@@ -19,7 +19,7 @@ export const Engagements: React.FC = () => {
   };
 
   return (
-    <section className="py-20 bg-slate-950 border-t border-slate-850 relative">
+    <section id="engagements" className="py-20 bg-slate-950 border-t border-slate-850 relative scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}

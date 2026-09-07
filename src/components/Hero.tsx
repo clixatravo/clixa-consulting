@@ -8,7 +8,7 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center pt-24 sm:pt-32 pb-16 sm:pb-20 overflow-hidden bg-slate-950">
+    <section id="accueil" className="relative min-h-[90vh] flex items-center justify-center pt-24 sm:pt-32 pb-16 sm:pb-20 overflow-hidden bg-slate-950 scroll-mt-24">
       {/* Background radial glow: lightweight on mobile, rich on desktop */}
       <div className="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none" />
       <div className="hidden sm:block absolute top-10 left-1/2 -translate-x-1/2 w-[850px] h-[520px] bg-sky-500/10 blur-[130px] rounded-full pointer-events-none transform-gpu" />

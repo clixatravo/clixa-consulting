@@ -11,7 +11,7 @@ export const AboutBanner: React.FC = () => {
   ];
 
   return (
-    <section className="py-20 bg-slate-900/60 border-y border-slate-850 relative">
+    <section id="a-propos" className="py-20 bg-slate-900/60 border-y border-slate-850 relative scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           

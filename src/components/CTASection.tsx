@@ -8,7 +8,7 @@ interface CTASectionProps {
 
 export const CTASection: React.FC<CTASectionProps> = ({ onOpenConsultation }) => {
   return (
-    <section className="py-24 bg-gradient-to-b from-slate-900 to-slate-950 border-t border-slate-800 relative overflow-hidden">
+    <section id="contact" className="py-24 bg-gradient-to-b from-slate-900 to-slate-950 border-t border-slate-850 relative overflow-hidden scroll-mt-24">
       {/* Glow: lightweight on mobile, rich on desktop */}
       <div className="hidden sm:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-sky-500/10 blur-[130px] rounded-full pointer-events-none transform-gpu" />
       <div className="sm:hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-40 bg-sky-500/10 blur-2xl rounded-full pointer-events-none transform-gpu" />

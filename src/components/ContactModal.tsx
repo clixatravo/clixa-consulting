@@ -85,7 +85,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
   // Generate automated pre-filled WhatsApp message for appointment confirmation
   const generateWhatsAppUrl = () => {
     const text = encodeURIComponent(
-      `Bonjour CLIXA Consulting,\n\nJe souhaite planifier un appel téléphonique avec l'administration pour échanger sur un projet.\n\n📅 Date souhaitée : ${selectedDay}\n⏰ Créneau horaire : ${selectedTime}\n💼 Thématique : ${topic}\n👤 Nom & Prénom : ${name || 'Non renseigné'}\n🏢 Entreprise : ${company || 'Non renseignée'}\n📞 Mon numéro : ${phone || 'À contacter sur ce numéro'}\n\nMerci de me confirmer ce rendez-vous dans le planning de l'administration.`
+      `Bonjour CLIXA Consulting,\n\nJe souhaite planifier un échange stratégique avec un consultant senior pour échanger sur notre projet.\n\n📅 Date souhaitée : ${selectedDay}\n⏰ Créneau horaire : ${selectedTime}\n💼 Thématique : ${topic}\n👤 Nom & Prénom : ${name || 'Non renseigné'}\n🏢 Entreprise : ${company || 'Non renseignée'}\n📞 Mon numéro : ${phone || 'À contacter sur ce numéro'}\n\nMerci de me confirmer la disponibilité dans votre planning.`
     );
     return `https://wa.me/212661344054?text=${text}`;
   };
@@ -103,7 +103,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
   const handleWhatsAppBooking = (e: React.FormEvent) => {
     e.preventDefault();
     if (!phone && !name) {
-      alert("Veuillez renseigner au moins votre Nom et Numéro de téléphone afin que l'administration puisse vous rappeler.");
+      alert("Veuillez renseigner au moins votre Nom et Numéro de téléphone afin que notre équipe puisse vous recontacter.");
       return;
     }
     const url = generateWhatsAppUrl();
@@ -143,7 +143,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
                 Planifier un Échange avec CLIXA
               </h3>
               <p className="text-xs text-slate-400">
-                Administration Maroc & France • Confirmation et rappel téléphonique
+                Consultants Maroc & France • Confirmation et échange stratégique
               </p>
             </div>
           </div>
@@ -196,10 +196,10 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
               <h4 className="text-2xl font-bold text-white">Créneau Enregistré !</h4>
 
               <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
-                Votre créneau pour <strong className="text-sky-400">{selectedDay} ({selectedTime})</strong> a été transmis à l'administration. Un consultant vous contactera précisément à l'heure convenue au <strong className="text-white">{phone || 'votre numéro'}</strong>.
+                Votre créneau pour <strong className="text-sky-400">{selectedDay} ({selectedTime})</strong> a été enregistré. Un consultant senior vous contactera précisément à l'heure convenue au <strong className="text-white">{phone || 'votre numéro'}</strong>.
               </p>
 
-              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 max-w-sm mx-auto text-xs text-slate-400 space-y-1">
+              <div className="p-4 rounded-xl bg-slate-950 border border-slate-850 max-w-sm mx-auto text-xs text-slate-400 space-y-1">
                 <div>Maroc : <span className="text-white">{BRAND.phoneMarocDisplay}</span></div>
                 <div>France : <span className="text-white">{BRAND.phoneFranceDisplay}</span></div>
                 <div>Email : <span className="text-white">{BRAND.contactEmail}</span></div>
@@ -222,7 +222,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
               <div className="p-3.5 rounded-xl bg-emerald-950/30 border border-emerald-800/50 flex items-start gap-3 text-xs text-emerald-300">
                 <MessageCircle className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
                 <div>
-                  <strong className="text-white block mb-0.5">Rappel téléphonique par l'administration</strong>
+                  <strong className="text-white block mb-0.5">Échange stratégique avec un consultant senior</strong>
                   Sélectionnez votre créneau libre. Votre demande est synchronisée directement sur WhatsApp avec confirmation automatique.
                 </div>
               </div>
@@ -339,7 +339,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
 
               <div className="text-center">
                 <span className="text-[11px] text-slate-400">
-                  L'administration recevra l'horaire retenu et vous contactera au créneau choisi.
+                  Notre équipe recevra l'horaire retenu et vous contactera au créneau choisi.
                 </span>
               </div>
 

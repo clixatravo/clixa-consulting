@@ -2,7 +2,11 @@ import React from 'react';
 import { BRAND } from '../data/content';
 import { Mail, Phone, MapPin, ArrowUp, MessageCircle } from 'lucide-react';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onOpenLegal: (tab: 'mentions' | 'confidentialite') => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onOpenLegal }) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -142,12 +146,28 @@ export const Footer: React.FC = () => {
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <div>
-            © {new Date().getFullYear()} CLIXA Consulting (<a href="https://clixa.ma" className="text-slate-400 hover:text-white">clixa.ma</a>). Tous droits réservés.
+            © {new Date().getFullYear()} CLIXA Consulting (
+            <a href={__SITE_URL__} className="text-slate-400 hover:text-white">
+              {__SITE_URL__.replace(/^https?:\/\//, '')}
+            </a>
+            ). Tous droits réservés.
           </div>
 
-          <div className="flex items-center gap-6">
-            <span>Maroc : {BRAND.phoneMarocDisplay}</span>
-            <span>France : {BRAND.phoneFranceDisplay}</span>
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+            <button
+              onClick={() => onOpenLegal('mentions')}
+              className="hover:text-white transition-colors cursor-pointer underline-offset-2 hover:underline"
+            >
+              Mentions légales
+            </button>
+            <button
+              onClick={() => onOpenLegal('confidentialite')}
+              className="hover:text-white transition-colors cursor-pointer underline-offset-2 hover:underline"
+            >
+              Confidentialité
+            </button>
+            <span className="hidden lg:inline">Maroc : {BRAND.phoneMarocDisplay}</span>
+            <span className="hidden lg:inline">France : {BRAND.phoneFranceDisplay}</span>
             <button
               onClick={scrollToTop}
               className="p-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white transition-colors cursor-pointer"

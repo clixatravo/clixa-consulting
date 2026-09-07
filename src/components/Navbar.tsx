@@ -57,10 +57,28 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
 
   const handleNavClick = (href: string) => {
     setMobileMenuOpen(false);
+
     const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    if (!element) return;
+
+    // Le tiroir mobile pose overflow:hidden sur <body>. Ce verrou n'est levé
+    // qu'au rendu suivant : lancer le défilement tout de suite reviendrait à
+    // défiler un body verrouillé, ce que les navigateurs mobiles ignorent.
+    // On rend la main au navigateur avant de défiler.
+    requestAnimationFrame(() => {
+      document.body.style.overflow = 'unset';
+
+      const top = element.getBoundingClientRect().top + window.scrollY - 88;
+      const distance = Math.abs(top - window.scrollY);
+
+      // La page fait ~26 000 px : un défilement doux vers le bas de page dure
+      // plusieurs secondes et donne l'impression que le bouton ne répond pas.
+      // Au-delà de 3 écrans, on saute directement.
+      const behavior: ScrollBehavior =
+        distance > window.innerHeight * 3 ? 'auto' : 'smooth';
+
+      window.scrollTo({ top, behavior });
+    });
   };
 
   return (

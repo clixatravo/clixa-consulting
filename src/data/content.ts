@@ -487,3 +487,59 @@ export const WHY_CLIXA_CHAIN = [
   { step: "SI", desc: "Outils performants, intégrés et adaptés aux besoins métiers réels." },
   { step: "Exécution", desc: "Mise en œuvre concrète, adoption terrain et résultats durables." },
 ];
+
+/* ============================================================================
+   MENTIONS LÉGALES — À COMPLÉTER PAR CLIXA
+   ----------------------------------------------------------------------------
+   C'est le SEUL endroit à modifier pour les informations légales du site.
+   Tout champ laissé à null est automatiquement masqué sur la page publique
+   (mieux vaut ne rien afficher qu'une information erronée).
+
+   ⚠️  N'inscrivez ici que des valeurs officielles vérifiées : ces mentions
+   engagent juridiquement la société (art. 6-III de la LCEN en France,
+   loi 53-05 et loi 09-08 au Maroc).
+   ========================================================================== */
+
+export interface LegalEntity {
+  /** Dénomination sociale exacte telle qu'inscrite au registre */
+  denomination: string;
+  /** Ex. "SARL", "SARL AU", "SAS", "SASU", "Auto-entrepreneur" */
+  formeJuridique: string | null;
+  /** Ex. "100 000 MAD" — laisser null si non applicable */
+  capitalSocial: string | null;
+  /** Adresse complète du siège social */
+  adresse: string | null;
+  /** Identifiants officiels : libellé + valeur. Ex. { label: "ICE", value: "0012..." } */
+  identifiants: { label: string; value: string }[];
+  /** Personne responsable du contenu publié */
+  directeurPublication: string | null;
+  /** Numéro de TVA intracommunautaire (France) — null si non assujetti */
+  tvaIntracom: string | null;
+}
+
+export const LEGAL: {
+  /** Entité qui édite le site. Si vous avez deux structures, renseignez aussi `entiteSecondaire`. */
+  entitePrincipale: LegalEntity;
+  entiteSecondaire: LegalEntity | null;
+  /** Date de dernière mise à jour des mentions, affichée au visiteur */
+  derniereMaJ: string;
+} = {
+  entitePrincipale: {
+    denomination: "CLIXA CONSULTING",
+    formeJuridique: null,       // ex. "SARL AU"
+    capitalSocial: null,        // ex. "100 000 MAD"
+    adresse: null,              // ex. "12 rue X, quartier Y, 20000 Casablanca, Maroc"
+    identifiants: [
+      // { label: "RC", value: "123456 — Tribunal de Commerce de Casablanca" },
+      // { label: "ICE", value: "001234567000089" },
+      // { label: "IF", value: "12345678" },
+      // { label: "Patente", value: "12345678" },
+    ],
+    directeurPublication: null, // ex. "Mohamed Rida El Oizghiti"
+    tvaIntracom: null,
+  },
+
+  entiteSecondaire: null,       // structure française, le cas échéant
+
+  derniereMaJ: "2026",
+};

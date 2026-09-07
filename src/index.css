@@ -38,3 +38,154 @@
   transform: translateY(-2px);
   box-shadow: 0 12px 30px -10px rgba(14, 165, 233, 0.15);
 }
+
+/* ---------------------------------------------------------------
+   Design tokens manquants : slate-850 / slate-750 étaient utilisés
+   dans 25 endroits du code mais n'existent pas dans Tailwind
+   (bordures et fonds invisibles). On les déclare ici.
+   --------------------------------------------------------------- */
+@theme {
+  --color-slate-750: #283548;
+  --color-slate-850: #172033;
+}
+
+/* Ancrage des sections sous la navbar fixe (#expertises, #faq...) */
+@layer base {
+  section[id],
+  [id] {
+    scroll-margin-top: 6rem;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Utilitaires d'animation (équivalent tailwindcss-animate, non
+   installé) : animate-in / fade-in / zoom-in-95 / slide-in-from-*
+   --------------------------------------------------------------- */
+@layer utilities {
+  .animate-in {
+    animation-name: clixa-enter;
+    animation-duration: 200ms;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    animation-fill-mode: both;
+  }
+  .fade-in { --clixa-enter-opacity: 0; }
+  .zoom-in-95 { --clixa-enter-scale: 0.95; }
+  .slide-in-from-bottom-3 { --clixa-enter-y: 0.75rem; }
+  .slide-in-from-bottom-4 { --clixa-enter-y: 1rem; }
+  .slide-in-from-right-4 { --clixa-enter-x: 1rem; }
+}
+
+@keyframes clixa-enter {
+  from {
+    opacity: var(--clixa-enter-opacity, 1);
+    transform: translate3d(
+        var(--clixa-enter-x, 0),
+        var(--clixa-enter-y, 0),
+        0
+      )
+      scale(var(--clixa-enter-scale, 1));
+  }
+}
+
+/* Respect de prefers-reduced-motion (accessibilité) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Performance mobile
+   La page fait ~26 000 px et 1 500 nœuds : les 12 sections étaient
+   toutes mises en page et peintes au chargement. content-visibility
+   laisse le navigateur ignorer celles qui sont hors écran, sans
+   aucun changement visuel. Le mot-clé `auto` de contain-intrinsic-size
+   mémorise la hauteur réelle une fois la section rendue, ce qui évite
+   les sauts de barre de défilement.
+   --------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  main > section[id] {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
+  }
+}
+
+/* Le bouton WhatsApp flottant masquait la fin du pied de page sur mobile. */
+@media (max-width: 640px) {
+  footer {
+    padding-bottom: 6.5rem;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Réactivité tactile
+   Sans touch-action, iOS attend ~300 ms après chaque appui pour
+   vérifier s'il s'agit d'un double-tap de zoom : l'interface semble
+   lente et les appuis rapprochés sont ignorés. `manipulation` désactive
+   ce délai tout en conservant le défilement et le pincement-zoom.
+   --------------------------------------------------------------- */
+button,
+a,
+[role='button'],
+input,
+select,
+textarea,
+label {
+  touch-action: manipulation;
+}
+
+/* Le halo gris d'iOS/Android masquait notre propre retour visuel. */
+button,
+a,
+[role='button'] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Retour visuel immédiat au doigt, avant même le re-rendu React :
+   sans lui, l'appui paraît sans effet le temps que l'état change. */
+@media (hover: none) {
+  button:active,
+  a:active,
+  [role='button']:active {
+    opacity: 0.7;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Cibles tactiles
+   L'icône WhatsApp (38 px) et le bouton menu (42 px) de l'en-tête
+   étaient sous le minimum recommandé de 44 px, et séparés de 8 px
+   seulement : le pouce touchait fréquemment WhatsApp au lieu du menu.
+   La zone sensible est agrandie sans modifier l'apparence.
+   --------------------------------------------------------------- */
+@media (max-width: 1279px) {
+  header button,
+  header a[href^='https://wa.me'] {
+    position: relative;
+  }
+
+  header button::after,
+  header a[href^='https://wa.me']::after {
+    content: '';
+    position: absolute;
+    inset: 50%;
+    width: 44px;
+    height: 44px;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* L'en-tête fixe applique un flou d'arrière-plan une fois défilé : sur
+   mobile, cela force le repeint de tout l'écran à chaque image du
+   défilement. Fond opaque à la place, rendu identique à l'œil. */
+@media (max-width: 1024px) {
+  header.backdrop-blur-md {
+    backdrop-filter: none;
+    background-color: rgb(2 6 23 / 0.97);
+  }
+}

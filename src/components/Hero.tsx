@@ -38,11 +38,11 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
         </p>
 
         {/* Pill Tags: Finance • Process • AMOA • ERP Odoo • Digital */}
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-8 sm:mb-10 max-w-3xl mx-auto px-2">
+        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-3 mb-7 sm:mb-10 max-w-3xl mx-auto px-2">
           {BRAND.heroBadges.map((badge) => (
             <span
               key={badge}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/80 border border-slate-800 text-slate-200 text-xs sm:text-sm font-medium hover:border-sky-500/40 hover:text-white transition-all shadow-sm"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg bg-slate-900/80 border border-slate-800 text-slate-200 text-[11px] sm:text-sm font-medium hover:border-sky-500/40 hover:text-white transition-colors shadow-sm"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
               {badge}
@@ -126,12 +126,27 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
               >
                 {/* Real Corporate Photography */}
                 <div className="relative h-44 sm:h-48 overflow-hidden bg-slate-950">
-                  <img
-                    src={pillar.image}
-                    alt={pillar.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"
-                    loading="lazy"
-                  />
+                  <picture>
+                    {/* 640w pour mobile, 1200w au-dela : evite de telecharger
+                        une image 1200px pour un emplacement de ~340px. */}
+                    <source
+                      type="image/webp"
+                      sizes="(max-width: 640px) 92vw, 400px"
+                      srcSet={
+                        `${pillar.image?.replace(/\.jpg$/, '-800.webp')} 800w, ` +
+                        `${pillar.image?.replace(/\.jpg$/, '.webp')} 1200w`
+                      }
+                    />
+                    <img
+                      src={pillar.image}
+                      alt={pillar.title}
+                      width={1200}
+                      height={800}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/30 to-transparent" />
                   
                   <div className="absolute top-3 left-3">

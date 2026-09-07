@@ -38,3 +38,63 @@
   transform: translateY(-2px);
   box-shadow: 0 12px 30px -10px rgba(14, 165, 233, 0.15);
 }
+
+/* ---------------------------------------------------------------
+   Design tokens manquants : slate-850 / slate-750 étaient utilisés
+   dans 25 endroits du code mais n'existent pas dans Tailwind
+   (bordures et fonds invisibles). On les déclare ici.
+   --------------------------------------------------------------- */
+@theme {
+  --color-slate-750: #283548;
+  --color-slate-850: #172033;
+}
+
+/* Ancrage des sections sous la navbar fixe (#expertises, #faq...) */
+@layer base {
+  section[id],
+  [id] {
+    scroll-margin-top: 6rem;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Utilitaires d'animation (équivalent tailwindcss-animate, non
+   installé) : animate-in / fade-in / zoom-in-95 / slide-in-from-*
+   --------------------------------------------------------------- */
+@layer utilities {
+  .animate-in {
+    animation-name: clixa-enter;
+    animation-duration: 200ms;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    animation-fill-mode: both;
+  }
+  .fade-in { --clixa-enter-opacity: 0; }
+  .zoom-in-95 { --clixa-enter-scale: 0.95; }
+  .slide-in-from-bottom-3 { --clixa-enter-y: 0.75rem; }
+  .slide-in-from-bottom-4 { --clixa-enter-y: 1rem; }
+  .slide-in-from-right-4 { --clixa-enter-x: 1rem; }
+}
+
+@keyframes clixa-enter {
+  from {
+    opacity: var(--clixa-enter-opacity, 1);
+    transform: translate3d(
+        var(--clixa-enter-x, 0),
+        var(--clixa-enter-y, 0),
+        0
+      )
+      scale(var(--clixa-enter-scale, 1));
+  }
+}
+
+/* Respect de prefers-reduced-motion (accessibilité) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

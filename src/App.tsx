@@ -15,14 +15,26 @@ import { CTASection } from './components/CTASection';
 import { Footer } from './components/Footer';
 import { ContactModal } from './components/ContactModal';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
+import { CookieConsent } from './components/CookieConsent';
+import { LegalModal, type LegalTab } from './components/LegalModal';
+import { trackLead } from './lib/analytics';
 
 export const App: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState<string | undefined>(undefined);
+  const [legalOpen, setLegalOpen] = useState(false);
+  const [legalTab, setLegalTab] = useState<LegalTab>('mentions');
 
   const handleOpenConsultation = (topic?: string) => {
     setSelectedTopic(topic);
     setModalOpen(true);
+    // Conversion Meta Pixel : ne se declenche que si le visiteur a consenti.
+    trackLead(topic);
+  };
+
+  const handleOpenLegal = (tab: LegalTab) => {
+    setLegalTab(tab);
+    setLegalOpen(true);
   };
 
   const handleCloseConsultation = () => {
@@ -75,7 +87,7 @@ export const App: React.FC = () => {
       </main>
 
       {/* Footer */}
-      <Footer />
+      <Footer onOpenLegal={handleOpenLegal} />
 
       {/* Floating WhatsApp Quick Action Button */}
       <FloatingWhatsApp />
@@ -86,6 +98,17 @@ export const App: React.FC = () => {
         onClose={handleCloseConsultation}
         initialTopic={selectedTopic}
       />
+
+      {/* Mentions legales & politique de confidentialite */}
+      <LegalModal
+        isOpen={legalOpen}
+        tab={legalTab}
+        onChangeTab={setLegalTab}
+        onClose={() => setLegalOpen(false)}
+      />
+
+      {/* Bandeau de consentement RGPD (conditionne le chargement du Meta Pixel) */}
+      <CookieConsent onOpenLegal={handleOpenLegal} />
     </div>
   );
 };

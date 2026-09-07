@@ -101,12 +101,21 @@ export const Expertises: React.FC<ExpertisesProps> = ({ onOpenConsultation }) =>
               {/* Optional Real Photo Header */}
               {expertise.image && (
                 <div className="relative h-48 -mx-7 -mt-7 sm:-mx-9 sm:-mt-9 mb-6 overflow-hidden bg-slate-950">
-                  <img
-                    src={expertise.image}
-                    alt={expertise.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
+                  <picture>
+                    <source
+                      srcSet={expertise.image?.replace(/\.jpg$/, '.webp')}
+                      type="image/webp"
+                    />
+                    <img
+                      src={expertise.image}
+                      alt={expertise.title}
+                      width={1200}
+                      height={800}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
                   
                   {/* Flagship ribbon inside image */}

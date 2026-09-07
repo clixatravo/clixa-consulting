@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Ressources internes sans intérêt pour l'indexation
+Disallow: /api/
+
+Sitemap: https://www.clixa.ma/sitemap.xml

@@ -39,6 +39,9 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
 
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  // Honeypot anti-spam : invisible pour l'utilisateur, rempli par les bots.
+  const [website, setWebsite] = useState('');
 
   const topicsList = [
     "Intégration d'ERP Odoo",
@@ -80,6 +83,16 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
+  // Empêche le scroll de l'arrière-plan tant que la modale est ouverte.
+  useEffect(() => {
+    if (!isOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   // Generate automated pre-filled WhatsApp message for appointment confirmation
@@ -90,22 +103,57 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
     return `https://wa.me/212661344054?text=${text}`;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Repli garanti : ouvre le client mail du visiteur avec la demande
+  // pré-remplie si l'API d'envoi n'est pas disponible.
+  const openMailtoFallback = () => {
+    const subject = encodeURIComponent(`[Site CLIXA] ${topic} - ${name} (${company})`);
+    const bodyText = encodeURIComponent(
+      `Projet : ${topic}\nNom : ${name}\nEntreprise : ${company}\nEmail : ${email}\nTelephone : ${phone || 'non renseigne'}\n\nMessage :\n${message || '-'}`
+    );
+    window.location.href = `mailto:${BRAND.contactEmail}?subject=${subject}&body=${bodyText}`;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
 
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, phone, company, topic, message, website }),
+      });
+
+      if (res.ok) {
+        setSubmitted(true);
+        return;
+      }
+
+      // API absente (dev local) ou non configuree : on bascule sur mailto.
+      if (res.status === 404 || res.status === 503) {
+        openMailtoFallback();
+        setSubmitted(true);
+        return;
+      }
+
+      const data = await res.json().catch(() => ({}));
+      setError(data.error || "L'envoi a echoue. Contactez-nous directement par telephone ou WhatsApp.");
+    } catch {
+      openMailtoFallback();
       setSubmitted(true);
-    }, 800);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleWhatsAppBooking = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!phone && !name) {
-      alert("Veuillez renseigner au moins votre Nom et Numéro de téléphone afin que l'administration puisse vous rappeler.");
+    if (!phone || !name) {
+      setError("Veuillez renseigner votre nom et votre numéro de téléphone afin que l'administration puisse vous rappeler.");
       return;
     }
+    setError(null);
     const url = generateWhatsAppUrl();
     window.open(url, '_blank');
     setSubmitted(true);
@@ -113,6 +161,8 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
 
   const handleReset = () => {
     setSubmitted(false);
+    setError(null);
+    setWebsite('');
     setName('');
     setEmail('');
     setPhone('');
@@ -130,7 +180,12 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
       />
 
       {/* Modal Dialog */}
-      <div className="relative w-full max-w-2xl rounded-2xl bg-slate-900 border border-slate-700 shadow-2xl overflow-hidden my-4 sm:my-8 z-10 animate-in fade-in zoom-in-95 duration-200">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="clixa-modal-title"
+        className="relative w-full max-w-2xl rounded-2xl bg-slate-900 border border-slate-700 shadow-2xl overflow-hidden my-4 sm:my-8 z-10 animate-in fade-in zoom-in-95 duration-200"
+      >
         
         {/* Header bar */}
         <div className="px-5 sm:px-6 py-4 sm:py-5 border-b border-slate-800 flex items-center justify-between bg-slate-950/70">
@@ -139,7 +194,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-white leading-tight">
+              <h3 id="clixa-modal-title" className="text-lg font-bold text-white leading-tight">
                 Planifier un Échange avec CLIXA
               </h3>
               <p className="text-xs text-slate-400">
@@ -150,6 +205,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
 
           <button
             onClick={onClose}
+            aria-label="Fermer la fenêtre"
             className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
@@ -193,11 +249,19 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
                 <CheckCircle2 className="w-8 h-8" />
               </div>
 
-              <h4 className="text-2xl font-bold text-white">Créneau Enregistré !</h4>
+              <h4 className="text-2xl font-bold text-white">
+                {mode === 'call' ? 'Créneau Enregistré !' : 'Demande Envoyée !'}
+              </h4>
 
-              <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
-                Votre créneau pour <strong className="text-sky-400">{selectedDay} ({selectedTime})</strong> a été transmis à l'administration. Un consultant vous contactera précisément à l'heure convenue au <strong className="text-white">{phone || 'votre numéro'}</strong>.
-              </p>
+              {mode === 'call' ? (
+                <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
+                  Votre créneau pour <strong className="text-sky-400">{selectedDay} ({selectedTime})</strong> a été transmis à l'administration. Un consultant vous contactera précisément à l'heure convenue au <strong className="text-white">{phone || 'votre numéro'}</strong>.
+                </p>
+              ) : (
+                <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
+                  Votre demande concernant <strong className="text-sky-400">{topic}</strong> a bien été transmise à nos consultants. Vous recevrez une réponse à l'adresse <strong className="text-white">{email}</strong> sous 24h ouvrées.
+                </p>
+              )}
 
               <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 max-w-sm mx-auto text-xs text-slate-400 space-y-1">
                 <div>Maroc : <span className="text-white">{BRAND.phoneMarocDisplay}</span></div>
@@ -326,6 +390,12 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
                 </div>
               </div>
 
+              {error && (
+                <div role="alert" className="p-3 rounded-xl bg-red-950/40 border border-red-800/60 text-xs text-red-300">
+                  {error}
+                </div>
+              )}
+
               {/* WhatsApp Action Button */}
               <div className="pt-2">
                 <button
@@ -451,6 +521,24 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
                 <ShieldCheck className="w-4 h-4 text-sky-400 shrink-0" />
                 <span>Confidentialité garantie • Réponse sous 24h ouvrées.</span>
               </div>
+
+              {/* Honeypot anti-spam : masqué aux humains, piège à bots */}
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+                className="absolute left-[-9999px] w-px h-px opacity-0"
+              />
+
+              {error && (
+                <div role="alert" className="p-3 rounded-xl bg-red-950/40 border border-red-800/60 text-xs text-red-300">
+                  {error}
+                </div>
+              )}
 
               {/* Submit button */}
               <div className="pt-2">

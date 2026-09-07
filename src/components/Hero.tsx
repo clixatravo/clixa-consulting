@@ -126,12 +126,21 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
               >
                 {/* Real Corporate Photography */}
                 <div className="relative h-44 sm:h-48 overflow-hidden bg-slate-950">
-                  <img
-                    src={pillar.image}
-                    alt={pillar.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"
-                    loading="lazy"
-                  />
+                  <picture>
+                    <source
+                      srcSet={pillar.image?.replace(/\.jpg$/, '.webp')}
+                      type="image/webp"
+                    />
+                    <img
+                      src={pillar.image}
+                      alt={pillar.title}
+                      width={1200}
+                      height={800}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/30 to-transparent" />
                   
                   <div className="absolute top-3 left-3">

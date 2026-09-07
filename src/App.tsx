@@ -4,10 +4,14 @@ import { Hero } from './components/Hero';
 import { TrustBanner } from './components/TrustBanner';
 import { AboutBanner } from './components/AboutBanner';
 import { Expertises } from './components/Expertises';
+import { Secteurs } from './components/Secteurs';
 import { CaseStudies } from './components/CaseStudies';
+import { Testimonials } from './components/Testimonials';
+import { RoiCalculator } from './components/RoiCalculator';
 import { FacturationElec } from './components/FacturationElec';
 import { SolutionsDigitales } from './components/SolutionsDigitales';
 import { AuditExpress } from './components/AuditExpress';
+import { ComparisonTable } from './components/ComparisonTable';
 import { Methodologie } from './components/Methodologie';
 import { Engagements } from './components/Engagements';
 import { WhyClixa } from './components/WhyClixa';
@@ -50,8 +54,17 @@ export const App: React.FC = () => {
         {/* 3. The Core Expertises (ERP Odoo, Web, AMOA, Finance, Process) */}
         <Expertises onOpenConsultation={handleOpenConsultation} />
 
+        {/* 3.5. Spécialisations Sectorielles (BTP, Industrie, Négoce, Services, Santé, Énergie) */}
+        <Secteurs onOpenConsultation={handleOpenConsultation} />
+
         {/* 4. Case Studies / Cas Clients Concrets with Chiffres Clés */}
         <CaseStudies onOpenConsultation={handleOpenConsultation} />
+
+        {/* 4.5. Retours d'Expérience & Témoignages Dirigeants */}
+        <Testimonials onOpenConsultation={handleOpenConsultation} />
+
+        {/* 4.7. Simulateur Interactif de ROI & Rentabilité */}
+        <RoiCalculator onOpenConsultation={handleOpenConsultation} />
 
         {/* 5. Focus Facturation Électronique & Flux */}
         <FacturationElec onOpenConsultation={handleOpenConsultation} />
@@ -61,6 +74,9 @@ export const App: React.FC = () => {
 
         {/* 7. Diagnostic / Mini-Audit Express Interactif */}
         <AuditExpress onOpenConsultation={handleOpenConsultation} />
+
+        {/* 7.5. Tableau Comparatif : Pourquoi CLIXA vs Intégrateurs Classiques */}
+        <ComparisonTable onOpenConsultation={handleOpenConsultation} />
 
         {/* 8. Proven 4-Step Methodology */}
         <Methodologie onOpenConsultation={handleOpenConsultation} />

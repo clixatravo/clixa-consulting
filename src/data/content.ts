@@ -513,3 +513,178 @@ export const WHY_CLIXA_CHAIN = [
   { step: "SI", desc: "Outils performants, intégrés et adaptés aux besoins métiers réels." },
   { step: "Exécution", desc: "Mise en œuvre concrète, adoption terrain et résultats durables." },
 ];
+
+export interface TestimonialItem {
+  id: string;
+  name: string;
+  role: string;
+  companyType: string;
+  location: string;
+  flag: string;
+  quote: string;
+  impactMetric: string;
+  impactLabel: string;
+  projectScope: string;
+}
+
+export const TESTIMONIALS: TestimonialItem[] = [
+  {
+    id: "btp-casa",
+    name: "Amine B.",
+    role: "Directeur Général",
+    companyType: "Groupe BTP & Travaux Publics (180 collab.)",
+    location: "Casablanca, Maroc",
+    flag: "🇲🇦",
+    quote:
+      "Grâce à CLIXA, le déploiement d'Odoo s'est fait sans aucun arrêt de chantier. La centralisation des achats, des stocks et de la comptabilité de projet nous fait gagner un temps précieux chaque semaine.",
+    impactMetric: "-4 jours",
+    impactLabel: "Délai de validation des achats chantiers",
+    projectScope: "ERP Odoo Achats, Stocks & Facturation",
+  },
+  {
+    id: "daf-negoce",
+    name: "Sofia L.",
+    role: "Directrice Financière (DAF)",
+    companyType: "Société de Distribution & Négoce (85 collab.)",
+    location: "Tanger / Casablanca",
+    flag: "🇲🇦",
+    quote:
+      "Ce qui distingue CLIXA, c'est leur double casquette Finance et SI. Ils ne se sont pas contentés d'installer un logiciel : ils ont restructuré notre plan analytique, automatisé les clôtures et sécurisé notre conformité fiscale.",
+    impactMetric: "+100%",
+    impactLabel: "Clôtures mensuelles à J+3 au lieu de J+15",
+    projectScope: "Finance, Contrôle de Gestion & Facturation Élec.",
+  },
+  {
+    id: "ops-paris",
+    name: "Thomas M.",
+    role: "Directeur des Opérations",
+    companyType: "Société de Conseil & Services IT (60 collab.)",
+    location: "Paris, France",
+    flag: "🇫🇷",
+    quote:
+      "La rigueur AMOA de CLIXA nous a évité les dépassements habituels de budget. Le portail client sur-mesure et l'interconnexion avec notre CRM ont transformé notre suivi commercial et notre facturation récurrente.",
+    impactMetric: "+28%",
+    impactLabel: "Taux de facturation opérationnelle",
+    projectScope: "AMOA, Plateforme Web Métier & API",
+  },
+];
+
+export interface SecteurItem {
+  id: string;
+  icon: string;
+  title: string;
+  subtitle: string;
+  challenges: string[];
+  features: string[];
+  color: string;
+}
+
+export const SECTEURS: SecteurItem[] = [
+  {
+    id: "btp",
+    icon: "HardHat",
+    title: "BTP, Immobilier & Ingénierie",
+    subtitle: "Suivi chantiers, achats & rentabilité par affaire",
+    challenges: [
+      "Suivi analytique des coûts chantiers en temps réel",
+      "Gestion des sous-traitants et situations de travaux",
+      "Contrôle des stocks matériaux et engins mobiles",
+    ],
+    features: ["Odoo Chantier", "Validation Achats", "Trésorerie BTP"],
+    color: "from-amber-500/20 to-orange-500/5 border-amber-500/30 text-amber-400",
+  },
+  {
+    id: "industrie",
+    icon: "Factory",
+    title: "Industrie, Production & Manufacture",
+    subtitle: "Ordres de fabrication, GPAO & traçabilité",
+    challenges: [
+      "Planification des gammes et ordres de fabrication (OF)",
+      "Traçabilité stricte des lots et contrôle qualité",
+      "Calcul des coûts de revient industriels réels",
+    ],
+    features: ["GPAO Odoo", "Gestion des Lots", "Calcul Coûts Reviens"],
+    color: "from-blue-500/20 to-cyan-500/5 border-blue-500/30 text-blue-400",
+  },
+  {
+    id: "negoce",
+    icon: "Boxes",
+    title: "Négoce, Distribution & Import/Export",
+    subtitle: "Multidépôts, tarification dynamique & supply chain",
+    challenges: [
+      "Gestion des flux d'importation, fret et droits de douane",
+      "Tarification complexe par profil client et remises volumiques",
+      "Inventaires tournants et synchronisation logistique",
+    ],
+    features: ["Logistique Multidépôts", "Dédouanement", "EDI / B2B"],
+    color: "from-sky-500/20 to-indigo-500/5 border-sky-500/30 text-sky-400",
+  },
+  {
+    id: "services",
+    icon: "Briefcase",
+    title: "Services, Cabinets & Sociétés ESN",
+    subtitle: "Gestion par projet, temps & facturation régie/forfait",
+    challenges: [
+      "Suivi précis des temps passés et taux d'occupation",
+      "Facturation au jalon, au forfait ou en régie",
+      "Rentabilité par mission et reporting clients",
+    ],
+    features: ["Feuilles de Temps", "Portails Extranet", "Facturation Auto"],
+    color: "from-teal-500/20 to-emerald-500/5 border-teal-500/30 text-teal-400",
+  },
+  {
+    id: "sante",
+    icon: "Stethoscope",
+    title: "Santé, Cliniques & Fournitures Médicales",
+    subtitle: "Conformité réglementaire, stocks critiques & traçabilité",
+    challenges: [
+      "Péremption, numéros de série et gestion d'urgence",
+      "Facturation tiers-payant et conventions mutuelles",
+      "Maintenance des équipements biomédicaux",
+    ],
+    features: ["Gestion Péremption", "Traçabilité Médicale", "Conformité CNDP"],
+    color: "from-rose-500/20 to-pink-500/5 border-rose-500/30 text-rose-400",
+  },
+  {
+    id: "energie",
+    icon: "Zap",
+    title: "Énergie, Télécoms & Réseaux",
+    subtitle: "Interventions terrain, contrats & maintenance",
+    challenges: [
+      "Gestion des plannings d'équipes itinérantes",
+      "Contrats de maintenance récurrente et SLA stricts",
+      "Devisage technique et approvisionnement de pièces",
+    ],
+    features: ["Application Mobile Terrain", "SLA & Ticketing", "Contrats Récurrents"],
+    color: "from-indigo-500/20 to-purple-500/5 border-indigo-500/30 text-indigo-400",
+  },
+];
+
+export const COMPARISON_ITEMS = [
+  {
+    critere: "Compréhension Métier & Finance",
+    classique: "Focalisé uniquement sur le code technique et les modules standards bruts.",
+    clixa: "Consultants hybrides issus du conseil en gestion, de la finance d'entreprise et de l'AMOA.",
+  },
+  {
+    critere: "Respect des Délais & Budgets",
+    classique: "Dépassements fréquents de calendrier, avenants coûteux non anticipés.",
+    clixa: "Cadrage AMOA contractuel strict, gouvernance transparente et jalons fermes.",
+  },
+  {
+    critere: "Adoption par les Collaborateurs",
+    classique: "Formation théorique rapide en fin de projet ; résistance et rejet terrain fréquents.",
+    clixa: "Conduite du changement dès la conception, ateliers immersifs et 100% adhésion opérationnelle.",
+  },
+  {
+    critere: "Facturation Électronique & Fiscalité",
+    classique: "Modules génériques souvent non conformes aux spécificités DGI (Maroc) ou DGFIP (France).",
+    clixa: "Conformité fiscale totale intégrée nativement dans les flux de ventes et d'achats.",
+  },
+  {
+    critere: "Accompagnement Post-Démarrage",
+    classique: "Support dépersonnalisé par tickets impersonnels avec délais de réponse lents.",
+    clixa: "Interlocuteur senior dédié, assistance hypercare et SLA de réactivité garanti.",
+  },
+];
+

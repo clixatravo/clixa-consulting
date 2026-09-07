@@ -14,7 +14,9 @@ import {
   Target, 
   Compass, 
   HelpCircle,
-  Sparkles
+  Sparkles,
+  Layers,
+  Calculator
 } from 'lucide-react';
 import { BRAND } from '../data/content';
 
@@ -55,10 +57,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
 
   const navLinks = [
     { label: 'Expertises', href: '#expertises', icon: Database },
+    { label: 'Secteurs', href: '#secteurs', icon: Layers },
     { label: 'Cas Clients', href: '#cas-clients', icon: Award },
+    { label: 'Simulateur ROI', href: '#simulateur-roi', icon: Calculator },
     { label: 'Facturation', href: '#facturation', icon: FileText },
     { label: 'Diagnostic', href: '#diagnostic', icon: Target },
-    { label: 'Méthode', href: '#methode', icon: Compass },
     { label: 'FAQ', href: '#faq', icon: HelpCircle },
   ];
 

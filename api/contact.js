@@ -58,7 +58,7 @@ export default async function handler(req, res) {
   const from = process.env.CONTACT_FROM || 'CLIXA Site <onboarding@resend.dev>';
 
   const html = `
-    <h2 style="font-family:sans-serif">Nouvelle demande — clixa.ma</h2>
+    <h2 style="font-family:sans-serif">Nouvelle demande depuis le site</h2>
     <table style="font-family:sans-serif;font-size:14px;border-collapse:collapse">
       <tr><td><b>Projet</b></td><td>${esc(topic)}</td></tr>
       <tr><td><b>Nom</b></td><td>${esc(name)}</td></tr>

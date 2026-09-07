@@ -44,16 +44,38 @@ depuis le pied de page. **À compléter par CLIXA** dans
 juridique, capital, RC/ICE (Maroc) ou SIREN (France), adresse du siège et
 directeur de la publication.
 
+## Domaine du site
+
+Aucun domaine n'est écrit en dur. L'adresse canonique est résolue au build
+par `vite.config.ts`, dans cet ordre :
+
+1. `SITE_URL` — variable d'environnement Vercel, à définir **uniquement** le
+   jour où un domaine propre est branché (ex. `https://www.clixa.ma`) ;
+2. `VERCEL_PROJECT_PRODUCTION_URL` — fourni automatiquement par Vercel, c'est
+   le domaine `.vercel.app` du projet. **C'est le mode actuel : rien à faire.**
+3. `VERCEL_URL` pour les préversions, `http://localhost:5173` en local.
+
+Cette valeur alimente d'un seul coup le lien canonique, les balises Open Graph
+et Twitter, les données structurées, le lien du pied de page, `robots.txt` et
+`sitemap.xml` — ces deux derniers étant générés au build, ils ne peuvent pas
+diverger du reste.
+
+Pour brancher un domaine plus tard : ajoutez le domaine dans Vercel, puis la
+variable `SITE_URL`, et redéployez. Aucune modification de code.
+
 ## SEO
 
-- `public/robots.txt` et `public/sitemap.xml` (à mettre à jour si le domaine change)
-- Données structurées Schema.org `ProfessionalService` + `FAQPage` dans `index.html`
-- Balises Open Graph / Twitter Card en URL absolue (aperçus WhatsApp & LinkedIn)
+- `robots.txt` et `sitemap.xml` générés au build avec le bon domaine
+- Les déploiements de préversion sont en `noindex, nofollow` et bloqués dans
+  `robots.txt`, afin de ne pas faire doublon avec la production
+- Données structurées Schema.org `ProfessionalService` + `FAQPage`
+- Open Graph / Twitter Card en URL absolue (aperçus WhatsApp & LinkedIn)
 
 ## Structure
 
 ```
 api/contact.js              Fonction serverless d'envoi des leads
+vite.config.ts              Résolution du domaine + génération robots/sitemap
 src/components/             Sections de la page + modales
 src/data/content.ts         Tout le contenu éditorial (textes, offres, FAQ, cas clients)
 src/lib/analytics.ts        Chargement conditionnel du Meta Pixel

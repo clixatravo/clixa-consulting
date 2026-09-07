@@ -146,7 +146,11 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegal }) => {
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <div>
-            © {new Date().getFullYear()} CLIXA Consulting (<a href="https://clixa.ma" className="text-slate-400 hover:text-white">clixa.ma</a>). Tous droits réservés.
+            © {new Date().getFullYear()} CLIXA Consulting (
+            <a href={__SITE_URL__} className="text-slate-400 hover:text-white">
+              {__SITE_URL__.replace(/^https?:\/\//, '')}
+            </a>
+            ). Tous droits réservés.
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">

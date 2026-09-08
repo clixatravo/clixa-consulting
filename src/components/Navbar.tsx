@@ -17,14 +17,29 @@ import { BRAND } from '../data/content';
 
 export type PageId = 'accueil' | 'expertises' | 'secteurs-references' | 'diagnostic-roi' | 'cabinet' | 'contact';
 
+interface SubItem {
+  id: string;
+  label: string;
+}
+
+interface NavItem {
+  id: PageId;
+  label: string;
+  href: string;
+  icon: any;
+  subItems?: SubItem[];
+}
+
 interface NavbarProps {
   currentPage: PageId;
-  onNavigate: (page: PageId) => void;
+  activeSubTab?: string;
+  onNavigate: (page: PageId, tab?: string) => void;
   onOpenConsultation: (topic?: string) => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ 
   currentPage, 
+  activeSubTab,
   onNavigate, 
   onOpenConsultation 
 }) => {
@@ -32,13 +47,63 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [scrollProgress, setScrollProgress] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navLinks: { id: PageId; label: string; href: string; icon: any }[] = [
+  const navLinks: NavItem[] = [
     { id: 'accueil', label: 'Accueil', href: '#accueil', icon: Compass },
-    { id: 'expertises', label: 'Expertises & Solutions', href: '#expertises', icon: Database },
-    { id: 'secteurs-references', label: 'Secteurs & Cas', href: '#secteurs-references', icon: Layers },
-    { id: 'diagnostic-roi', label: 'Outils & ROI', href: '#diagnostic-roi', icon: Calculator },
-    { id: 'cabinet', label: 'Le Cabinet', href: '#cabinet', icon: Award },
-    { id: 'contact', label: 'Contact & FAQ', href: '#contact', icon: HelpCircle },
+    { 
+      id: 'expertises', 
+      label: 'Expertises & Solutions', 
+      href: '#expertises', 
+      icon: Database,
+      subItems: [
+        { id: 'poles', label: '5 Pôles ERP & SI' },
+        { id: 'digital', label: 'Solutions Web' },
+        { id: 'technologies', label: 'Tech Stack' }
+      ]
+    },
+    { 
+      id: 'secteurs-references', 
+      label: 'Secteurs & Cas', 
+      href: '#secteurs-references', 
+      icon: Layers,
+      subItems: [
+        { id: 'secteurs', label: 'Secteurs Clés' },
+        { id: 'cas-clients', label: 'Cas Réels' },
+        { id: 'temoignages', label: 'Témoignages' }
+      ]
+    },
+    { 
+      id: 'diagnostic-roi', 
+      label: 'Outils & ROI', 
+      href: '#diagnostic-roi', 
+      icon: Calculator,
+      subItems: [
+        { id: 'roi', label: 'Simulateur ROI' },
+        { id: 'facturation', label: 'Facturation 2026' },
+        { id: 'diagnostic', label: 'Diagnostic Flash' }
+      ]
+    },
+    { 
+      id: 'cabinet', 
+      label: 'Le Cabinet', 
+      href: '#cabinet', 
+      icon: Award,
+      subItems: [
+        { id: 'methode', label: 'Méthode (01-04)' },
+        { id: 'comparatif', label: 'Pourquoi CLIXA ?' },
+        { id: 'equipe', label: 'Équipe Associés' }
+      ]
+    },
+    { 
+      id: 'contact', 
+      label: 'Contact & FAQ', 
+      href: '#contact', 
+      icon: HelpCircle,
+      subItems: [
+        { id: 'rdv', label: 'Prendre RDV' },
+        { id: 'faq', label: 'FAQ Stratégique' },
+        { id: 'livre-blanc', label: 'Livre Blanc 2026' }
+      ]
+    },
   ];
 
   // Scroll listener for sticky styles & reading progress bar
@@ -75,10 +140,10 @@ export const Navbar: React.FC<NavbarProps> = ({
     };
   }, [mobileMenuOpen]);
 
-  const handleLinkClick = (e: React.MouseEvent, pageId: PageId) => {
+  const handleLinkClick = (e: React.MouseEvent, pageId: PageId, tabId?: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
-    onNavigate(pageId);
+    onNavigate(pageId, tabId);
   };
 
   return (
@@ -254,10 +319,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span className="text-sky-400 font-mono text-[10px]">Consultants actifs</span>
               </div>
 
-              {/* Navigation Links with Active Highlight */}
-              <nav className="p-4 space-y-1.5">
-                <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 px-3 py-1.5">
-                  Pages du Site
+              {/* Navigation Links with Active Highlight & Sub-items */}
+              <nav className="p-4 space-y-2">
+                <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 px-3 py-1">
+                  Espaces du Cabinet
                 </div>
 
                 {navLinks.map((link, idx) => {
@@ -265,40 +330,63 @@ export const Navbar: React.FC<NavbarProps> = ({
                   const isActive = currentPage === link.id;
 
                   return (
-                    <button
-                      key={link.id}
-                      onClick={(e) => handleLinkClick(e, link.id)}
-                      style={{ animationDelay: `${(idx + 1) * 50}ms` }}
-                      className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-medium transition-all duration-200 text-left group cursor-pointer animate-menu-item active:scale-[0.98] ${
-                        isActive
-                          ? 'bg-sky-950/60 border border-sky-500/40 text-white shadow-sm shadow-sky-500/10'
-                          : 'text-slate-200 hover:text-white hover:bg-slate-900/90 border border-transparent'
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className={`p-1.5 rounded-lg border transition-colors ${
-                          isActive 
-                            ? 'bg-sky-500/20 border-sky-400/50 text-sky-300' 
-                            : 'bg-slate-900 border-slate-800 text-sky-400 group-hover:border-sky-500/40 group-hover:text-sky-300'
-                        }`}>
-                          <Icon className="w-4 h-4" />
+                    <div key={link.id} className="space-y-1">
+                      <button
+                        onClick={(e) => handleLinkClick(e, link.id)}
+                        style={{ animationDelay: `${(idx + 1) * 40}ms` }}
+                        className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 text-left group cursor-pointer animate-menu-item active:scale-[0.98] ${
+                          isActive
+                            ? 'bg-sky-950/60 border border-sky-500/40 text-white shadow-sm shadow-sky-500/10 font-semibold'
+                            : 'text-slate-200 hover:text-white hover:bg-slate-900/90 border border-transparent'
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className={`p-1.5 rounded-lg border transition-colors ${
+                            isActive 
+                              ? 'bg-sky-500/20 border-sky-400/50 text-sky-300' 
+                              : 'bg-slate-900 border-slate-800 text-sky-400 group-hover:border-sky-500/40 group-hover:text-sky-300'
+                          }`}>
+                            <Icon className="w-4 h-4" />
+                          </div>
+                          <span>{link.label}</span>
                         </div>
-                        <span className={isActive ? 'font-semibold text-sky-200' : ''}>{link.label}</span>
-                      </div>
 
-                      <div className="flex items-center gap-2">
-                        {isActive && (
-                          <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/30">
-                            Actuel
-                          </span>
-                        )}
-                        <ChevronRight className={`w-4 h-4 transition-all ${
-                          isActive 
-                            ? 'text-sky-400 translate-x-0.5' 
-                            : 'text-slate-600 group-hover:text-sky-400 group-hover:translate-x-0.5'
-                        }`} />
-                      </div>
-                    </button>
+                        <div className="flex items-center gap-2">
+                          {isActive && (
+                            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/30">
+                              Actuel
+                            </span>
+                          )}
+                          <ChevronRight className={`w-4 h-4 transition-all ${
+                            isActive 
+                              ? 'text-sky-400 translate-x-0.5' 
+                              : 'text-slate-600 group-hover:text-sky-400 group-hover:translate-x-0.5'
+                          }`} />
+                        </div>
+                      </button>
+
+                      {/* Sub-item quick chips if this page is active or has sub-items */}
+                      {link.subItems && isActive && (
+                        <div className="pl-11 pr-2 py-1 flex flex-wrap gap-1.5 animate-in fade-in duration-200">
+                          {link.subItems.map((sub) => {
+                            const isSubActive = activeSubTab === sub.id;
+                            return (
+                              <button
+                                key={sub.id}
+                                onClick={(e) => handleLinkClick(e, link.id, sub.id)}
+                                className={`text-[11px] px-2.5 py-1 rounded-lg font-medium transition-colors cursor-pointer ${
+                                  isSubActive
+                                    ? 'bg-sky-500/20 text-sky-200 border border-sky-400/40'
+                                    : 'bg-slate-900/80 text-slate-400 hover:text-white hover:bg-slate-850 border border-slate-800/80'
+                                }`}
+                              >
+                                {sub.label}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
                   );
                 })}
               </nav>

@@ -15,7 +15,9 @@ import {
   Send, 
   HelpCircle, 
   BookOpen,
-  ArrowRight
+  ArrowRight,
+  Sparkles,
+  Quote
 } from 'lucide-react';
 import { Navbar, PageId } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -169,7 +171,8 @@ export const App: React.FC = () => {
       {/* Top Multi-Page Navigation */}
       <Navbar 
         currentPage={currentPage}
-        onNavigate={(page) => handleNavigate(page)}
+        activeSubTab={subTabs[currentPage]}
+        onNavigate={handleNavigate}
         onOpenConsultation={handleOpenConsultation} 
       />
 
@@ -192,8 +195,117 @@ export const App: React.FC = () => {
               <TrustBanner />
             </ScrollReveal>
 
+            {/* Why CLIXA 3-Pillar Value Proposition */}
+            <section className="py-20 bg-slate-950 relative border-b border-slate-850">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="text-center max-w-3xl mx-auto mb-14">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-xs font-semibold text-sky-400 mb-3">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>Positionnement Différenciant</span>
+                  </div>
+                  <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">
+                    Une Approche Hybride Dédiée aux Dirigeants
+                  </h2>
+                  <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
+                    Nous réconcilions les enjeux financiers du comité de direction avec les réalités opérationnelles du terrain.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {/* Pillar 1 */}
+                  <div className="p-7 rounded-3xl bg-gradient-to-b from-slate-900/80 to-slate-950 border border-slate-800 hover:border-sky-500/40 transition-all duration-300 group shadow-xl">
+                    <div className="w-12 h-12 rounded-2xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 mb-5 group-hover:scale-110 transition-transform">
+                      <TrendingUp className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-lg font-bold text-white mb-2 group-hover:text-sky-300 transition-colors">
+                      Culture Finance & Process Métier
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-400 leading-relaxed mb-4">
+                      Pas d'intégration technique à l'aveugle. Tout commence par la cartographie de vos flux réels et le calcul de rentabilité (ROI).
+                    </p>
+                    <button 
+                      onClick={() => handleNavigate('cabinet', 'comparatif')}
+                      className="text-xs font-semibold text-sky-400 hover:text-sky-300 flex items-center gap-1.5 cursor-pointer"
+                    >
+                      <span>Voir la différence CLIXA</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
+
+                  {/* Pillar 2 */}
+                  <div className="p-7 rounded-3xl bg-gradient-to-b from-slate-900/80 to-slate-950 border border-slate-800 hover:border-blue-500/40 transition-all duration-300 group shadow-xl">
+                    <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 mb-5 group-hover:scale-110 transition-transform">
+                      <Cpu className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-300 transition-colors">
+                      Expertise ERP Odoo 17/18 Certifiée
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-400 leading-relaxed mb-4">
+                      Maîtrise des standards Odoo et personnalisations robustes sans dette technique : Achats, Ventes, Stocks, Comptabilité, Production.
+                    </p>
+                    <button 
+                      onClick={() => handleNavigate('expertises', 'poles')}
+                      className="text-xs font-semibold text-blue-400 hover:text-blue-300 flex items-center gap-1.5 cursor-pointer"
+                    >
+                      <span>Découvrir l'offre Odoo</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
+
+                  {/* Pillar 3 */}
+                  <div className="p-7 rounded-3xl bg-gradient-to-b from-slate-900/80 to-slate-950 border border-slate-800 hover:border-emerald-500/40 transition-all duration-300 group shadow-xl">
+                    <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-5 group-hover:scale-110 transition-transform">
+                      <ShieldCheck className="w-6 h-6" />
+                    </div>
+                    <h3 className="text-lg font-bold text-white mb-2 group-hover:text-emerald-300 transition-colors">
+                      Double Présence Maroc 🇲🇦 & France 🇫🇷
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-400 leading-relaxed mb-4">
+                      Équipes basées à Casablanca et Paris. Accompagnement de proximité et conformité fiscale stricte (DGI & DGFIP 2026).
+                    </p>
+                    <button 
+                      onClick={() => handleNavigate('contact', 'rdv')}
+                      className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1.5 cursor-pointer"
+                    >
+                      <span>Prendre attache avec nos associés</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Executive Testimonial Spotlight */}
+            <section className="py-16 bg-slate-900/30 border-b border-slate-850">
+              <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="p-8 sm:p-10 rounded-3xl bg-slate-950 border border-slate-800 relative overflow-hidden shadow-2xl flex flex-col md:flex-row items-center gap-8">
+                  <div className="p-4 rounded-2xl bg-sky-500/10 text-sky-400 shrink-0">
+                    <Quote className="w-10 h-10" />
+                  </div>
+                  <div className="space-y-3 flex-1 text-center md:text-left">
+                    <p className="text-base sm:text-lg text-slate-200 font-medium italic leading-relaxed">
+                      « CLIXA a transformé la vision de notre comité de direction. L'intégration d'Odoo s'est faite sans rupture d'activité, avec un gain de productivité immédiat de 35% sur nos cycles de commande. »
+                    </p>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 border-t border-slate-850">
+                      <div>
+                        <span className="font-bold text-white text-sm">Directeur Général</span>
+                        <span className="text-slate-400 text-xs block">Groupe Industriel & Négoce (Casablanca • 120 collaborateurs)</span>
+                      </div>
+                      <button
+                        onClick={() => handleNavigate('secteurs-references', 'cas-clients')}
+                        className="text-xs font-semibold text-sky-400 hover:text-sky-300 flex items-center gap-1 cursor-pointer"
+                      >
+                        <span>Lire tous les cas clients</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
             {/* Strategic Summary & Direct Access Banner */}
-            <section className="py-16 bg-slate-900/40 border-t border-slate-850">
+            <section className="py-16 bg-slate-950">
               <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-slate-900 via-slate-900/90 to-slate-950 border border-slate-800 flex flex-col lg:flex-row items-center justify-between gap-8 shadow-2xl">
                   <div className="space-y-3 text-center lg:text-left max-w-xl">
@@ -246,7 +358,7 @@ export const App: React.FC = () => {
               onNavigateHome={() => handleNavigate('accueil')}
             />
 
-            <div className="py-8">
+            <div className="tab-content-view">
               {subTabs.expertises === 'poles' && (
                 <div className="animate-in fade-in zoom-in-95 duration-200">
                   <Expertises onOpenConsultation={handleOpenConsultation} />
@@ -285,7 +397,7 @@ export const App: React.FC = () => {
               onNavigateHome={() => handleNavigate('accueil')}
             />
 
-            <div className="py-8">
+            <div className="tab-content-view">
               {subTabs['secteurs-references'] === 'secteurs' && (
                 <div className="animate-in fade-in zoom-in-95 duration-200">
                   <Secteurs onOpenConsultation={handleOpenConsultation} />
@@ -324,7 +436,7 @@ export const App: React.FC = () => {
               onNavigateHome={() => handleNavigate('accueil')}
             />
 
-            <div className="py-8">
+            <div className="tab-content-view">
               {subTabs['diagnostic-roi'] === 'roi' && (
                 <div className="animate-in fade-in zoom-in-95 duration-200">
                   <RoiCalculator onOpenConsultation={handleOpenConsultation} />
@@ -338,7 +450,7 @@ export const App: React.FC = () => {
               )}
 
               {subTabs['diagnostic-roi'] === 'diagnostic' && (
-                <div className="animate-in fade-in zoom-in-95 duration-200 space-y-12">
+                <div className="animate-in fade-in zoom-in-95 duration-200 space-y-8">
                   <AuditExpress onOpenConsultation={handleOpenConsultation} />
                   <AuditFlash onOpenConsultation={handleOpenConsultation} />
                 </div>
@@ -364,23 +476,23 @@ export const App: React.FC = () => {
               onNavigateHome={() => handleNavigate('accueil')}
             />
 
-            <div className="py-8">
+            <div className="tab-content-view">
               {subTabs.cabinet === 'methode' && (
-                <div className="animate-in fade-in zoom-in-95 duration-200 space-y-10">
+                <div className="animate-in fade-in zoom-in-95 duration-200 space-y-8">
                   <AboutBanner />
                   <Methodologie onOpenConsultation={handleOpenConsultation} />
                 </div>
               )}
 
               {subTabs.cabinet === 'comparatif' && (
-                <div className="animate-in fade-in zoom-in-95 duration-200 space-y-10">
+                <div className="animate-in fade-in zoom-in-95 duration-200 space-y-8">
                   <ComparisonTable onOpenConsultation={handleOpenConsultation} />
                   <WhyClixa onOpenConsultation={handleOpenConsultation} />
                 </div>
               )}
 
               {subTabs.cabinet === 'equipe' && (
-                <div className="animate-in fade-in zoom-in-95 duration-200 space-y-10">
+                <div className="animate-in fade-in zoom-in-95 duration-200 space-y-8">
                   <TeamPedigree onOpenConsultation={handleOpenConsultation} />
                   <Engagements />
                 </div>
@@ -406,7 +518,7 @@ export const App: React.FC = () => {
               onNavigateHome={() => handleNavigate('accueil')}
             />
 
-            <div className="py-8">
+            <div className="tab-content-view">
               {subTabs.contact === 'rdv' && (
                 <div className="animate-in fade-in zoom-in-95 duration-200">
                   <CTASection onOpenConsultation={handleOpenConsultation} />

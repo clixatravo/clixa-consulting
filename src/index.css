@@ -170,3 +170,24 @@
   );
   animation: shimmerEffect 4s linear infinite;
 }
+
+/* Compact section padding inside multi-page tabbed views */
+.tab-content-view section {
+  padding-top: 1.5rem !important;
+  padding-bottom: 3.5rem !important;
+  border-top: none !important;
+}
+
+.tab-content-view section > div > .text-center:first-child {
+  margin-bottom: 2rem !important;
+}
+
+/* Hide scrollbar for clean horizontal tab navigation */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+

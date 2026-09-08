@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { BRAND } from '../data/content';
-import { Mail, Phone, MapPin, ArrowUp, MessageCircle, Send, CheckCircle2, ShieldCheck, Lock, FileText } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowUp, MessageCircle, CheckCircle2 } from 'lucide-react';
 import { LegalModal } from './LegalModal';
+import { PageId } from './Navbar';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onNavigate?: (page: PageId) => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   const [legalModalOpen, setLegalModalOpen] = useState(false);
   const [legalType, setLegalType] = useState<'mentions' | 'privacy'>('mentions');
   const [newsletterEmail, setNewsletterEmail] = useState('');
@@ -11,6 +16,15 @@ export const Footer: React.FC = () => {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleLink = (e: React.MouseEvent, pageId: PageId) => {
+    e.preventDefault();
+    if (onNavigate) {
+      onNavigate(pageId);
+    } else {
+      window.location.hash = pageId;
+    }
   };
 
   const handleNewsletter = (e: React.FormEvent) => {
@@ -103,41 +117,51 @@ export const Footer: React.FC = () => {
             {/* Expertises Col */}
             <div className="space-y-3">
               <h4 className="text-xs font-bold uppercase tracking-wider text-white font-mono">
-                Pôles Stratégiques
+                Pôles & Solutions
               </h4>
               <ul className="space-y-2 text-xs sm:text-sm">
                 <li>
-                  <a href="#expertises" className="hover:text-sky-400 transition-colors flex items-center gap-1.5">
+                  <button 
+                    onClick={(e) => handleLink(e, 'expertises')} 
+                    className="hover:text-sky-400 transition-colors flex items-center gap-1.5 text-left cursor-pointer"
+                  >
                     <span className="text-sky-400 text-xs">★</span>
                     <span className="text-slate-200 font-medium">Intégration ERP Odoo</span>
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a href="#digital" className="hover:text-sky-400 transition-colors flex items-center gap-1.5">
+                  <button 
+                    onClick={(e) => handleLink(e, 'expertises')} 
+                    className="hover:text-sky-400 transition-colors flex items-center gap-1.5 text-left cursor-pointer"
+                  >
                     <span className="text-sky-400 text-xs">★</span>
-                    <span className="text-slate-200 font-medium">Web & Communication</span>
-                  </a>
+                    <span className="text-slate-200 font-medium">Web & Solutions Digitales</span>
+                  </button>
                 </li>
                 <li>
-                  <a href="#expertises" className="hover:text-sky-400 transition-colors flex items-center gap-1.5">
+                  <button 
+                    onClick={(e) => handleLink(e, 'expertises')} 
+                    className="hover:text-sky-400 transition-colors flex items-center gap-1.5 text-left cursor-pointer"
+                  >
                     <span className="text-sky-400 text-xs">★</span>
                     <span className="text-slate-200 font-medium">AMOA Systèmes d'Info</span>
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a href="#facturation" className="hover:text-sky-400 transition-colors">
-                    Facturation Électronique
-                  </a>
+                  <button 
+                    onClick={(e) => handleLink(e, 'diagnostic-roi')} 
+                    className="hover:text-sky-400 transition-colors text-left cursor-pointer"
+                  >
+                    Facturation Électronique 2026
+                  </button>
                 </li>
                 <li>
-                  <a href="#expertises" className="hover:text-sky-400 transition-colors">
-                    Performance & Finance
-                  </a>
-                </li>
-                <li>
-                  <a href="#secteurs" className="hover:text-sky-400 transition-colors">
-                    Secteurs d'Activité
-                  </a>
+                  <button 
+                    onClick={(e) => handleLink(e, 'secteurs-references')} 
+                    className="hover:text-sky-400 transition-colors text-left cursor-pointer"
+                  >
+                    Secteurs d'Activité & Cas
+                  </button>
                 </li>
               </ul>
             </div>
@@ -145,23 +169,48 @@ export const Footer: React.FC = () => {
             {/* Méthode & Navigation */}
             <div className="space-y-3">
               <h4 className="text-xs font-bold uppercase tracking-wider text-white font-mono">
-                Approche CLIXA
+                Espaces Clés
               </h4>
               <ul className="space-y-2 text-xs sm:text-sm">
                 <li>
-                  <a href="#methode" className="hover:text-sky-400 transition-colors">Notre Méthode (01-04)</a>
+                  <button 
+                    onClick={(e) => handleLink(e, 'cabinet')} 
+                    className="hover:text-sky-400 transition-colors text-left cursor-pointer"
+                  >
+                    Notre Méthode en 4 Étapes
+                  </button>
                 </li>
                 <li>
-                  <a href="#comparatif" className="hover:text-sky-400 transition-colors">Pourquoi CLIXA ?</a>
+                  <button 
+                    onClick={(e) => handleLink(e, 'cabinet')} 
+                    className="hover:text-sky-400 transition-colors text-left cursor-pointer"
+                  >
+                    Pourquoi CLIXA vs Intégrateurs
+                  </button>
                 </li>
                 <li>
-                  <a href="#simulateur-roi" className="hover:text-sky-400 transition-colors">Simulateur ROI</a>
+                  <button 
+                    onClick={(e) => handleLink(e, 'diagnostic-roi')} 
+                    className="hover:text-sky-400 transition-colors text-left cursor-pointer"
+                  >
+                    Simulateur de ROI & Rentabilité
+                  </button>
                 </li>
                 <li>
-                  <a href="#audit-flash" className="hover:text-sky-400 transition-colors">Diagnostic Flash 48H</a>
+                  <button 
+                    onClick={(e) => handleLink(e, 'diagnostic-roi')} 
+                    className="hover:text-sky-400 transition-colors text-left cursor-pointer"
+                  >
+                    Pack Diagnostic Flash 48H
+                  </button>
                 </li>
                 <li>
-                  <a href="#guide-dirigeant" className="hover:text-sky-400 transition-colors">Livre Blanc Exécutif</a>
+                  <button 
+                    onClick={(e) => handleLink(e, 'contact')} 
+                    className="hover:text-sky-400 transition-colors text-left cursor-pointer"
+                  >
+                    Livre Blanc & FAQ Stratégique
+                  </button>
                 </li>
                 <li>
                   <a href={BRAND.whatsappLink} target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors flex items-center gap-1">
@@ -172,7 +221,7 @@ export const Footer: React.FC = () => {
               </ul>
             </div>
 
-            {/* Contact Col - Dual Presence Maroc & France */}
+            {/* Contact Col */}
             <div className="space-y-3">
               <h4 className="text-xs font-bold uppercase tracking-wider text-white font-mono">
                 Contacts & Agences

@@ -107,7 +107,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
       return;
     }
     const url = generateWhatsAppUrl();
-    window.open(url, '_blank');
+    window.open(url, '_blank', 'noopener,noreferrer');
     setSubmitted(true);
   };
 

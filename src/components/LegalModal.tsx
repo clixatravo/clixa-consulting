@@ -40,7 +40,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, type })
               <h3 className="text-lg font-bold text-white">
                 {type === 'mentions' ? "Mentions Légales & Propriété Intellectuelle" : "Politique de Confidentialité & Données"}
               </h3>
-              <p className="text-xs text-slate-400">CLIXA Consulting • clixa.ma</p>
+              <p className="text-xs text-slate-400">CLIXA Consulting • clixaconseil.com</p>
             </div>
           </div>
 
@@ -59,7 +59,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, type })
               <div>
                 <h4 className="font-bold text-white mb-1">1. Éditeur de la Plateforme</h4>
                 <p className="text-slate-400">
-                  Le site <strong>clixa.ma</strong> est édité par le cabinet <strong>CLIXA Consulting</strong>, cabinet de conseil en management, organisation, systèmes d'information et intégration ERP.
+                  Le site <strong>clixaconseil.com</strong> est édité par le cabinet <strong>CLIXA Consulting</strong>, cabinet de conseil en management, organisation, systèmes d'information et intégration ERP.
                 </p>
                 <p className="text-slate-400 mt-1">
                   Implantations : Casablanca (Maroc) & Paris (France).<br />

@@ -57,7 +57,7 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
         transitionDuration: `${duration}ms`,
         transitionDelay: `${delay}ms`,
       }}
-      className={`transition-all ease-out transform-gpu will-change-transform ${getTransformClass()} ${className}`}
+      className={`transition-opacity transition-transform ease-out ${getTransformClass()} ${className}`}
     >
       {children}
     </div>

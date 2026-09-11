@@ -93,16 +93,18 @@ export const App: React.FC = () => {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState<string | undefined>(undefined);
+  const isInternalNavRef = React.useRef(false);
 
   // Synchronize with URL hash changes (browser back/forward, external links)
   useEffect(() => {
     const handleHashChange = () => {
+      if (isInternalNavRef.current) return;
       const { page, tab } = parseHashToPageAndTab(window.location.hash);
       setCurrentPage(page);
       if (tab) {
         setSubTabs(prev => ({ ...prev, [page]: tab }));
       }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo(0, 0);
     };
 
     window.addEventListener('hashchange', handleHashChange);
@@ -110,20 +112,28 @@ export const App: React.FC = () => {
   }, []);
 
   const handleNavigate = useCallback((page: PageId, tab?: string) => {
+    isInternalNavRef.current = true;
     setCurrentPage(page);
     if (tab) {
       setSubTabs(prev => ({ ...prev, [page]: tab }));
-      window.location.hash = tab;
+      window.history.replaceState(null, '', `#${tab}`);
     } else {
-      window.location.hash = page;
+      window.history.replaceState(null, '', `#${page}`);
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo(0, 0);
+    setTimeout(() => {
+      isInternalNavRef.current = false;
+    }, 120);
   }, []);
 
-  const handleTabChange = (page: PageId, tabId: string) => {
+  const handleTabChange = useCallback((page: PageId, tabId: string) => {
+    isInternalNavRef.current = true;
     setSubTabs(prev => ({ ...prev, [page]: tabId }));
-    window.location.hash = tabId;
-  };
+    window.history.replaceState(null, '', `#${tabId}`);
+    setTimeout(() => {
+      isInternalNavRef.current = false;
+    }, 120);
+  }, []);
 
   const handleOpenConsultation = (topic?: string) => {
     setSelectedTopic(topic);

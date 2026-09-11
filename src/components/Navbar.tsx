@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Menu, 
   X, 
@@ -44,7 +44,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenConsultation 
 }) => {
   const [scrolled, setScrolled] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const scrolledRef = useRef(false);
+  const progressBarRef = useRef<HTMLDivElement>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks: NavItem[] = [
@@ -106,7 +107,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     },
   ];
 
-  // Scroll listener for sticky styles & reading progress bar
+  // Lightweight scroll listener for sticky styles & reading progress bar
   useEffect(() => {
     let ticking = false;
 
@@ -114,10 +115,18 @@ export const Navbar: React.FC<NavbarProps> = ({
       if (!ticking) {
         window.requestAnimationFrame(() => {
           const scrollPos = window.scrollY;
-          setScrolled(scrollPos > 20);
+          const isOver20 = scrollPos > 20;
+          if (isOver20 !== scrolledRef.current) {
+            scrolledRef.current = isOver20;
+            setScrolled(isOver20);
+          }
 
-          const totalScroll = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-          setScrollProgress(totalScroll > 0 ? (scrollPos / totalScroll) * 100 : 0);
+          if (progressBarRef.current) {
+            const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = totalScroll > 0 ? (scrollPos / totalScroll) * 100 : 0;
+            progressBarRef.current.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+          }
+
           ticking = false;
         });
         ticking = true;
@@ -154,8 +163,9 @@ export const Navbar: React.FC<NavbarProps> = ({
         className="fixed top-0 left-0 right-0 h-[2.5px] z-50 pointer-events-none bg-slate-900/30"
       >
         <div 
-          className="h-full bg-gradient-to-r from-sky-400 via-cyan-400 to-blue-500 shadow-[0_0_10px_rgba(56,189,248,0.8)] transition-[width] duration-150 ease-out"
-          style={{ width: `${scrollProgress}%` }}
+          ref={progressBarRef}
+          className="h-full bg-gradient-to-r from-sky-400 via-cyan-400 to-blue-500 shadow-[0_0_10px_rgba(56,189,248,0.8)]"
+          style={{ width: '0%' }}
         />
       </div>
 

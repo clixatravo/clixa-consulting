@@ -5,6 +5,7 @@ import { TrustBanner } from './components/TrustBanner';
 import { AboutBanner } from './components/AboutBanner';
 import { Expertises } from './components/Expertises';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
+import { ChatAssistant } from './components/ChatAssistant';
 
 /* ---------------------------------------------------------------------------
    Découpage du bundle.
@@ -145,6 +146,7 @@ export const App: React.FC = () => {
       </Suspense>
 
       {/* Floating WhatsApp Quick Action Button */}
+      <ChatAssistant />
       <FloatingWhatsApp />
 
       {/* Lead capture modal : téléchargée seulement à l'ouverture */}

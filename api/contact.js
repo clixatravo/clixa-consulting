@@ -16,15 +16,7 @@
  * même avant configuration.
  */
 
-const MAX_LEN = 4000;
-
-const esc = (value) =>
-  String(value ?? '')
-    .slice(0, MAX_LEN)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+import { courrielDemande } from './_gabarit.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -65,20 +57,7 @@ export default async function handler(req, res) {
       .json({ code: 'NOT_CONFIGURED', error: 'Service email non configuré.' });
   }
 
-  const html = `
-    <h2 style="font-family:sans-serif">Nouvelle demande depuis le site</h2>
-    <table style="font-family:sans-serif;font-size:14px;border-collapse:collapse">
-      <tr><td style="padding:2px 10px 2px 0"><b>Projet</b></td><td>${esc(topic)}</td></tr>
-      <tr><td style="padding:2px 10px 2px 0"><b>Nom</b></td><td>${esc(name)}</td></tr>
-      <tr><td style="padding:2px 10px 2px 0"><b>Entreprise</b></td><td>${esc(company)}</td></tr>
-      <tr><td style="padding:2px 10px 2px 0"><b>Email</b></td><td>${esc(email)}</td></tr>
-      <tr><td style="padding:2px 10px 2px 0"><b>Téléphone</b></td><td>${esc(phone) || '—'}</td></tr>
-    </table>
-    <p style="font-family:sans-serif;font-size:14px"><b>Message :</b><br>${
-      esc(message).replace(/\n/g, '<br>') || '—'
-    }</p>
-    <hr>
-    <p style="font-family:sans-serif;font-size:12px;color:#666">Reçu le ${new Date().toLocaleString('fr-FR')}</p>`;
+  const { subject, html, text } = courrielDemande({ name, email, company, phone, topic, message });
 
   try {
     const response = await fetch('https://api.resend.com/emails', {
@@ -92,8 +71,9 @@ export default async function handler(req, res) {
         to: [to],
         // Permet de répondre directement au prospect depuis la boîte mail.
         reply_to: String(email).slice(0, 200),
-        subject: `[Site] ${topic || 'Demande'} — ${String(name).slice(0, 80)} (${String(company).slice(0, 80)})`,
+        subject,
         html,
+        text,
       }),
     });
 

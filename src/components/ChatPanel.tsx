@@ -33,11 +33,21 @@ const lireHistorique = (): Message[] => {
    Le modèle écrit un markdown minimal (gras, listes, liens). On le transforme
    en éléments React, sans jamais injecter de HTML : une réponse ne peut pas
    glisser de balise dans la page. */
-const MOTIF = /(\*\*[^*]+\*\*|https?:\/\/[^\s)]+|[\w.+-]+@[\w-]+(?:\.[\w-]+)+)/g;
+const MOTIF = /(\[[^\]]+\]\(https?:\/\/[^\s)]+\)|\*\*[^*]+\*\*|https?:\/\/[^\s)\]]+|[\w.+-]+@[\w-]+(?:\.[\w-]+)+)/g;
 
 const enLigne = (texte: string, cle: string): React.ReactNode[] =>
   texte.split(MOTIF).map((part, i) => {
     const k = `${cle}-${i}`;
+    const md = part.match(/^\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)$/);
+    if (md) {
+      // Lien écrit en markdown [libellé](url) : si le libellé est l'URL elle-même, on l'abrège.
+      const libelle = /^https?:\/\//.test(md[1]) ? md[1].replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '') : md[1];
+      return (
+        <a key={k} href={md[2]} target="_blank" rel="noopener noreferrer" className="text-sky-400 underline underline-offset-2 hover:text-sky-300 break-words">
+          {libelle.replace(/^\*\*|\*\*$/g, '')}
+        </a>
+      );
+    }
     if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
       return <strong key={k} className="font-semibold text-white">{part.slice(2, -2)}</strong>;
     }

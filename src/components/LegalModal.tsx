@@ -1,12 +1,23 @@
 import React, { useEffect } from 'react';
 import { X, ShieldCheck, FileText, Lock } from 'lucide-react';
-import { BRAND } from '../data/content';
+import { BRAND, LEGAL_IDENTITY, missingLegalFields } from '../data/content';
 
 interface LegalModalProps {
   isOpen: boolean;
   onClose: () => void;
   type: 'mentions' | 'privacy';
 }
+
+
+/** N'affiche la ligne que si la valeur existe : une mention légale vide vaut
+ *  mieux qu'une mention légale inventée. */
+const LegalLine: React.FC<{ label: string; value: string | null }> = ({ label, value }) =>
+  value ? (
+    <div className="flex flex-col sm:flex-row sm:gap-2">
+      <span className="text-slate-500 shrink-0 sm:w-56">{label}</span>
+      <span className="text-slate-300">{value}</span>
+    </div>
+  ) : null;
 
 export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, type }) => {
   useEffect(() => {
@@ -65,6 +76,27 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, type })
                   Implantations : Casablanca (Maroc) & Paris (France).<br />
                   Contact : <a href={`mailto:${BRAND.contactEmail}`} className="text-sky-400 hover:underline">{BRAND.contactEmail}</a> | Téléphone Maroc : {BRAND.phoneMarocDisplay} | Téléphone France : {BRAND.phoneFranceDisplay}.
                 </p>
+
+                {/* Identité légale : renseignée dans LEGAL_IDENTITY (content.ts).
+                    Chaque ligne disparaît tant que la valeur est absente. */}
+                <div className="mt-3 space-y-1 text-slate-400">
+                  <LegalLine label="Forme juridique" value={LEGAL_IDENTITY.formeJuridique} />
+                  <LegalLine label="Capital social" value={LEGAL_IDENTITY.capitalSocial} />
+                  <LegalLine label="Siège social" value={LEGAL_IDENTITY.adresseSiege} />
+                  {LEGAL_IDENTITY.identifiants.map((id) => (
+                    <LegalLine key={id.label} label={id.label} value={id.value} />
+                  ))}
+                  <LegalLine label="N° TVA intracommunautaire" value={LEGAL_IDENTITY.tvaIntracom} />
+                  <LegalLine label="Directeur de la publication" value={LEGAL_IDENTITY.directeurPublication} />
+                </div>
+
+                {import.meta.env.DEV && missingLegalFields(LEGAL_IDENTITY).length > 0 && (
+                  <div className="mt-3 p-3 rounded-xl bg-amber-950/30 border border-amber-800/50 text-[11px] text-amber-300">
+                    <strong className="block mb-1">Visible en développement uniquement</strong>
+                    Mentions incomplètes — à renseigner dans <code>src/data/content.ts</code>{' '}
+                    (<code>LEGAL_IDENTITY</code>) : {missingLegalFields(LEGAL_IDENTITY).join(', ')}.
+                  </div>
+                )}
               </div>
 
               <div>

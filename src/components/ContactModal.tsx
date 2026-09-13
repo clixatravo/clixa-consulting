@@ -39,6 +39,9 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
 
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  // Honeypot anti-spam : invisible pour l'utilisateur, rempli par les robots.
+  const [website, setWebsite] = useState('');
 
   const topicsList = [
     "Intégration d'ERP Odoo",
@@ -90,22 +93,65 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
     return `https://wa.me/212661344054?text=${text}`;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Repli garanti : ouvre le client mail du visiteur avec la demande
+  // pré-remplie lorsque l'envoi serveur n'est pas disponible.
+  const openMailtoFallback = () => {
+    const subject = encodeURIComponent(`[Site] ${topic} - ${name} (${company})`);
+    const bodyText = encodeURIComponent(
+      `Projet : ${topic}\nNom : ${name}\nEntreprise : ${company}\nEmail : ${email}\n` +
+        `Telephone : ${phone || 'non renseigne'}\n\nMessage :\n${message || '-'}`
+    );
+    window.location.href = `mailto:${BRAND.contactEmail}?subject=${subject}&body=${bodyText}`;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
 
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, phone, company, topic, message, website }),
+      });
+
+      if (res.ok) {
+        setSubmitted(true);
+        return;
+      }
+
+      // 404 en développement local, 503 tant que Resend n'est pas configuré :
+      // dans les deux cas on bascule sur le client mail plutôt que de perdre
+      // la demande.
+      if (res.status === 404 || res.status === 503) {
+        openMailtoFallback();
+        setSubmitted(true);
+        return;
+      }
+
+      const data = await res.json().catch(() => ({}));
+      setError(
+        data.error ||
+          "L'envoi a échoué. Contactez-nous directement par téléphone ou WhatsApp."
+      );
+    } catch {
+      openMailtoFallback();
       setSubmitted(true);
-    }, 800);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleWhatsAppBooking = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!phone && !name) {
-      alert("Veuillez renseigner au moins votre Nom et Numéro de téléphone afin que notre équipe puisse vous recontacter.");
+    if (!phone || !name) {
+      setError(
+        "Veuillez renseigner votre nom et votre numéro de téléphone afin que notre équipe puisse vous recontacter."
+      );
       return;
     }
+    setError(null);
     const url = generateWhatsAppUrl();
     window.open(url, '_blank', 'noopener,noreferrer');
     setSubmitted(true);
@@ -113,6 +159,8 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
 
   const handleReset = () => {
     setSubmitted(false);
+    setError(null);
+    setWebsite('');
     setName('');
     setEmail('');
     setPhone('');
@@ -193,11 +241,19 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
                 <CheckCircle2 className="w-8 h-8" />
               </div>
 
-              <h4 className="text-2xl font-bold text-white">Créneau Enregistré !</h4>
+              <h4 className="text-2xl font-bold text-white">
+                {mode === 'call' ? 'Créneau Enregistré !' : 'Demande Envoyée !'}
+              </h4>
 
-              <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
-                Votre créneau pour <strong className="text-sky-400">{selectedDay} ({selectedTime})</strong> a été enregistré. Un consultant senior vous contactera précisément à l'heure convenue au <strong className="text-white">{phone || 'votre numéro'}</strong>.
-              </p>
+              {mode === 'call' ? (
+                <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
+                  Votre créneau pour <strong className="text-sky-400">{selectedDay} ({selectedTime})</strong> a été enregistré. Un consultant senior vous contactera précisément à l'heure convenue au <strong className="text-white">{phone || 'votre numéro'}</strong>.
+                </p>
+              ) : (
+                <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
+                  Votre demande concernant <strong className="text-sky-400">{topic}</strong> a bien été transmise à nos consultants. Vous recevrez une réponse à l'adresse <strong className="text-white">{email}</strong> sous 24h ouvrées.
+                </p>
+              )}
 
               <div className="p-4 rounded-xl bg-slate-950 border border-slate-850 max-w-sm mx-auto text-xs text-slate-400 space-y-1">
                 <div>Maroc : <span className="text-white">{BRAND.phoneMarocDisplay}</span></div>
@@ -326,6 +382,12 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
                 </div>
               </div>
 
+              {error && (
+                <div role="alert" className="p-3 rounded-xl bg-red-950/40 border border-red-800/60 text-xs text-red-300">
+                  {error}
+                </div>
+              )}
+
               {/* WhatsApp Action Button */}
               <div className="pt-2">
                 <button
@@ -451,6 +513,24 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
                 <ShieldCheck className="w-4 h-4 text-sky-400 shrink-0" />
                 <span>Confidentialité garantie • Réponse sous 24h ouvrées.</span>
               </div>
+
+              {/* Honeypot anti-spam : masqué aux humains, piège à robots */}
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+                className="absolute left-[-9999px] w-px h-px opacity-0"
+              />
+
+              {error && (
+                <div role="alert" className="p-3 rounded-xl bg-red-950/40 border border-red-800/60 text-xs text-red-300">
+                  {error}
+                </div>
+              )}
 
               {/* Submit button */}
               <div className="pt-2">

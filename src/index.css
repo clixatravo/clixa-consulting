@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------
+   Nuances absentes de Tailwind.
+   slate-850 et slate-750 sont utilisés dans 22 fichiers (bordures de
+   sections, fonds de cartes, pied de page) mais n'existent pas dans la
+   palette : aucune règle n'était générée et ces bordures restaient
+   invisibles. Elles s'intercalent entre slate-800 et slate-900.
+   --------------------------------------------------------------- */
+@theme {
+  --color-slate-750: #283548;
+  --color-slate-850: #172033;
+}
+
 @layer base {
   html {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -152,6 +164,34 @@
   animation: menuItemEntrance 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* Équivalents des classes de tailwindcss-animate, qui n'est pas installé :
+   `animate-in fade-in zoom-in-95` était écrit dans 5 composants sans
+   produire la moindre règle — les modales et le panneau WhatsApp
+   apparaissaient d'un coup, sans transition. */
+.animate-in {
+  animation-name: clixaEnter;
+  animation-duration: 0.2s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: both;
+}
+.fade-in { --clixa-enter-opacity: 0; }
+.zoom-in-95 { --clixa-enter-scale: 0.95; }
+.slide-in-from-bottom-3 { --clixa-enter-y: 0.75rem; }
+.slide-in-from-bottom-4 { --clixa-enter-y: 1rem; }
+.slide-in-from-right { --clixa-enter-x: 100%; }
+
+@keyframes clixaEnter {
+  from {
+    opacity: var(--clixa-enter-opacity, 1);
+    transform: translate3d(
+        var(--clixa-enter-x, 0),
+        var(--clixa-enter-y, 0),
+        0
+      )
+      scale(var(--clixa-enter-scale, 1));
+  }
+}
+
 /* Stagger delay helpers */
 .delay-50  { animation-delay: 50ms; }
 .delay-100 { animation-delay: 100ms; }
@@ -225,6 +265,7 @@
   .animate-menu-item,
   .animate-pulse-glow,
   .animate-drawer-slide,
+  .animate-in,
   .shimmer-btn {
     animation: none !important;
     transform: none !important;
@@ -245,3 +286,18 @@
   }
 }
 
+
+/* -------------------------------------------------------------------------
+   Rendu différé des sections hors écran.
+   La page compte une vingtaine de sections, toutes mises en page et peintes
+   au chargement. content-visibility laisse le navigateur ignorer celles qui
+   ne sont pas visibles, sans aucun changement d'apparence. Le mot-clé `auto`
+   de contain-intrinsic-size mémorise la hauteur réelle une fois la section
+   rendue, ce qui évite les sauts de barre de défilement.
+   ------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  main > section[id] {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
+  }
+}

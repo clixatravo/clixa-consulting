@@ -10,6 +10,8 @@
  * fond slate, accent sky.
  */
 
+import { LOGO_PNG_BASE64 } from './_logo.js';
+
 const BRAND = {
   nom: 'CLIXA Consulting',
   site: 'https://www.clixaconseil.com',
@@ -19,12 +21,25 @@ const BRAND = {
   telMarocLien: 'tel:+212661344054',
   telFrance: '+33 7 53 97 01 86',
   telFranceLien: 'tel:+33753970186',
-  // PNG et non SVG : Gmail et Outlook n'affichent pas le SVG dans un courriel.
-  // Servi par le site (public/email/), donc en ligne dès le déploiement.
-  logo: 'https://www.clixaconseil.com/email/logo-clixa.png',
 };
 
 const MAX_LEN = 4000;
+
+/**
+ * Identifiant de l'image intégrée. Le PNG part en pièce jointe « inline »
+ * (voir `pieceJointeLogo`) et le HTML le désigne par `cid:` : c'est la seule
+ * forme que Zoho, Gmail et Outlook affichent sans demander d'autorisation.
+ * PNG et non SVG, que ces messageries n'affichent pas.
+ */
+const LOGO_CID = 'logo-clixa';
+
+/** Pièce jointe à passer à Resend pour que `cid:logo-clixa` s'affiche. */
+export const pieceJointeLogo = () => ({
+  filename: 'logo-clixa.png',
+  content: LOGO_PNG_BASE64,
+  content_type: 'image/png',
+  content_id: LOGO_CID,
+});
 
 /**
  * Échapper avant d'écrire dans le HTML.
@@ -148,7 +163,7 @@ export function courrielDemande(demande, recuLe = new Date()) {
                       <tr>
                         <td width="44" height="44" valign="middle" style="width: 44px; height: 44px;">
                           <a href="${BRAND.site}" style="text-decoration: none;">
-                            <img src="${BRAND.logo}" width="44" height="44" alt="CLIXA" style="display: block; width: 44px; height: 44px; border: 0; outline: none; font-size: 12px; font-weight: bold; color: #38bdf8;">
+                            <img src="cid:${LOGO_CID}" width="44" height="44" alt="CLIXA" style="display: block; width: 44px; height: 44px; border: 0; outline: none; font-size: 12px; font-weight: bold; color: #38bdf8;">
                           </a>
                         </td>
                         <td style="padding-left: 14px;">

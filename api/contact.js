@@ -16,7 +16,7 @@
  * même avant configuration.
  */
 
-import { courrielDemande } from './_gabarit.js';
+import { courrielDemande, pieceJointeLogo } from './_gabarit.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -74,6 +74,7 @@ export default async function handler(req, res) {
         subject,
         html,
         text,
+        attachments: [pieceJointeLogo()],
       }),
     });
 

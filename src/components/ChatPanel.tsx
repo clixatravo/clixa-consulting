@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Send, Sparkles, X, MessageCircle } from 'lucide-react';
+import { Send, X, MessageCircle } from 'lucide-react';
+import { RobotIcon } from './RobotIcon';
 import { BRAND } from '../data/content';
 
 type Message = { role: 'user' | 'assistant'; content: string };
@@ -185,7 +186,7 @@ export const ChatPanel: React.FC<{ ouvert: boolean; onFermer: () => void }> = ({
       <header className="flex items-center justify-between gap-3 border-b border-slate-800 bg-slate-900/80 px-4 py-3">
         <div className="flex items-center gap-2.5">
           <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-sky-600 to-cyan-400 text-white">
-            <Sparkles className="h-5 w-5" />
+            <RobotIcon className="h-6 w-6" />
           </span>
           <div className="leading-tight">
             <p className="text-sm font-bold text-white">Assistant IA CLIXA</p>

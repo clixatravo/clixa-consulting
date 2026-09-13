@@ -80,7 +80,7 @@ export const BRAND = {
   punchline: "Du diagnostic à l’exécution, nous transformons vos enjeux en solutions concrètes.",
   
   // Contacts
-  contactEmail: "contact@clixa.ma",
+  contactEmail: "contact@clixaconseil.com",
   phoneMaroc: "+212 661 34 40 54",
   phoneMarocRaw: "00212661344054",
   phoneMarocDisplay: "+212 6 61 34 40 54",
@@ -703,3 +703,54 @@ export const COMPARISON_ITEMS = [
   },
 ];
 
+
+/* ============================================================================
+   MENTIONS LÉGALES — À COMPLÉTER PAR CLIXA
+   ----------------------------------------------------------------------------
+   Seul endroit à modifier pour l'identité légale du site. Tout champ laissé
+   à null est masqué sur la page publique : mieux vaut ne rien afficher qu'une
+   mention approximative.
+
+   ⚠️  N'inscrire ici que des valeurs officielles vérifiées : ces mentions
+   engagent la société (art. 6-III de la LCEN en France, lois 53-05 et 09-08
+   au Maroc).
+   ========================================================================== */
+
+export interface LegalIdentity {
+  /** Ex. "SARL", "SARL AU", "SAS", "Auto-entrepreneur" */
+  formeJuridique: string | null;
+  /** Ex. "100 000 MAD" */
+  capitalSocial: string | null;
+  /** Adresse complète du siège social */
+  adresseSiege: string | null;
+  /** Identifiants officiels : { label: "ICE", value: "0012..." } */
+  identifiants: { label: string; value: string }[];
+  /** Responsable du contenu publié */
+  directeurPublication: string | null;
+  /** TVA intracommunautaire (France) */
+  tvaIntracom: string | null;
+}
+
+export const LEGAL_IDENTITY: LegalIdentity = {
+  formeJuridique: null,        // ex. "SARL AU"
+  capitalSocial: null,         // ex. "100 000 MAD"
+  adresseSiege: null,          // ex. "12 rue X, 20000 Casablanca, Maroc"
+  identifiants: [
+    // { label: "RC", value: "123456 — Tribunal de Commerce de Casablanca" },
+    // { label: "ICE", value: "001234567000089" },
+    // { label: "IF", value: "12345678" },
+  ],
+  directeurPublication: null,  // ex. "Prénom Nom"
+  tvaIntracom: null,
+};
+
+/** Champs légalement obligatoires encore vides. Sert uniquement à afficher un
+ *  rappel en développement — jamais visible par les visiteurs. */
+export const missingLegalFields = (identity: LegalIdentity): string[] => {
+  const missing: string[] = [];
+  if (!identity.formeJuridique) missing.push('forme juridique');
+  if (!identity.adresseSiege) missing.push('adresse du siège');
+  if (!identity.identifiants.length) missing.push('identifiants officiels (RC / ICE ou SIREN)');
+  if (!identity.directeurPublication) missing.push('directeur de la publication');
+  return missing;
+};

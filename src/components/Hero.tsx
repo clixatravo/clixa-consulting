@@ -150,13 +150,16 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
 
                 {/* Real Corporate Photography */}
                 <div className="relative h-44 sm:h-48 overflow-hidden bg-slate-950">
+                  {/* fetchpriority en minuscules : React 18 ne transmet pas la
+                      forme camelCase au DOM (support ajouté en React 19), ce qui
+                      déclenchait un avertissement et annulait l'indice de priorité. */}
                   <img
                     src={pillar.image}
                     alt={pillar.title}
                     width={800}
                     height={447}
                     decoding="async"
-                    fetchPriority="high"
+                    {...{ fetchpriority: 'high' }}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-95 group-hover:opacity-100"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/30 to-transparent" />

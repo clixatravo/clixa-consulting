@@ -17,14 +17,18 @@
   modèles régulièrement : un nom en dur qui disparaît rendrait l'assistant
   muet du jour au lendemain. Un 404 (modèle inconnu) ou un 429 (quota du
   modèle épuisé) fait passer au suivant ; toute autre erreur est remontée.
-  Les « -lite » d'abord : le quota gratuit y est le plus large.
+
+  Flash d'abord : Flash-Lite répondait en français à une question posée en
+  anglais et mêlait les alphabets en darija. Son quota gratuit est plus
+  large, il prend donc le relais quand celui de Flash est épuisé pour la
+  journée — l'assistant perd en finesse, il ne se tait pas.
 */
 const MODELES = [
   process.env.GEMINI_MODEL,
-  'gemini-flash-lite-latest',
   'gemini-flash-latest',
-  'gemini-2.5-flash-lite',
   'gemini-2.5-flash',
+  'gemini-flash-lite-latest',
+  'gemini-2.5-flash-lite',
 ].filter(Boolean);
 
 export class ErreurGemini extends Error {

@@ -19,6 +19,9 @@ const BRAND = {
   telMarocLien: 'tel:+212661344054',
   telFrance: '+33 7 53 97 01 86',
   telFranceLien: 'tel:+33753970186',
+  // PNG et non SVG : Gmail et Outlook n'affichent pas le SVG dans un courriel.
+  // Servi par le site (public/email/), donc en ligne dès le déploiement.
+  logo: 'https://www.clixaconseil.com/email/logo-clixa.png',
 };
 
 const MAX_LEN = 4000;
@@ -143,15 +146,17 @@ export function courrielDemande(demande, recuLe = new Date()) {
                   <td>
                     <table border="0" cellspacing="0" cellpadding="0">
                       <tr>
-                        <td width="40" height="40" align="center" valign="middle" bgcolor="#0b1220" style="width: 40px; height: 40px; background-color: #0b1220; border: 1px solid #0ea5e9; border-radius: 10px;">
-                          <span style="font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 800; font-size: 20px; color: #38bdf8; line-height: 40px;">C</span>
+                        <td width="44" height="44" valign="middle" style="width: 44px; height: 44px;">
+                          <a href="${BRAND.site}" style="text-decoration: none;">
+                            <img src="${BRAND.logo}" width="44" height="44" alt="CLIXA" style="display: block; width: 44px; height: 44px; border: 0; outline: none; font-size: 12px; font-weight: bold; color: #38bdf8;">
+                          </a>
                         </td>
                         <td style="padding-left: 14px;">
                           <div style="font-size: 19px; font-weight: 800; letter-spacing: 0.06em; color: #ffffff;">
                             CLIXA <span style="font-size: 11px; font-weight: 600; letter-spacing: 0.14em; color: #94a3b8;">CONSULTING</span>
                           </div>
                           <div style="font-size: 10px; font-family: 'SF Mono', Menlo, Consolas, monospace; letter-spacing: 0.12em; text-transform: uppercase; color: #38bdf8; margin-top: 3px;">
-                            Conseil · ERP Odoo · AMOA · Digital
+                            Transformer · Structurer · Performer
                           </div>
                         </td>
                       </tr>

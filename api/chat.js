@@ -100,7 +100,7 @@ export default async function handler(req, res) {
     flux = await repondreEnFlux({ systeme: consignes(await catalogueFormations()), messages });
   } catch (err) {
     console.error('assistant', err.status, err.message);
-    if (err.status === 503) {
+    if (err.nonConfigure) {
       return res.status(503).json({ code: 'NOT_CONFIGURED', error: 'Assistant non configuré.' });
     }
     if (err.status === 429) {

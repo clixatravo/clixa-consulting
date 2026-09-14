@@ -15,8 +15,9 @@
 /*
   ⚠️ Plusieurs modèles, essayés dans l'ordre. Google renomme et retire ses
   modèles régulièrement : un nom en dur qui disparaît rendrait l'assistant
-  muet du jour au lendemain. Un 404 (modèle inconnu) ou un 429 (quota du
-  modèle épuisé) fait passer au suivant ; toute autre erreur est remontée.
+  muet du jour au lendemain. Un 404 (modèle inconnu), un 429 (quota épuisé)
+  ou une erreur 5xx (modèle surchargé, fréquent aux heures de pointe) fait
+  passer au suivant ; une autre erreur est remontée.
 
   Flash d'abord : Flash-Lite répondait en français à une question posée en
   anglais et mêlait les alphabets en darija. Son quota gratuit est plus
@@ -32,11 +33,24 @@ const MODELES = [
 ].filter(Boolean);
 
 export class ErreurGemini extends Error {
-  constructor(message, status) {
+  /**
+   * @param {string} message
+   * @param {number} status
+   * @param {{ nonConfigure?: boolean }} [options]
+   */
+  constructor(message, status, { nonConfigure = false } = {}) {
     super(message);
     this.status = status;
+    /*
+      ⚠️ Distinct du statut. Gemini répond lui-même 503 quand un modèle est
+      surchargé : confondre les deux faisait annoncer au visiteur un assistant
+      « en cours de mise en service » alors qu'il l'était depuis longtemps.
+    */
+    this.nonConfigure = nonConfigure;
   }
 }
+
+const REESSAYABLE = (status) => status === 404 || status === 429 || status >= 500;
 
 /**
  * @param {{ systeme: string, messages: { role: 'user'|'assistant', content: string }[] }} demande
@@ -44,7 +58,7 @@ export class ErreurGemini extends Error {
  */
 export async function repondreEnFlux({ systeme, messages }) {
   const cle = process.env.GEMINI_API_KEY;
-  if (!cle) throw new ErreurGemini('GEMINI_API_KEY absente', 503);
+  if (!cle) throw new ErreurGemini('GEMINI_API_KEY absente', 503, { nonConfigure: true });
 
   const corps = JSON.stringify({
     systemInstruction: { parts: [{ text: systeme }] },
@@ -69,7 +83,7 @@ export async function repondreEnFlux({ systeme, messages }) {
     if (reponse.ok) return lireFlux(reponse.body);
 
     derniere = new ErreurGemini(`${modele} → ${reponse.status} ${await reponse.text()}`, reponse.status);
-    if (reponse.status !== 404 && reponse.status !== 429) break;
+    if (!REESSAYABLE(reponse.status)) break;
   }
   throw derniere;
 }

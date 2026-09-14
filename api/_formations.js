@@ -15,6 +15,9 @@
 const SOURCE = 'https://www.clixa.africa';
 const DUREE_CACHE_MS = 10 * 60 * 1000;
 
+/** Miroir de MOYENS_AFFICHES, platform/src/lib/moyens.ts sur clixa.africa. */
+const MOYENS_ACCEPTES = ['Carte bancaire', 'Virement bancaire', 'Western Union · Ria · MoneyGram'];
+
 let cache = { texte: null, expire: 0 };
 
 const lire = async (chemin) => {
@@ -93,9 +96,14 @@ const decrireTarifs = (t) => {
     `# Tarifs et paiement (CLIXA Institute)`,
     t.prixComptant ? `Prix de référence d'un parcours payé comptant : ${t.prixComptant} ${t.devise}` : '',
     `Facilités de paiement :\n${plans}`,
-    valeurs(t.moyensPaiement).length
-      ? `Moyens de paiement : ${valeurs(t.moyensPaiement).join(', ')}`
-      : '',
+    /*
+      ⚠️ Pas `moyensPaiement` du CMS : il porte encore « Western Union, Ria,
+      MoneyGram », la liste d'avant le 28 août 2026, masquée dans /admin et
+      retirée de la fiche. Recopiée, elle faisait répondre à qui voulait payer
+      par carte que ce n'était pas possible. La liste vraie vit dans le code de
+      clixa.africa (platform/src/lib/moyens.ts) ; à reporter ici si elle change.
+    */
+    `Moyens de paiement acceptés : ${MOYENS_ACCEPTES.join(', ')}`,
   ]
     .filter(Boolean)
     .join('\n');

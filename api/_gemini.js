@@ -66,7 +66,13 @@ export async function repondreEnFlux({ systeme, messages }) {
       role: m.role === 'assistant' ? 'model' : 'user',
       parts: [{ text: m.content }],
     })),
-    generationConfig: { temperature: 0.3, maxOutputTokens: 900 },
+    /*
+      Flash réfléchit avant de répondre, et cette réflexion se prend sur le même
+      plafond de jetons que la réponse : à 900, une réponse s'arrêtait en plein
+      mot. La consigne « bref » tient la longueur ; le plafond n'est qu'un
+      garde-fou.
+    */
+    generationConfig: { temperature: 0.3, maxOutputTokens: 4096 },
   });
 
   let derniere;
@@ -91,6 +97,14 @@ export async function repondreEnFlux({ systeme, messages }) {
 async function* lireFlux(flux) {
   const decodeur = new TextDecoder();
   let tampon = '';
+  /*
+    ⚠️ Une réponse coupée ne doit pas passer pour une réponse. Gemini dit
+    comment il termine (`finishReason`) : « STOP » est une fin normale ; un
+    plafond atteint, un filtre ou un arrêt du modèle ne le sont pas, et le
+    visiteur repartirait avec une moitié de phrase. On le lui dit alors.
+  */
+  let finPropre = false;
+  let duTexte = false;
   for await (const morceau of flux) {
     tampon += decodeur.decode(morceau, { stream: true });
     let fin;
@@ -99,14 +113,21 @@ async function* lireFlux(flux) {
       tampon = tampon.slice(fin + 1);
       if (!ligne.startsWith('data:')) continue;
       try {
-        const donnees = JSON.parse(ligne.slice(5));
-        const texte = (donnees.candidates?.[0]?.content?.parts ?? [])
+        const candidat = JSON.parse(ligne.slice(5)).candidates?.[0];
+        if (candidat?.finishReason) finPropre = candidat.finishReason === 'STOP';
+        const texte = (candidat?.content?.parts ?? [])
           .map((p) => (p.thought ? '' : p.text ?? ''))
           .join('');
-        if (texte) yield texte;
+        if (texte) {
+          duTexte = true;
+          yield texte;
+        }
       } catch {
         // Ligne partielle ou événement sans texte : on l'ignore.
       }
     }
+  }
+  if (duTexte && !finPropre) {
+    yield '\n\n(Réponse interrompue. Reposez la question, ou écrivez-nous sur WhatsApp : https://wa.me/212661344054)';
   }
 }

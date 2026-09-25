@@ -102,10 +102,12 @@ export const CaseStudies: React.FC<CaseStudiesProps> = ({ onOpenConsultation }) 
                 </div>
               </div>
 
-              {/* Card Action */}
-              <div className="pt-4 border-t border-white/[0.08] flex items-center justify-between text-xs font-semibold text-sky-400 group-hover:text-sky-300">
+              {/* Card Action (SQLI Signature Link) */}
+              <div className="pt-4 border-t border-white/[0.08] flex items-center justify-between text-xs font-semibold text-sky-400 group-hover:text-white transition-colors">
                 <span>Analyser ce cas avec un associé</span>
-                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <div className="w-7 h-7 rounded-full bg-sky-500/10 border border-sky-500/20 flex items-center justify-center group-hover:bg-sky-500 group-hover:text-white transition-all duration-300">
+                  <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </div>
               </div>
             </div>
           ))}

@@ -44,7 +44,7 @@ export const ExecutiveLab: React.FC<ExecutiveLabProps> = ({ onOpenConsultation }
   ];
 
   return (
-    <section id="simulateur-roi" className="py-24 bg-[#050811] border-b border-white/[0.08] relative overflow-hidden scroll-mt-24">
+    <section id="simulateur-roi" className="face-section py-24 bg-[#050811] border-b border-white/[0.08] relative overflow-hidden scroll-mt-24">
       {/* Background ambient lighting */}
       <div className="absolute top-1/3 left-10 w-96 h-96 bg-emerald-500/[0.03] blur-[140px] rounded-full pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-amber-500/[0.03] blur-[140px] rounded-full pointer-events-none" />

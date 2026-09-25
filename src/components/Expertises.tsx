@@ -41,7 +41,7 @@ export const Expertises: React.FC<ExpertisesProps> = ({ onOpenConsultation }) =>
   };
 
   return (
-    <section id="expertises" className="py-24 bg-[#050811] relative scroll-mt-24 overflow-hidden border-b border-white/[0.08]">
+    <section id="expertises" className="face-section py-24 bg-[#050811] relative scroll-mt-24 overflow-hidden border-b border-white/[0.08]">
       {/* Background ambient lighting */}
       <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-sky-500/[0.03] blur-[150px] rounded-full pointer-events-none" />
       <div className="absolute bottom-10 left-10 w-[400px] h-[400px] bg-blue-600/[0.03] blur-[140px] rounded-full pointer-events-none" />

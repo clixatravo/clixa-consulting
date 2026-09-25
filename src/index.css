@@ -269,3 +269,35 @@
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
+
+/* ---------------------------------------------------------------------------
+   SQLI Scroll Reveal & Face-to-Face Transition Classes
+   ------------------------------------------------------------------------- */
+.animation-scroll {
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.animation-scroll.fade-in-bottom {
+  transform: translateY(32px);
+}
+
+.animation-scroll.slide-right {
+  transform: translateX(-32px);
+}
+
+.animation-scroll.slide-left {
+  transform: translateX(32px);
+}
+
+.animation-scroll--scrolled {
+  opacity: 1 !important;
+  transform: translate(0, 0) !important;
+}
+
+.face-section {
+  scroll-margin-top: 5.5rem;
+  transition: opacity 0.4s ease-in-out;
+}
+

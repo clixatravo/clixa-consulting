@@ -10,7 +10,7 @@ export const Methodologie: React.FC<MethodologieProps> = ({ onOpenConsultation }
   const [activeStep, setActiveStep] = useState<number>(0);
 
   return (
-    <section id="methode" className="py-24 bg-[#060913] border-b border-white/[0.08] relative scroll-mt-24 overflow-hidden">
+    <section id="methode" className="face-section py-24 bg-[#060913] border-b border-white/[0.08] relative scroll-mt-24 overflow-hidden">
       {/* Background ambient */}
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-blue-600/[0.03] blur-[140px] rounded-full pointer-events-none" />
 

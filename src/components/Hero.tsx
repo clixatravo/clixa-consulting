@@ -39,7 +39,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
   }, [rotatingFocuses.length]);
 
   return (
-    <section id="accueil" className="relative min-h-[92vh] flex flex-col justify-center pt-32 sm:pt-36 pb-16 sm:pb-24 overflow-hidden bg-[#050811] scroll-mt-24">
+    <section id="accueil" className="face-section relative min-h-[92vh] flex flex-col justify-center pt-32 sm:pt-36 pb-16 sm:pb-24 overflow-hidden bg-[#050811] scroll-mt-24">
       {/* 1. SQLI SVG LIQUID FILTER DISTORTION & ATMOSPHERIC BACKDROP */}
       <svg className="absolute w-0 h-0 pointer-events-none" aria-hidden="true" focusable="false">
         <defs>
@@ -307,6 +307,18 @@ export const Hero: React.FC<HeroProps> = ({ onOpenConsultation }) => {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Transition prompt to Face 02 */}
+        <div className="pt-10 flex justify-center">
+          <a
+            href="#expertises"
+            className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-slate-900/80 border border-white/[0.08] text-xs font-semibold text-slate-300 hover:text-white hover:border-sky-500/40 transition-all backdrop-blur-md shadow-lg group cursor-pointer"
+          >
+            <span className="font-mono text-sky-400 text-[11px]">Face 02</span>
+            <span>Explorer l'Architecture SI & Odoo</span>
+            <ArrowDown className="w-3.5 h-3.5 text-sky-400 group-hover:translate-y-0.5 transition-transform" />
+          </a>
         </div>
 
       </div>

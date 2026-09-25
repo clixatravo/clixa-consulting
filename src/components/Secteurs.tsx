@@ -42,7 +42,7 @@ export const Secteurs: React.FC<SecteursProps> = ({ onOpenConsultation }) => {
   const active = SECTEURS.find(s => s.id === selectedSecteur) || SECTEURS[0];
 
   return (
-    <section id="secteurs" className="py-24 bg-[#050811] border-b border-white/[0.08] relative scroll-mt-24 overflow-hidden">
+    <section id="secteurs" className="face-section py-24 bg-[#050811] border-b border-white/[0.08] relative scroll-mt-24 overflow-hidden">
       {/* Ambient glow */}
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-sky-500/[0.03] blur-[140px] rounded-full pointer-events-none" />
 

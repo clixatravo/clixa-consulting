@@ -2,7 +2,7 @@
 
 /* ---------------------------------------------------------------------------
    CLIXA CONSULTING - TIER-1 EXECUTIVE DESIGN SYSTEM
-   Standard d'excellence : McKinsey / BCG / Big4 Management Advisory
+   Standards : UM6P / Netflix / Big4 Executive Advisory
    ------------------------------------------------------------------------- */
 
 @theme {
@@ -25,6 +25,7 @@
     -webkit-text-size-adjust: 100%;
     background-color: #050811;
     color: #f1f5f9;
+    scroll-behavior: smooth;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -39,56 +40,60 @@
 }
 
 /* ---------------------------------------------------------------------------
-   High-Level Executive Textures & Subtle Backgrounds (No saturated gamer glows)
+   High-Level Executive Textures & Ambient Glows
    ------------------------------------------------------------------------- */
 .bg-executive-grid {
-  background-size: 48px 48px;
+  background-size: 56px 56px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
 }
 
 .bg-radial-subtle {
-  background: radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.08) 0%, rgba(5, 8, 17, 0) 70%);
+  background: radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.1) 0%, rgba(5, 8, 17, 0) 70%);
 }
 
 .bg-radial-spotlight {
-  background: radial-gradient(circle at 50% 30%, rgba(30, 58, 138, 0.12) 0%, rgba(5, 8, 17, 0) 75%);
+  background: radial-gradient(circle at 50% 30%, rgba(30, 58, 138, 0.15) 0%, rgba(5, 8, 17, 0) 75%);
 }
 
 /* ---------------------------------------------------------------------------
-   Executive Cards & Glass Panels
+   Executive Cards & Glass Panels (UM6P/Netflix Inspired)
    ------------------------------------------------------------------------- */
 .executive-card {
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.7) 0%, rgba(10, 15, 29, 0.85) 100%);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.6) 0%, rgba(10, 15, 29, 0.85) 100%);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 12px 35px -10px rgba(0, 0, 0, 0.6);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
 }
 
 .executive-card:hover {
-  border-color: rgba(56, 189, 248, 0.35);
-  transform: translateY(-2px);
-  box-shadow: 0 20px 40px -15px rgba(2, 132, 199, 0.15);
+  border-color: rgba(56, 189, 248, 0.45);
+  transform: translateY(-3px);
+  box-shadow: 0 24px 48px -12px rgba(2, 132, 199, 0.2);
 }
 
 .executive-card-gold {
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.8) 0%, rgba(10, 15, 29, 0.9) 100%);
-  border: 1px solid rgba(245, 158, 11, 0.2);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.75) 0%, rgba(10, 15, 29, 0.9) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  box-shadow: 0 12px 35px -10px rgba(0, 0, 0, 0.6);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
 }
 
 .executive-card-gold:hover {
-  border-color: rgba(245, 158, 11, 0.45);
-  transform: translateY(-2px);
-  box-shadow: 0 20px 40px -15px rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.55);
+  transform: translateY(-3px);
+  box-shadow: 0 24px 48px -12px rgba(245, 158, 11, 0.2);
 }
 
 .glass-panel-luxury {
   background: rgba(10, 15, 29, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -96,7 +101,7 @@
    Executive Text Gradients
    ------------------------------------------------------------------------- */
 .text-gradient-executive {
-  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #94a3b8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -114,18 +119,41 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Luxury Buttons & Micro-Interactions
+   Luxury Buttons & Micro-Interactions with Shimmer
    ------------------------------------------------------------------------- */
 .executive-btn-primary {
+  position: relative;
+  overflow: hidden;
   background: linear-gradient(135deg, #0284c7 0%, #0369a1 50%, #1d4ed8 100%);
-  box-shadow: 0 4px 20px -2px rgba(2, 132, 199, 0.35);
+  box-shadow: 0 4px 24px -2px rgba(2, 132, 199, 0.4);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.executive-btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: none;
+}
+
+.executive-btn-primary:hover::after {
+  animation: shimmerSweep 1s ease-in-out;
 }
 
 .executive-btn-primary:hover {
   background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #2563eb 100%);
-  box-shadow: 0 8px 30px -4px rgba(2, 132, 199, 0.5);
-  transform: translateY(-1px);
+  box-shadow: 0 8px 32px -4px rgba(2, 132, 199, 0.6);
+  transform: translateY(-2px);
 }
 
 .executive-btn-primary:active {
@@ -134,21 +162,30 @@
 }
 
 .executive-btn-secondary {
-  background: rgba(15, 23, 42, 0.8);
+  background: rgba(15, 23, 42, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.12);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .executive-btn-secondary:hover {
-  background: rgba(30, 41, 59, 0.9);
-  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(30, 41, 59, 0.95);
+  border-color: rgba(255, 255, 255, 0.3);
   color: #ffffff;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
 /* ---------------------------------------------------------------------------
-   Entrance & Slide-in Keyframes (Fluid, 60 FPS)
+   High-End Keyframe Animations (Fluid 60 FPS)
    ------------------------------------------------------------------------- */
+@keyframes shimmerSweep {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
 @keyframes entranceFadeDown {
   from {
     opacity: 0;
@@ -163,7 +200,7 @@
 @keyframes entranceFadeUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(24px);
   }
   to {
     opacity: 1;
@@ -171,36 +208,23 @@
   }
 }
 
-@keyframes entranceScaleUp {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes drawerSlideIn {
-  from {
-    transform: translateX(100%);
-    opacity: 0.9;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes pulseSubtle {
+@keyframes floatBadge {
   0%, 100% {
-    opacity: 0.15;
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.2;
     transform: scale(1);
   }
   50% {
-    opacity: 0.25;
-    transform: scale(1.05);
+    opacity: 0.35;
+    transform: scale(1.08);
   }
 }
 
@@ -212,27 +236,19 @@
   animation: entranceFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.animate-entrance-scale {
-  animation: entranceScaleUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+.animate-float {
+  animation: floatBadge 4s ease-in-out infinite;
 }
 
-.animate-drawer-slide {
-  animation: drawerSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.animate-pulse-subtle {
-  animation: pulseSubtle 8s ease-in-out infinite;
+.animate-pulse-glow {
+  animation: pulseGlow 7s ease-in-out infinite;
 }
 
 /* Delay Helpers */
-.delay-50 { animation-delay: 50ms; }
 .delay-100 { animation-delay: 100ms; }
-.delay-150 { animation-delay: 150ms; }
 .delay-200 { animation-delay: 200ms; }
-.delay-250 { animation-delay: 250ms; }
 .delay-300 { animation-delay: 300ms; }
 .delay-400 { animation-delay: 400ms; }
-.delay-500 { animation-delay: 500ms; }
 
 /* Hide scrollbar utility */
 .scrollbar-none {

@@ -90,7 +90,7 @@ export const Secteurs: React.FC<SecteursProps> = ({ onOpenConsultation }) => {
         </div>
 
         {/* Active Industry Focus Display Card */}
-        <div className="p-7 sm:p-10 rounded-3xl bg-slate-900/70 border border-white/[0.09] shadow-2xl relative overflow-hidden backdrop-blur-xl">
+        <div key={selectedSecteur} className="p-7 sm:p-10 rounded-3xl bg-slate-900/70 border border-white/[0.09] shadow-2xl relative overflow-hidden backdrop-blur-xl animate-in fade-in duration-300">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative">
             
             {/* Left Overview */}

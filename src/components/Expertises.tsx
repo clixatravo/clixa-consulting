@@ -93,7 +93,7 @@ export const Expertises: React.FC<ExpertisesProps> = ({ onOpenConsultation }) =>
         </div>
 
         {/* Master Executive Briefing Dossier */}
-        <div className="rounded-3xl bg-slate-900/80 border border-white/[0.09] shadow-2xl overflow-hidden backdrop-blur-xl">
+        <div key={selectedId} className="rounded-3xl bg-slate-900/80 border border-white/[0.09] shadow-2xl overflow-hidden backdrop-blur-xl animate-in fade-in duration-300">
           <div className="grid grid-cols-1 lg:grid-cols-12">
             
             {/* Left Column: Strategic Scope & Deliverables */}

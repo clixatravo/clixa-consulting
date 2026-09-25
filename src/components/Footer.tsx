@@ -26,20 +26,20 @@ export const Footer: React.FC = () => {
 
   return (
     <>
-      <footer className="bg-slate-950 border-t border-slate-850 pt-16 pb-12 text-slate-400 text-sm">
+      <footer className="bg-[#04060e] border-t border-white/[0.08] pt-16 pb-12 text-slate-400 text-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* Strategic Newsletter Banner */}
-          <div className="mb-14 p-6 sm:p-8 rounded-3xl bg-slate-900/80 border border-slate-800 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-xl">
+          {/* Strategic Executive Newsletter Banner */}
+          <div className="mb-14 p-6 sm:p-8 rounded-3xl bg-slate-900/60 border border-white/[0.08] flex flex-col lg:flex-row items-center justify-between gap-6 shadow-2xl backdrop-blur-md">
             <div className="space-y-1 text-center lg:text-left">
-              <span className="text-xs font-mono font-bold uppercase tracking-wider text-sky-400">
-                La Note Stratégique CLIXA
+              <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-sky-400">
+                La Note Stratégique Exécutive CLIXA
               </span>
-              <h3 className="text-base sm:text-lg font-bold text-white">
-                Recevez notre veille mensuelle sur l'ERP Odoo et la Facturation 2026
+              <h3 className="text-base sm:text-lg font-bold text-white font-heading">
+                Recevez notre veille confidentielle : ERP Odoo, Facturation 2026 & Performance
               </h3>
-              <p className="text-xs text-slate-400">
-                Synthèse réservée aux dirigeants : fiscalité DGI/DGFIP, retours d'expérience et leviers de performance.
+              <p className="text-xs text-slate-400 font-sans">
+                Synthèse trimestrielle réservée aux comités de direction : conformité fiscale DGI/DGFIP, retours d'expérience et benchmarks.
               </p>
             </div>
 
@@ -51,59 +51,59 @@ export const Footer: React.FC = () => {
                     required
                     value={newsletterEmail}
                     onChange={(e) => setNewsletterEmail(e.target.value)}
-                    placeholder="Votre email professionnel..."
-                    className="w-full sm:w-72 px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-sky-500 transition-colors"
+                    placeholder="Votre adresse email professionnelle..."
+                    className="w-full sm:w-72 px-4 py-2.5 rounded-xl bg-slate-950 border border-white/[0.08] text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-sky-500 transition-colors"
                   />
                   <button
                     type="submit"
-                    className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-xs font-bold text-white transition-colors cursor-pointer whitespace-nowrap shadow-md shadow-sky-500/20"
+                    className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-xs font-bold text-white transition-colors cursor-pointer whitespace-nowrap shadow-md shadow-sky-500/20 font-heading"
                   >
-                    S'inscrire
+                    S'abonner
                   </button>
                 </form>
               ) : (
                 <div className="p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-700/50 text-xs text-emerald-300 flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>Inscription confirmée ! Vous recevrez la prochaine note mensuelle.</span>
+                  <span>Inscription enregistrée avec succès.</span>
                 </div>
               )}
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-850">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/[0.08]">
             
             {/* Brand Col */}
             <div className="lg:col-span-2 space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-slate-900 border border-slate-700/80 p-1 flex items-center justify-center shadow-inner">
+                <div className="w-9 h-9 rounded-xl bg-slate-900 border border-white/[0.1] p-1.5 flex items-center justify-center shadow-inner">
                   <svg viewBox="0 0 48 48" className="w-full h-full" fill="none">
                     <path d="M14 16L24 24L14 32" stroke="#38BDF8" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
                     <path d="M34 16L24 24L34 32" stroke="#0284C7" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
                     <circle cx="24" cy="24" r="3.5" fill="#38BDF8"/>
                   </svg>
                 </div>
-                <span className="font-extrabold text-lg tracking-tight text-white">
+                <span className="font-extrabold text-lg tracking-tight text-white font-heading">
                   CLIXA <span className="text-slate-400 font-semibold text-sm">CONSULTING</span>
                 </span>
               </div>
 
-              <p className="text-xs text-sky-400 font-medium tracking-wide uppercase">
+              <p className="text-xs text-sky-400 font-medium tracking-wide uppercase font-mono">
                 {BRAND.tagline}
               </p>
 
-              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-sm">
-                Cabinet de conseil accompagnant les dirigeants dans l'intégration ERP, la digitalisation des opérations et l'optimisation durable de leur performance.
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-sm font-sans">
+                Cabinet de conseil de direction générale accompagnant les entreprises dans l'intégration ERP Odoo, la digitalisation des processus et la sécurisation financière de leur croissance.
               </p>
 
-              <div className="pt-2 text-xs text-slate-500 font-mono">
-                ERP Odoo • Web & Digital • AMOA • Finance • Process
+              <div className="pt-2 text-xs text-slate-400 font-mono">
+                Casablanca 🇲🇦 • Paris 🇫🇷 • Interventions Internationales
               </div>
             </div>
 
             {/* Expertises Col */}
             <div className="space-y-3">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-white font-mono">
-                Pôles Stratégiques
+              <h4 className="text-xs font-bold uppercase tracking-wider text-white font-heading">
+                Pôles d'Excellence
               </h4>
               <ul className="space-y-2 text-xs sm:text-sm">
                 <li>
@@ -113,9 +113,9 @@ export const Footer: React.FC = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#digital" className="hover:text-sky-400 transition-colors flex items-center gap-1.5">
+                  <a href="#expertises" className="hover:text-sky-400 transition-colors flex items-center gap-1.5">
                     <span className="text-sky-400 text-xs">★</span>
-                    <span className="text-slate-200 font-medium">Web & Communication</span>
+                    <span className="text-slate-200 font-medium">Web & Solutions Digitales</span>
                   </a>
                 </li>
                 <li>
@@ -125,18 +125,13 @@ export const Footer: React.FC = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#facturation" className="hover:text-sky-400 transition-colors">
-                    Facturation Électronique
-                  </a>
-                </li>
-                <li>
                   <a href="#expertises" className="hover:text-sky-400 transition-colors">
                     Performance & Finance
                   </a>
                 </li>
                 <li>
-                  <a href="#secteurs" className="hover:text-sky-400 transition-colors">
-                    Secteurs d'Activité
+                  <a href="#expertises" className="hover:text-sky-400 transition-colors">
+                    Facturation Électronique DGI/DGFIP
                   </a>
                 </li>
               </ul>
@@ -144,38 +139,32 @@ export const Footer: React.FC = () => {
 
             {/* Méthode & Navigation */}
             <div className="space-y-3">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-white font-mono">
-                Approche CLIXA
+              <h4 className="text-xs font-bold uppercase tracking-wider text-white font-heading">
+                Approche Stratégique
               </h4>
               <ul className="space-y-2 text-xs sm:text-sm">
                 <li>
-                  <a href="#methode" className="hover:text-sky-400 transition-colors">Notre Méthode (01-04)</a>
+                  <a href="#methode" className="hover:text-sky-400 transition-colors">Méthodologie en 4 Phases</a>
                 </li>
                 <li>
-                  <a href="#comparatif" className="hover:text-sky-400 transition-colors">Pourquoi CLIXA ?</a>
+                  <a href="#comparatif" className="hover:text-sky-400 transition-colors">Pourquoi CLIXA vs SSII</a>
                 </li>
                 <li>
-                  <a href="#simulateur-roi" className="hover:text-sky-400 transition-colors">Simulateur ROI</a>
+                  <a href="#cas-clients" className="hover:text-sky-400 transition-colors">Cas d'Usage & ROI</a>
+                </li>
+                <li>
+                  <a href="#simulateur-roi" className="hover:text-sky-400 transition-colors">Simulateur de Rentabilité</a>
                 </li>
                 <li>
                   <a href="#audit-flash" className="hover:text-sky-400 transition-colors">Diagnostic Flash 48H</a>
                 </li>
-                <li>
-                  <a href="#guide-dirigeant" className="hover:text-sky-400 transition-colors">Livre Blanc Exécutif</a>
-                </li>
-                <li>
-                  <a href={BRAND.whatsappLink} target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors flex items-center gap-1">
-                    <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Support WhatsApp Direct</span>
-                  </a>
-                </li>
               </ul>
             </div>
 
-            {/* Contact Col - Dual Presence Maroc & France */}
+            {/* Contact Col - Dual Hubs */}
             <div className="space-y-3">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-white font-mono">
-                Contacts & Agences
+              <h4 className="text-xs font-bold uppercase tracking-wider text-white font-heading">
+                Bureaux & Contacts
               </h4>
               <ul className="space-y-2.5 text-xs sm:text-sm">
                 <li>
@@ -186,7 +175,7 @@ export const Footer: React.FC = () => {
                 </li>
 
                 <li className="pt-1">
-                  <div className="text-[11px] text-slate-400 uppercase font-mono">Maroc :</div>
+                  <div className="text-[11px] text-slate-400 uppercase font-mono">Hub Maroc :</div>
                   <a href={`tel:${BRAND.phoneMarocRaw}`} className="flex items-center gap-2 text-slate-200 hover:text-sky-400 transition-colors font-mono font-bold">
                     <Phone className="w-3.5 h-3.5 text-sky-400 shrink-0" />
                     <span>{BRAND.phoneMarocDisplay}</span>
@@ -194,7 +183,7 @@ export const Footer: React.FC = () => {
                 </li>
 
                 <li>
-                  <div className="text-[11px] text-slate-400 uppercase font-mono">France :</div>
+                  <div className="text-[11px] text-slate-400 uppercase font-mono">Hub France :</div>
                   <a href={`tel:${BRAND.phoneFranceRaw}`} className="flex items-center gap-2 text-slate-200 hover:text-sky-400 transition-colors font-mono font-bold">
                     <Phone className="w-3.5 h-3.5 text-sky-400 shrink-0" />
                     <span>{BRAND.phoneFranceDisplay}</span>
@@ -231,7 +220,7 @@ export const Footer: React.FC = () => {
               </button>
               <button
                 onClick={scrollToTop}
-                className="p-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white transition-colors cursor-pointer ml-2"
+                className="p-2 rounded-xl bg-slate-900 border border-white/[0.08] hover:bg-slate-850 text-slate-400 hover:text-white transition-colors cursor-pointer ml-2"
                 title="Retour en haut"
               >
                 <ArrowUp className="w-4 h-4" />

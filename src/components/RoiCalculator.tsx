@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calculator, ArrowRight, TrendingUp, Clock, ShieldCheck, Sparkles } from 'lucide-react';
+import { Calculator, ArrowRight, TrendingUp, Clock, ShieldCheck, Sparkles, ArrowUpRight } from 'lucide-react';
 
 interface RoiCalculatorProps {
   onOpenConsultation: (topic?: string) => void;
@@ -10,10 +10,10 @@ export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ onOpenConsultation
   const [hoursLost, setHoursLost] = useState<number>(5);
   const [currency, setCurrency] = useState<'MAD' | 'EUR'>('MAD');
 
-  // Hourly cost estimation (loaded labor rate)
-  // MAD: ~65 DH/h on average blended administrative cost
-  // EUR: ~28 €/h on average blended administrative cost
-  const hourlyRate = currency === 'MAD' ? 70 : 30;
+  // Hourly cost estimation (blended loaded labor cost)
+  // MAD: ~70 DH/h blended
+  // EUR: ~32 €/h blended
+  const hourlyRate = currency === 'MAD' ? 70 : 32;
   const weeksPerYear = 46; // working weeks
 
   const totalHoursSavedYearly = Math.round(employees * hoursLost * weeksPerYear * 0.75); // 75% efficiency gain
@@ -24,47 +24,47 @@ export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ onOpenConsultation
   };
 
   return (
-    <section id="simulateur-roi" className="py-24 bg-slate-950 border-t border-slate-850 relative overflow-hidden scroll-mt-24">
-      {/* Background glow */}
-      <div className="hidden sm:block absolute top-1/3 left-10 w-96 h-96 bg-cyan-500/10 blur-[130px] rounded-full pointer-events-none transform-gpu" />
+    <section id="simulateur-roi" className="py-24 bg-[#050811] border-b border-white/[0.08] relative overflow-hidden scroll-mt-24">
+      {/* Background ambient */}
+      <div className="absolute top-1/3 left-10 w-96 h-96 bg-emerald-500/[0.03] blur-[140px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         
         {/* Header */}
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-semibold text-emerald-400 mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs font-semibold text-emerald-400 mb-3 shadow-sm">
             <Calculator className="w-3.5 h-3.5" />
-            <span>Simulateur de Rentabilité Opérationnelle</span>
+            <span className="font-heading uppercase tracking-wider text-[11px]">Modélisation Financière Exécutive</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight mb-4">
-            Combien votre entreprise peut-elle économiser ?
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight mb-4 font-heading">
+            Simulateur de Rentabilité Opérationnelle & Payback
           </h2>
 
-          <p className="text-base sm:text-lg text-slate-400">
-            Estimez en quelques secondes le gain de temps et les économies directes générés par l'automatisation de vos flux et l'intégration d'un ERP moderne.
+          <p className="text-sm sm:text-base text-slate-300 font-sans leading-relaxed">
+            Mesurez l'impact direct de la standardisation de vos processus et de l'intégration ERP sur votre compte de résultat.
           </p>
         </div>
 
         {/* Calculator Widget Container */}
-        <div className="max-w-4xl mx-auto p-6 sm:p-10 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-2xl relative overflow-hidden">
+        <div className="max-w-4xl mx-auto p-6 sm:p-10 rounded-3xl bg-slate-900/80 border border-white/[0.09] shadow-2xl relative overflow-hidden backdrop-blur-xl">
           {/* Top Accent Line */}
-          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-emerald-400/50 to-transparent" />
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent" />
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             
             {/* Left Sliders Controls */}
             <div className="lg:col-span-7 space-y-7">
               
               {/* Currency Selector */}
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono font-bold uppercase text-slate-400">
-                  Devise de calcul :
+              <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
+                <span className="text-xs font-mono font-bold uppercase text-slate-400 tracking-wider">
+                  Devise de référence :
                 </span>
-                <div className="flex rounded-xl bg-slate-950 p-1 border border-slate-800">
+                <div className="flex rounded-xl bg-slate-950 p-1 border border-white/[0.08]">
                   <button
                     onClick={() => setCurrency('MAD')}
-                    className={`px-3 py-1 text-xs font-bold rounded-lg transition-colors cursor-pointer ${
+                    className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer ${
                       currency === 'MAD' ? 'bg-emerald-500 text-white shadow-sm' : 'text-slate-400 hover:text-white'
                     }`}
                   >
@@ -72,7 +72,7 @@ export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ onOpenConsultation
                   </button>
                   <button
                     onClick={() => setCurrency('EUR')}
-                    className={`px-3 py-1 text-xs font-bold rounded-lg transition-colors cursor-pointer ${
+                    className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer ${
                       currency === 'EUR' ? 'bg-emerald-500 text-white shadow-sm' : 'text-slate-400 hover:text-white'
                     }`}
                   >
@@ -85,9 +85,9 @@ export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ onOpenConsultation
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <label className="text-xs sm:text-sm font-semibold text-white">
-                    Nombre de collaborateurs utilisant les outils :
+                    Collaborateurs sur les processus de gestion :
                   </label>
-                  <span className="text-lg font-black font-mono text-sky-400 bg-slate-950 px-3 py-1 rounded-xl border border-slate-800">
+                  <span className="text-base font-bold font-mono text-sky-400 bg-slate-950 px-3 py-1 rounded-xl border border-white/[0.08]">
                     {employees} personnes
                   </span>
                 </div>
@@ -101,9 +101,9 @@ export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ onOpenConsultation
                   className="w-full h-2 bg-slate-950 rounded-lg appearance-none cursor-pointer accent-sky-400"
                 />
                 <div className="flex justify-between text-[10px] text-slate-500 font-mono">
-                  <span>5 pers.</span>
-                  <span>75 pers.</span>
-                  <span>150+ pers.</span>
+                  <span>5 pers. (PME)</span>
+                  <span>75 pers. (ETI)</span>
+                  <span>150+ pers. (Groupe)</span>
                 </div>
               </div>
 
@@ -111,82 +111,82 @@ export const RoiCalculator: React.FC<RoiCalculatorProps> = ({ onOpenConsultation
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <label className="text-xs sm:text-sm font-semibold text-white">
-                    Heures perdues en saisies manuelles & Excel / semaine / pers. :
+                    Temps estimé en ressaisies manuelles & Excel / semaine :
                   </label>
-                  <span className="text-lg font-black font-mono text-emerald-400 bg-slate-950 px-3 py-1 rounded-xl border border-slate-800">
-                    {hoursLost}h / sem
+                  <span className="text-base font-bold font-mono text-emerald-400 bg-slate-950 px-3 py-1 rounded-xl border border-white/[0.08]">
+                    {hoursLost}h / collaborateur
                   </span>
                 </div>
                 <input
                   type="range"
                   min="2"
-                  max="12"
+                  max="15"
                   step="1"
                   value={hoursLost}
                   onChange={(e) => setHoursLost(Number(e.target.value))}
                   className="w-full h-2 bg-slate-950 rounded-lg appearance-none cursor-pointer accent-emerald-400"
                 />
                 <div className="flex justify-between text-[10px] text-slate-500 font-mono">
-                  <span>2 heures</span>
-                  <span>6 heures</span>
-                  <span>12 heures</span>
+                  <span>2h / sem</span>
+                  <span>8h / sem</span>
+                  <span>15h / sem</span>
                 </div>
               </div>
 
-              <div className="p-4 rounded-xl bg-slate-950/70 border border-slate-800/80 text-xs text-slate-400 flex items-start gap-2.5">
-                <Sparkles className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <span>
-                  Basé sur les moyennes constatées par CLIXA chez ses clients après automatisation des flux de devis, facturation, achats et inventaires.
-                </span>
+              <div className="p-3.5 rounded-xl bg-slate-950/70 border border-white/[0.05] text-[11px] text-slate-400">
+                Hypothèse prudente CLIXA : taux de récupération net de 75% du temps perdu grâce aux automatisations Odoo et fiabilisation des flux.
               </div>
-
             </div>
 
-            {/* Right Live Results Card */}
-            <div className="lg:col-span-5 p-6 sm:p-8 rounded-2xl bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 border border-emerald-500/40 shadow-2xl flex flex-col justify-between gap-6 relative">
-              <div className="space-y-4">
-                <span className="text-xs font-mono font-bold uppercase tracking-wider text-emerald-400 block">
-                  Économies Potentielles Estimées
+            {/* Right Display Cards */}
+            <div className="lg:col-span-5 p-6 sm:p-7 rounded-2xl bg-gradient-to-b from-slate-950 to-slate-900 border border-white/[0.08] shadow-inner text-center flex flex-col justify-between">
+              
+              <div>
+                <span className="text-[11px] font-mono uppercase tracking-wider text-emerald-400 font-bold block mb-1">
+                  Économie Annuelle Potentielle
                 </span>
-
-                {/* Big Money Number */}
-                <div>
-                  <div className="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">
-                    {formatNumber(totalFinancialGain)} {currency}
-                  </div>
-                  <span className="text-xs text-slate-400 font-medium">gain financier direct annuel</span>
+                
+                <div className="text-3xl sm:text-4xl font-black text-white font-heading my-2">
+                  {formatNumber(totalFinancialGain)}{' '}
+                  <span className="text-lg font-bold text-emerald-400">
+                    {currency === 'MAD' ? 'MAD' : '€'}
+                  </span>
                 </div>
 
-                <div className="space-y-2.5 pt-4 border-t border-slate-800">
-                  <div className="flex items-center justify-between text-xs sm:text-sm">
-                    <span className="text-slate-400 flex items-center gap-1.5">
-                      <Clock className="w-3.5 h-3.5 text-sky-400" />
-                      Heures libérées / an :
-                    </span>
+                <div className="text-xs text-slate-400 mb-6">
+                  Gain net récurrent sur vos charges opérationnelles
+                </div>
+
+                <div className="space-y-3 text-left border-t border-white/[0.08] pt-4 mb-6">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-slate-400">Heures productives récupérées :</span>
                     <span className="font-mono font-bold text-white">
-                      {formatNumber(totalHoursSavedYearly)} h
+                      +{formatNumber(totalHoursSavedYearly)} h / an
                     </span>
                   </div>
-
-                  <div className="flex items-center justify-between text-xs sm:text-sm">
-                    <span className="text-slate-400 flex items-center gap-1.5">
-                      <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
-                      Délai moyen d'amortissement :
-                    </span>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-slate-400">Délai moyen d'amortissement :</span>
                     <span className="font-mono font-bold text-emerald-400">
-                      3 à 6 mois
+                      4 à 6 mois
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-slate-400">Fiabilisation des données DGI/DGFIP :</span>
+                    <span className="font-mono font-bold text-sky-400">
+                      100%
                     </span>
                   </div>
                 </div>
               </div>
 
               <button
-                onClick={() => onOpenConsultation(`Simulation ROI: ${employees} pers., gain est. ${formatNumber(totalFinancialGain)} ${currency}`)}
-                className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 hover:from-emerald-400 hover:to-teal-500 shadow-xl shadow-emerald-500/20 transition-all cursor-pointer active:scale-[0.98]"
+                onClick={() => onOpenConsultation(`Simulation ROI : ${formatNumber(totalFinancialGain)} ${currency}`)}
+                className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 transition-all shadow-lg shadow-emerald-500/20 active:scale-[0.98] cursor-pointer"
               >
-                <span>Demander mon étude de ROI détaillée</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>Valider cette modélisation</span>
+                <ArrowUpRight className="w-4 h-4" />
               </button>
+
             </div>
 
           </div>

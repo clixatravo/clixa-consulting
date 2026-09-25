@@ -8,9 +8,12 @@ import {
   Globe,
   CheckCircle2, 
   ArrowRight, 
-  Quote,
   Sparkles,
-  Star
+  Star,
+  ShieldCheck,
+  Clock,
+  ArrowUpRight,
+  FileCheck
 } from 'lucide-react';
 
 interface ExpertisesProps {
@@ -18,171 +21,239 @@ interface ExpertisesProps {
 }
 
 export const Expertises: React.FC<ExpertisesProps> = ({ onOpenConsultation }) => {
-  const [activeTab, setActiveTab] = useState<string>('all');
+  const [selectedId, setSelectedId] = useState<string>('odoo');
 
-  const getIcon = (id: string) => {
+  const getIcon = (id: string, className = "w-5 h-5") => {
     switch (id) {
       case 'odoo':
-        return <Database className="w-6 h-6 text-sky-400" />;
+        return <Database className={className} />;
       case 'digital':
-        return <Globe className="w-6 h-6 text-cyan-400" />;
+        return <Globe className={className} />;
       case 'amoa':
-        return <Layers className="w-6 h-6 text-indigo-400" />;
+        return <Layers className={className} />;
       case 'finance':
-        return <TrendingUp className="w-6 h-6 text-blue-400" />;
+        return <TrendingUp className={className} />;
       case 'process':
-        return <Workflow className="w-6 h-6 text-teal-400" />;
+        return <Workflow className={className} />;
       default:
-        return <Sparkles className="w-6 h-6 text-sky-400" />;
+        return <Sparkles className={className} />;
     }
   };
 
-  const filteredExpertises = activeTab === 'all' 
-    ? EXPERTISES 
-    : EXPERTISES.filter(item => item.id === activeTab);
+  const currentItem = EXPERTISES.find(e => e.id === selectedId) || EXPERTISES[0];
 
   return (
-    <section id="expertises" className="py-24 bg-slate-950 relative scroll-mt-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="expertises" className="py-24 bg-[#050811] relative scroll-mt-24 overflow-hidden border-b border-white/[0.08]">
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-sky-500/[0.03] blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-10 left-10 w-[400px] h-[400px] bg-blue-600/[0.03] blur-[140px] rounded-full pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-xs font-semibold text-sky-400 mb-3">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Pôles d'Excellence Métiers & SI</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs font-semibold text-sky-400 mb-3 shadow-sm">
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <span className="font-heading uppercase tracking-wider text-[11px]">Pôles d'Excellence & Dossiers d'Intervention</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight mb-4">
-            Nos Domaines d'Intervention
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight mb-4 font-heading">
+            Une Matrice de Compétences Complète & Intégrée
           </h2>
-          <p className="text-base sm:text-lg text-slate-400">
-            Une combinaison éprouvée d’intégration technologique (ERP Odoo, Digital), d’AMOA rigoureuse et de maîtrise financière & organisationnelle.
+          <p className="text-sm sm:text-base text-slate-300 font-sans leading-relaxed">
+            Chaque pôle est dirigé avec les exigences méthodologiques des grands cabinets de conseil et la capacité de délivrance technique opérationnelle.
           </p>
         </div>
 
-        {/* Filter Tabs */}
-        <div className="flex flex-wrap justify-center items-center gap-2 mb-12">
-          <button
-            onClick={() => setActiveTab('all')}
-            className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center gap-2 ${
-              activeTab === 'all'
-                ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/25 ring-1 ring-sky-400'
-                : 'bg-slate-900/90 text-slate-400 hover:text-white hover:bg-slate-850 border border-slate-800'
-            }`}
-          >
-            <span className={`w-1.5 h-1.5 rounded-full ${activeTab === 'all' ? 'bg-white' : 'bg-slate-500'}`} />
-            <span>Toutes nos offres ({EXPERTISES.length})</span>
-          </button>
-          {EXPERTISES.map((exp) => (
-            <button
-              key={exp.id}
-              onClick={() => setActiveTab(exp.id)}
-              className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center gap-2 ${
-                activeTab === exp.id
-                  ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/25 ring-1 ring-sky-400'
-                  : 'bg-slate-900/90 text-slate-400 hover:text-white hover:bg-slate-850 border border-slate-800'
-              }`}
-            >
-              {exp.isFlagship && <Star className="w-3 h-3 text-amber-400 fill-amber-400" />}
-              <span>{exp.title.split('&')[0]}</span>
-            </button>
-          ))}
+        {/* Tab Navigation: Executive Segment Switcher */}
+        <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 mb-12">
+          {EXPERTISES.map((exp) => {
+            const isSelected = selectedId === exp.id;
+            return (
+              <button
+                key={exp.id}
+                onClick={() => setSelectedId(exp.id)}
+                className={`px-4 sm:px-5 py-3 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer flex items-center gap-2.5 ${
+                  isSelected
+                    ? 'bg-gradient-to-r from-sky-600 to-blue-600 text-white shadow-lg shadow-sky-500/25 ring-1 ring-sky-400'
+                    : 'bg-slate-900/80 text-slate-400 hover:text-white hover:bg-slate-850 border border-white/[0.07]'
+                }`}
+              >
+                <span className={isSelected ? 'text-white' : 'text-sky-400'}>
+                  {getIcon(exp.id, "w-4 h-4")}
+                </span>
+                <span>{exp.title.split('&')[0]}</span>
+                {exp.isFlagship && (
+                  <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${isSelected ? 'bg-white/20 text-white' : 'bg-amber-400/10 text-amber-400'}`}>
+                    ★ Phare
+                  </span>
+                )}
+              </button>
+            );
+          })}
         </div>
 
-        {/* Expertises Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {filteredExpertises.map((expertise) => (
-            <div
-              key={expertise.id}
-              className={`flex flex-col rounded-2xl p-7 sm:p-9 transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-sky-500/5 group relative overflow-hidden ${
-                expertise.isFlagship
-                  ? 'bg-gradient-to-b from-slate-900 to-slate-950 border border-sky-500/40 hover:border-sky-400/70'
-                  : 'bg-slate-900/70 border border-slate-800/90 hover:border-sky-500/40'
-              }`}
-            >
-              {/* Top Accent Line */}
-              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-sky-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        {/* Master Executive Briefing Dossier */}
+        <div className="rounded-3xl bg-slate-900/80 border border-white/[0.09] shadow-2xl overflow-hidden backdrop-blur-xl">
+          <div className="grid grid-cols-1 lg:grid-cols-12">
+            
+            {/* Left Column: Strategic Scope & Deliverables */}
+            <div className="lg:col-span-7 p-7 sm:p-10 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-white/[0.08]">
+              <div>
+                <div className="flex items-center justify-between gap-3 mb-4">
+                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-sky-400 px-3 py-1 rounded-md bg-sky-500/10 border border-sky-500/20">
+                    {currentItem.badge}
+                  </span>
+                  <span className="text-xs text-slate-400 flex items-center gap-1.5 font-medium">
+                    <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                    Engagement forfaitaire & garanti
+                  </span>
+                </div>
 
-              {/* Optional Real Photo Header */}
-              {expertise.image && (
-                <div className="relative h-48 -mx-7 -mt-7 sm:-mx-9 sm:-mt-9 mb-6 overflow-hidden bg-slate-950">
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-white mb-3 font-heading leading-tight">
+                  {currentItem.title}
+                </h3>
+
+                <p className="text-sm sm:text-base font-medium text-sky-200/90 mb-4 leading-snug">
+                  {currentItem.tagline}
+                </p>
+
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6 font-sans">
+                  {currentItem.description}
+                </p>
+
+                {/* Deliverables Matrix */}
+                <div className="mb-6">
+                  <div className="text-xs font-heading font-bold text-slate-300 uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <FileCheck className="w-4 h-4 text-sky-400" />
+                    Livrables & Périmètre Opérationnel
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {currentItem.items.map((item, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-start gap-2.5 p-2.5 rounded-xl bg-slate-950/70 border border-white/[0.05] hover:border-sky-500/30 transition-colors"
+                      >
+                        <CheckCircle2 className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
+                        <span className="text-xs text-slate-300 font-medium leading-tight">
+                          {item}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Bar */}
+              <div className="pt-6 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="text-xs text-slate-400">
+                  Besoin d'un audit de cadrage sous 48h ?
+                </div>
+                <button
+                  onClick={() => onOpenConsultation(currentItem.title)}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 transition-all shadow-lg shadow-sky-500/20 active:scale-[0.98] cursor-pointer"
+                >
+                  <span>Demander un cadrage exécutif</span>
+                  <ArrowUpRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Right Column: Visual Case Presentation & Key Metrics */}
+            <div className="lg:col-span-5 p-7 sm:p-10 bg-slate-950/70 flex flex-col justify-between">
+              
+              {/* Photo Scrim if available */}
+              {currentItem.image ? (
+                <div className="relative h-56 rounded-2xl overflow-hidden mb-6 border border-white/[0.08] shadow-lg">
                   <img
-                    src={expertise.image}
-                    alt={expertise.title}
+                    src={currentItem.image}
+                    alt={currentItem.title}
                     width={800}
                     height={447}
                     decoding="async"
                     loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
-                  
-                  {/* Flagship ribbon inside image */}
-                  {expertise.isFlagship && (
-                    <div className="absolute top-3 right-3 px-3 py-1 bg-slate-950/85 backdrop-blur-md border border-sky-500/30 rounded-lg text-[10px] font-mono text-sky-300 font-semibold flex items-center gap-1 shadow-md">
-                      <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
-                      <span>PÔLE MAJEUR</span>
-                    </div>
-                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+                  <div className="absolute bottom-3 left-3 right-3 text-xs text-slate-200 font-medium bg-slate-900/90 backdrop-blur-md p-2.5 rounded-xl border border-white/[0.08]">
+                    Cas d'usage réel déployé par CLIXA en environnement de production.
+                  </div>
+                </div>
+              ) : (
+                <div className="h-56 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-white/[0.08] p-6 flex flex-col justify-center items-center text-center mb-6">
+                  <div className="p-4 rounded-2xl bg-sky-500/10 border border-sky-500/20 text-sky-400 mb-3">
+                    {getIcon(currentItem.id, "w-8 h-8")}
+                  </div>
+                  <h4 className="text-white font-bold text-base mb-1">Expertise Stratégique C-Suite</h4>
+                  <p className="text-xs text-slate-400 max-w-xs">Gouvernance, pilotage de la rentabilité et accompagnement des comités de direction.</p>
                 </div>
               )}
 
-              {/* Card Header */}
-              <div className="flex items-start justify-between gap-4 mb-5">
-                <div className="flex items-center gap-3.5">
-                  <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 shadow-inner group-hover:border-sky-500/40 group-hover:bg-slate-900 transition-all">
-                    {getIcon(expertise.id)}
+              {/* Verified Institutional Commitments */}
+              <div className="space-y-3">
+                <div className="p-3.5 rounded-xl bg-slate-900/80 border border-white/[0.06] flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <Clock className="w-4 h-4 text-sky-400" />
+                    <span className="text-xs text-slate-300 font-medium">Délai moyen d'intervention</span>
                   </div>
-                  <div>
-                    <span className="text-[11px] font-semibold uppercase tracking-wider text-sky-400 font-mono">
-                      {expertise.badge}
-                    </span>
-                    <h3 className="text-xl sm:text-2xl font-bold text-white group-hover:text-sky-300 transition-colors">
-                      {expertise.title}
-                    </h3>
+                  <span className="text-xs font-mono font-bold text-white bg-slate-950 px-2 py-0.5 rounded border border-white/[0.05]">
+                    72 Heures
+                  </span>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900/80 border border-white/[0.06] flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                    <span className="text-xs text-slate-300 font-medium">Protection des données</span>
                   </div>
+                  <span className="text-xs font-mono font-bold text-emerald-400 bg-slate-950 px-2 py-0.5 rounded border border-white/[0.05]">
+                    NDA Strict
+                  </span>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900/80 border border-white/[0.06] flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <Star className="w-4 h-4 text-amber-400" />
+                    <span className="text-xs text-slate-300 font-medium">Séniorité des consultants</span>
+                  </div>
+                  <span className="text-xs font-mono font-bold text-amber-300 bg-slate-950 px-2 py-0.5 rounded border border-white/[0.05]">
+                    10 à 15+ ans
+                  </span>
                 </div>
               </div>
 
-              {/* Tagline / Subtitle */}
-              <p className="text-sm sm:text-base font-semibold text-slate-200 mb-3 leading-snug">
-                {expertise.tagline}
-              </p>
-
-              {/* Description */}
-              <p className="text-xs sm:text-sm text-slate-400 mb-6 leading-relaxed">
-                {expertise.description}
-              </p>
-
-              {/* Bullet points list styled */}
-              <div className="space-y-2 mb-8 flex-1">
-                {expertise.items.map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-2.5 p-2 rounded-lg bg-slate-950/40 border border-slate-850/50 text-xs sm:text-sm text-slate-300 hover:border-slate-800 transition-colors">
-                    <CheckCircle2 className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* Role Quote if available */}
-              {expertise.roleQuote && (
-                <div className="mb-6 p-4 rounded-xl bg-slate-950/90 border-l-2 border-sky-400 text-xs sm:text-sm text-slate-300 italic flex items-start gap-2.5 shadow-inner">
-                  <Quote className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
-                  <span>{expertise.roleQuote}</span>
-                </div>
-              )}
-
-              {/* Card CTA */}
-              <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
-                <button
-                  onClick={() => onOpenConsultation(expertise.title)}
-                  className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-sky-400 hover:text-sky-300 transition-colors group/btn cursor-pointer py-1"
-                >
-                  <span>Échanger avec un consultant</span>
-                  <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                </button>
-                <span className="text-[11px] text-slate-500 font-mono">CLIXA Method</span>
-              </div>
             </div>
+
+          </div>
+        </div>
+
+        {/* Overview of all 5 pillars in compact cards so users can also grasp the full spectrum at a glance */}
+        <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+          {EXPERTISES.map((exp) => (
+            <button
+              key={exp.id}
+              onClick={() => setSelectedId(exp.id)}
+              className={`p-4 rounded-2xl text-left transition-all duration-300 border cursor-pointer ${
+                selectedId === exp.id
+                  ? 'bg-slate-900 border-sky-400/80 shadow-lg shadow-sky-500/10'
+                  : 'bg-slate-950/70 border-white/[0.06] hover:border-white/[0.15] hover:bg-slate-900/50'
+              }`}
+            >
+              <div className="flex items-center justify-between mb-2">
+                <div className={`p-1.5 rounded-lg ${selectedId === exp.id ? 'bg-sky-500/20 text-sky-400' : 'bg-slate-900 text-slate-400'}`}>
+                  {getIcon(exp.id, "w-4 h-4")}
+                </div>
+                <span className="text-[10px] font-mono text-slate-500">
+                  0{EXPERTISES.indexOf(exp) + 1}
+                </span>
+              </div>
+              <div className="text-xs font-bold text-white truncate mb-1">
+                {exp.title.split('&')[0]}
+              </div>
+              <div className="text-[11px] text-slate-400 line-clamp-2 leading-snug">
+                {exp.tagline}
+              </div>
+            </button>
           ))}
         </div>
 

@@ -8,36 +8,23 @@ import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { ChatAssistant } from './components/ChatAssistant';
 
 /* ---------------------------------------------------------------------------
-   Découpage du bundle.
-   Tout tenait dans un seul fichier de 340 Ko : le téléphone devait le
-   télécharger, l'analyser et l'exécuter en entier avant le moindre affichage.
-   Seuls la navigation et le premier écran sont chargés d'emblée ; le reste
-   suit immédiatement après, sans bloquer le rendu initial. La modale de
-   contact n'est téléchargée qu'à son ouverture.
+   Découpage optimisé du bundle pour des performances 60fps & un chargement instantané.
+   Seuls l'en-tête, le hero et les premières garanties sont prioritaires.
    ------------------------------------------------------------------------- */
 const Secteurs = lazy(() => import('./components/Secteurs').then((m) => ({ default: m.Secteurs })));
 const CaseStudies = lazy(() => import('./components/CaseStudies').then((m) => ({ default: m.CaseStudies })));
 const Testimonials = lazy(() => import('./components/Testimonials').then((m) => ({ default: m.Testimonials })));
 const RoiCalculator = lazy(() => import('./components/RoiCalculator').then((m) => ({ default: m.RoiCalculator })));
-const FacturationElec = lazy(() => import('./components/FacturationElec').then((m) => ({ default: m.FacturationElec })));
-const SolutionsDigitales = lazy(() => import('./components/SolutionsDigitales').then((m) => ({ default: m.SolutionsDigitales })));
-const TechStack = lazy(() => import('./components/TechStack').then((m) => ({ default: m.TechStack })));
-const AuditExpress = lazy(() => import('./components/AuditExpress').then((m) => ({ default: m.AuditExpress })));
 const ComparisonTable = lazy(() => import('./components/ComparisonTable').then((m) => ({ default: m.ComparisonTable })));
 const AuditFlash = lazy(() => import('./components/AuditFlash').then((m) => ({ default: m.AuditFlash })));
 const Methodologie = lazy(() => import('./components/Methodologie').then((m) => ({ default: m.Methodologie })));
-const Engagements = lazy(() => import('./components/Engagements').then((m) => ({ default: m.Engagements })));
-const TeamPedigree = lazy(() => import('./components/TeamPedigree').then((m) => ({ default: m.TeamPedigree })));
-const WhyClixa = lazy(() => import('./components/WhyClixa').then((m) => ({ default: m.WhyClixa })));
-const LeadMagnet = lazy(() => import('./components/LeadMagnet').then((m) => ({ default: m.LeadMagnet })));
 const FAQSection = lazy(() => import('./components/FAQSection').then((m) => ({ default: m.FAQSection })));
 const CTASection = lazy(() => import('./components/CTASection').then((m) => ({ default: m.CTASection })));
 const Footer = lazy(() => import('./components/Footer').then((m) => ({ default: m.Footer })));
 const ContactModal = lazy(() => import('./components/ContactModal').then((m) => ({ default: m.ContactModal })));
 
-/** Réserve la hauteur des sections différées : sans cela la page se
- *  contracterait puis se rallongerait, déplaçant le contenu sous le doigt. */
-const SectionFallback: React.FC = () => <div className="h-[600px]" aria-hidden="true" />;
+/** Réserve la hauteur des sections différées */
+const SectionFallback: React.FC = () => <div className="h-[400px]" aria-hidden="true" />;
 
 export const App: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -67,89 +54,67 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-cyan-500 selection:text-white">
-      {/* Top Navigation */}
+    <div className="min-h-screen bg-[#050811] text-slate-100 flex flex-col selection:bg-sky-500 selection:text-white font-sans antialiased">
+      {/* 1. Header Exécutif Ultra-Luxury Frosted Glass */}
       <Navbar onOpenConsultation={handleOpenConsultation} />
 
-      {/* Main Content Sections */}
+      {/* Main Executive Briefing Flow */}
       <main className="flex-1">
-        {/* 1. Hero Section based strictly on user recommendation */}
+        {/* 1. Le Salon Exécutif (Positionnement, Chiffres Clés & 3 Pôles Stratégiques) */}
         <Hero onOpenConsultation={handleOpenConsultation} />
 
-        {/* 1.5. Institutional Credibility & Trust Markers */}
+        {/* 2. Garanties Institutionnelles & Écosystème (Odoo, DGI/DGFIP, AMOA, NDA) */}
         <TrustBanner />
 
-        {/* 2. Brand Positioning & 4 Intersecting Dimensions */}
+        {/* 3. Doctrine d'Intervention & Carrefour Stratégique 360° */}
         <AboutBanner />
 
-        {/* 3. The Core Expertises (ERP Odoo, Web, AMOA, Finance, Process) */}
+        {/* 4. Pôles d'Excellence & Matrice de Compétences (Dossiers interactifs ERP Odoo, Web, AMOA, Finance) */}
         <Expertises onOpenConsultation={handleOpenConsultation} />
 
-        {/* Sections suivantes : chargées juste après, sans bloquer le haut de page */}
+        {/* Sections suivantes chargées en différé sans bloquer le rendu */}
         <Suspense fallback={<SectionFallback />}>
-        {/* 3.5. Spécialisations Sectorielles (BTP, Industrie, Négoce, Services, Santé, Énergie) */}
-        <Secteurs onOpenConsultation={handleOpenConsultation} />
+          {/* 5. Spécialisations Sectorielles (BTP, Industrie, Négoce, Services, Santé, Énergie) */}
+          <Secteurs onOpenConsultation={handleOpenConsultation} />
 
-        {/* 4. Case Studies / Cas Clients Concrets with Chiffres Clés */}
-        <CaseStudies onOpenConsultation={handleOpenConsultation} />
+          {/* 6. Dossiers d'Impact & Études de Cas Chiffrées */}
+          <CaseStudies onOpenConsultation={handleOpenConsultation} />
 
-        {/* 4.5. Retours d'Expérience & Témoignages Dirigeants */}
-        <Testimonials onOpenConsultation={handleOpenConsultation} />
+          {/* 7. Retours d'Expérience C-Level & Témoignages Dirigeants */}
+          <Testimonials onOpenConsultation={handleOpenConsultation} />
 
-        {/* 4.7. Simulateur Interactif de ROI & Rentabilité */}
-        <RoiCalculator onOpenConsultation={handleOpenConsultation} />
+          {/* 8. Simulateur Financier de Rentabilité & Payback (MAD / EUR) */}
+          <RoiCalculator onOpenConsultation={handleOpenConsultation} />
 
-        {/* 5. Focus Facturation Électronique & Flux */}
-        <FacturationElec onOpenConsultation={handleOpenConsultation} />
+          {/* 9. Pack Diagnostic Flash 48H (Cadrage Exécutif Indépendant) */}
+          <AuditFlash onOpenConsultation={handleOpenConsultation} />
 
-        {/* 6. Digital Solutions */}
-        <SolutionsDigitales onOpenConsultation={handleOpenConsultation} />
+          {/* 10. Méthodologie en 4 Phases & Gouvernance Rigoureuse */}
+          <Methodologie onOpenConsultation={handleOpenConsultation} />
 
-        {/* 6.5. Technologies Maîtrisées & Écosystème */}
-        <TechStack onOpenConsultation={handleOpenConsultation} />
+          {/* 11. Benchmark : Pourquoi les Comités de Direction Choisissent CLIXA vs SSII */}
+          <ComparisonTable onOpenConsultation={handleOpenConsultation} />
 
-        {/* 7. Diagnostic / Mini-Audit Express Interactif */}
-        <AuditExpress onOpenConsultation={handleOpenConsultation} />
+          {/* 12. Foire Aux Questions Stratégiques des Dirigeants */}
+          <FAQSection onOpenConsultation={handleOpenConsultation} />
 
-        {/* 7.5. Tableau Comparatif : Pourquoi CLIXA vs Intégrateurs Classiques */}
-        <ComparisonTable onOpenConsultation={handleOpenConsultation} />
-
-        {/* 7.8. Pack Diagnostic Flash 48H */}
-        <AuditFlash onOpenConsultation={handleOpenConsultation} />
-
-        {/* 8. Proven 4-Step Methodology */}
-        <Methodologie onOpenConsultation={handleOpenConsultation} />
-
-        {/* 9. Service Guarantees & Commitments */}
-        <Engagements />
-
-        {/* 9.5. Profil des Consultants & Charte Déontologique */}
-        <TeamPedigree onOpenConsultation={handleOpenConsultation} />
-
-        {/* 10. Why CLIXA: Hybrid Alignment */}
-        <WhyClixa onOpenConsultation={handleOpenConsultation} />
-
-        {/* 10.5. Téléchargement du Livre Blanc Exécutif 2026 */}
-        <LeadMagnet onOpenConsultation={handleOpenConsultation} />
-
-        {/* 11. FAQ Stratégique pour Dirigeants */}
-        <FAQSection onOpenConsultation={handleOpenConsultation} />
-
-        {/* 12. Conversion CTA */}
-        <CTASection onOpenConsultation={handleOpenConsultation} />
+          {/* 13. Consultation Exécutive & Prise de Rendez-vous Confidentielle */}
+          <CTASection onOpenConsultation={handleOpenConsultation} />
         </Suspense>
       </main>
 
-      {/* Footer */}
+      {/* Footer Institutionnel */}
       <Suspense fallback={<div className="h-64" aria-hidden="true" />}>
         <Footer />
       </Suspense>
 
-      {/* Floating WhatsApp Quick Action Button */}
+      {/* Assistant IA Exécutif */}
       <ChatAssistant />
+
+      {/* Bouton Flottant WhatsApp Direct */}
       <FloatingWhatsApp />
 
-      {/* Lead capture modal : téléchargée seulement à l'ouverture */}
+      {/* Modale de Prise de Rendez-vous Exécutif */}
       {modalOpen && (
         <Suspense fallback={null}>
           <ContactModal

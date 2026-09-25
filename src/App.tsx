@@ -7,8 +7,7 @@ import { Expertises } from './components/Expertises';
 import { Secteurs } from './components/Secteurs';
 import { CaseStudies } from './components/CaseStudies';
 import { Testimonials } from './components/Testimonials';
-import { RoiCalculator } from './components/RoiCalculator';
-import { AuditFlash } from './components/AuditFlash';
+import { ExecutiveLab } from './components/ExecutiveLab';
 import { Methodologie } from './components/Methodologie';
 import { ComparisonTable } from './components/ComparisonTable';
 import { FAQSection } from './components/FAQSection';
@@ -17,7 +16,7 @@ import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { ChatAssistant } from './components/ChatAssistant';
 
-/* Modale de consultation chargée dynamiquement pour préserver la mémoire */
+/* Dynamic load for consultation modal */
 const ContactModal = lazy(() => import('./components/ContactModal').then((m) => ({ default: m.ContactModal })));
 
 export const App: React.FC = () => {
@@ -49,52 +48,49 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#050811] text-slate-100 flex flex-col selection:bg-sky-500 selection:text-white font-sans antialiased">
-      {/* 1. Header Exécutif avec navigation fiable & fluide */}
+      {/* 1. SQLI Header Exécutif avec navigation fiable & fluide */}
       <Navbar onOpenConsultation={handleOpenConsultation} />
 
-      {/* Main Executive Briefing Flow */}
+      {/* Main Executive Briefing Flow (SQLI Architectural Faces) */}
       <main className="flex-1">
-        {/* 1. Le Grand Salon Exécutif (Positionnement, Titre & 3 Pôles Majeurs) */}
+        {/* Face 1: Le Grand Salon Exécutif (Hero Cinematic + Cockpit SI Live + 3 Pôles Majeurs) */}
         <Hero onOpenConsultation={handleOpenConsultation} />
 
-        {/* 2. Chiffres Clés & Garanties Institutionnelles (Odoo, DGI/DGFIP, AMOA, NDA) */}
+        {/* Face 2: Chiffres Clés Bloomberg & SQLI Infinite Marquee Slider */}
         <TrustBanner />
 
-        {/* 3. Doctrine d'Intervention & Carrefour Stratégique 360° */}
+        {/* Face 3: Doctrine d'Intervention & Carrefour Stratégique 360° */}
         <AboutBanner />
 
-        {/* 4. Pôles d'Excellence & Matrice de Compétences (ERP Odoo, Web, AMOA, Finance) */}
+        {/* Face 4: SQLI Push-Services (2-Column Split: Expertises & Architecture SI) */}
         <Expertises onOpenConsultation={handleOpenConsultation} />
 
-        {/* 5. Spécialisations Sectorielles (BTP, Industrie, Négoce, Services, Santé, Énergie) */}
+        {/* Face 5: Spécialisations Sectorielles Métiers (Industrie, BTP, Négoce, Santé, Services) */}
         <Secteurs onOpenConsultation={handleOpenConsultation} />
 
-        {/* 6. Dossiers d'Impact & Études de Cas Chiffrées */}
+        {/* Face 6: SQLI Push-Use-Cases (2-Column Split: Case Studies & ROI Vérifiés) */}
         <CaseStudies onOpenConsultation={handleOpenConsultation} />
 
-        {/* 7. Retours d'Expérience C-Level & Témoignages Dirigeants */}
+        {/* Face 7: Retours d'Expérience C-Level & Témoignages Dirigeants Vérifiés */}
         <Testimonials onOpenConsultation={handleOpenConsultation} />
 
-        {/* 8. Simulateur Financier de Rentabilité & Payback (MAD / EUR) */}
-        <RoiCalculator onOpenConsultation={handleOpenConsultation} />
+        {/* Face 8: Executive Decision Lab (Simulateur ROI Interactif + Diagnostic Flash 48H) */}
+        <ExecutiveLab onOpenConsultation={handleOpenConsultation} />
 
-        {/* 9. Pack Diagnostic Flash 48H (Cadrage Exécutif Indépendant) */}
-        <AuditFlash onOpenConsultation={handleOpenConsultation} />
-
-        {/* 10. Méthodologie en 4 Phases & Gouvernance Rigoureuse */}
+        {/* Face 9: Méthodologie en 4 Phases Éprouvées & Gouvernance Big 4 */}
         <Methodologie onOpenConsultation={handleOpenConsultation} />
 
-        {/* 11. Benchmark : Pourquoi les Comités de Direction Choisissent CLIXA vs SSII */}
+        {/* Face 10: Benchmark Différenciateur : Pourquoi Choisir CLIXA vs SSII */}
         <ComparisonTable onOpenConsultation={handleOpenConsultation} />
 
-        {/* 12. Foire Aux Questions Stratégiques des Dirigeants */}
+        {/* Face 11: Foire Aux Questions Stratégiques des Directeurs */}
         <FAQSection onOpenConsultation={handleOpenConsultation} />
 
-        {/* 13. Consultation Exécutive & Prise de Rendez-vous Confidentielle */}
+        {/* Face 12: Consultation Exécutive & Prise de Rendez-vous Confidentielle */}
         <CTASection onOpenConsultation={handleOpenConsultation} />
       </main>
 
-      {/* Footer Institutionnel */}
+      {/* Footer Institutionnel SQLI Standard */}
       <Footer />
 
       {/* Assistant IA Exécutif */}

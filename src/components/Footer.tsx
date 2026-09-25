@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BRAND } from '../data/content';
-import { Mail, Phone, MapPin, ArrowUp, MessageCircle, Send, CheckCircle2, ShieldCheck, Lock, FileText } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowUp, MessageCircle, Send, CheckCircle2, ShieldCheck, Lock, FileText, Globe, ArrowUpRight } from 'lucide-react';
 import { LegalModal } from './LegalModal';
 
 export const Footer: React.FC = () => {
@@ -26,20 +26,20 @@ export const Footer: React.FC = () => {
 
   return (
     <>
-      <footer className="bg-[#04060e] border-t border-white/[0.08] pt-16 pb-12 text-slate-400 text-sm">
+      <footer className="bg-[#03050c] border-t border-white/[0.08] pt-16 pb-12 text-slate-400 text-sm font-sans" role="contentinfo">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* Strategic Executive Newsletter Banner */}
+          {/* 1. STRATEGIC EXECUTIVE NEWSLETTER BANNER (SQLI High-Level Briefing) */}
           <div className="mb-14 p-6 sm:p-8 rounded-3xl bg-slate-900/60 border border-white/[0.08] flex flex-col lg:flex-row items-center justify-between gap-6 shadow-2xl backdrop-blur-md">
             <div className="space-y-1 text-center lg:text-left">
               <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-sky-400">
                 La Note Stratégique Exécutive CLIXA
               </span>
               <h3 className="text-base sm:text-lg font-bold text-white font-heading">
-                Recevez notre veille confidentielle : ERP Odoo, Facturation 2026 & Performance
+                Recevez notre veille C-Suite : ERP Odoo, Facturation 2026 & Rigueur SI
               </h3>
               <p className="text-xs text-slate-400 font-sans">
-                Synthèse trimestrielle réservée aux comités de direction : conformité fiscale DGI/DGFIP, retours d'expérience et benchmarks.
+                Synthèse trimestrielle réservée aux comités de direction : conformité fiscale DGI/DGFIP, benchmarks sectoriels et cas pratiques.
               </p>
             </div>
 
@@ -70,21 +70,25 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
+          {/* 2. SQLI MULTI-COLUMN CORPORATE STRUCTURE */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/[0.08]">
             
             {/* Brand Col */}
             <div className="lg:col-span-2 space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-slate-900 border border-white/[0.1] p-1.5 flex items-center justify-center shadow-inner">
-                  <svg viewBox="0 0 48 48" className="w-full h-full" fill="none">
-                    <path d="M14 16L24 24L14 32" stroke="#38BDF8" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M34 16L24 24L34 32" stroke="#0284C7" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-                    <circle cx="24" cy="24" r="3.5" fill="#38BDF8"/>
-                  </svg>
+                {/* SQLI Twin Rectangles Emblem */}
+                <div className="flex items-end gap-1 h-6">
+                  <div className="w-1.5 h-6 rounded-sm bg-sky-400" />
+                  <div className="w-1.5 h-4 rounded-sm bg-blue-600" />
                 </div>
-                <span className="font-extrabold text-lg tracking-tight text-white font-heading">
-                  CLIXA <span className="text-slate-400 font-semibold text-sm">CONSULTING</span>
-                </span>
+                <div className="flex items-baseline gap-1.5">
+                  <span className="font-extrabold text-xl tracking-tight text-white font-heading">
+                    CLIXA
+                  </span>
+                  <span className="text-slate-400 font-semibold text-xs tracking-widest uppercase font-mono">
+                    CONSULTING
+                  </span>
+                </div>
               </div>
 
               <p className="text-xs text-sky-400 font-medium tracking-wide uppercase font-mono">
@@ -92,15 +96,23 @@ export const Footer: React.FC = () => {
               </p>
 
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-sm font-sans">
-                Cabinet de conseil de direction générale accompagnant les entreprises dans l'intégration ERP Odoo, la digitalisation des processus et la sécurisation financière de leur croissance.
+                Cabinet de conseil de direction générale accompagnant les entreprises dans l'intégration ERP Odoo, l'architecture des systèmes d'information et la conformité réglementaire.
               </p>
 
-              <div className="pt-2 text-xs text-slate-400 font-mono">
-                Casablanca 🇲🇦 • Paris 🇫🇷 • Interventions Internationales
+              {/* Direct Hubs Badge */}
+              <div className="pt-2 text-xs text-slate-400 font-mono space-y-1">
+                <div className="flex items-center gap-2 text-slate-300">
+                  <span>🇲🇦</span>
+                  <span><strong>Casablanca :</strong> Casablanca Finance City (CFC) & Twin Center</span>
+                </div>
+                <div className="flex items-center gap-2 text-slate-300">
+                  <span>🇫🇷</span>
+                  <span><strong>Paris :</strong> 8ème Arrondissement (Europe & AMOA)</span>
+                </div>
               </div>
             </div>
 
-            {/* Expertises Col */}
+            {/* Col 1: Pôles d'Excellence */}
             <div className="space-y-3">
               <h4 className="text-xs font-bold uppercase tracking-wider text-white font-heading">
                 Pôles d'Excellence
@@ -137,75 +149,76 @@ export const Footer: React.FC = () => {
               </ul>
             </div>
 
-            {/* Méthode & Navigation */}
+            {/* Col 2: Approche & Outils */}
             <div className="space-y-3">
               <h4 className="text-xs font-bold uppercase tracking-wider text-white font-heading">
-                Approche Stratégique
+                Approche & Outils
               </h4>
               <ul className="space-y-2 text-xs sm:text-sm">
                 <li>
-                  <a href="#methode" className="hover:text-sky-400 transition-colors">Méthodologie en 4 Phases</a>
+                  <a href="#cas-clients" className="hover:text-sky-400 transition-colors">
+                    Cas Clients & ROI
+                  </a>
                 </li>
                 <li>
-                  <a href="#comparatif" className="hover:text-sky-400 transition-colors">Pourquoi CLIXA vs SSII</a>
+                  <a href="#simulateur-roi" className="hover:text-sky-400 transition-colors">
+                    Simulateur de Rentabilité
+                  </a>
                 </li>
                 <li>
-                  <a href="#cas-clients" className="hover:text-sky-400 transition-colors">Cas d'Usage & ROI</a>
+                  <a href="#simulateur-roi" className="hover:text-sky-400 transition-colors">
+                    Diagnostic Flash 48H
+                  </a>
                 </li>
                 <li>
-                  <a href="#simulateur-roi" className="hover:text-sky-400 transition-colors">Simulateur de Rentabilité</a>
+                  <a href="#methode" className="hover:text-sky-400 transition-colors">
+                    Méthodologie en 4 Phases
+                  </a>
                 </li>
                 <li>
-                  <a href="#audit-flash" className="hover:text-sky-400 transition-colors">Diagnostic Flash 48H</a>
+                  <a href="#secteurs" className="hover:text-sky-400 transition-colors">
+                    Spécialisations Métiers
+                  </a>
                 </li>
               </ul>
             </div>
 
-            {/* Contact Col - Dual Hubs */}
+            {/* Col 3: Contacts Directs C-Suite */}
             <div className="space-y-3">
               <h4 className="text-xs font-bold uppercase tracking-wider text-white font-heading">
-                Bureaux & Contacts
+                Lignes Directes
               </h4>
-              <ul className="space-y-2.5 text-xs sm:text-sm">
+              <ul className="space-y-2.5 text-xs">
                 <li>
-                  <a href={`mailto:${BRAND.contactEmail}`} className="flex items-center gap-2 text-white hover:text-sky-400 transition-colors font-medium">
-                    <Mail className="w-4 h-4 text-sky-400 shrink-0" />
-                    <span>{BRAND.contactEmail}</span>
+                  <a href={`tel:${BRAND.phoneMarocRaw}`} className="text-white hover:text-sky-300 font-mono transition-colors block">
+                    <span className="text-slate-400 block text-[10px]">Siège Maroc (Casablanca) :</span>
+                    {BRAND.phoneMarocDisplay}
                   </a>
                 </li>
-
-                <li className="pt-1">
-                  <div className="text-[11px] text-slate-400 uppercase font-mono">Hub Maroc :</div>
-                  <a href={`tel:${BRAND.phoneMarocRaw}`} className="flex items-center gap-2 text-slate-200 hover:text-sky-400 transition-colors font-mono font-bold">
-                    <Phone className="w-3.5 h-3.5 text-sky-400 shrink-0" />
-                    <span>{BRAND.phoneMarocDisplay}</span>
-                  </a>
-                </li>
-
                 <li>
-                  <div className="text-[11px] text-slate-400 uppercase font-mono">Hub France :</div>
-                  <a href={`tel:${BRAND.phoneFranceRaw}`} className="flex items-center gap-2 text-slate-200 hover:text-sky-400 transition-colors font-mono font-bold">
-                    <Phone className="w-3.5 h-3.5 text-sky-400 shrink-0" />
-                    <span>{BRAND.phoneFranceDisplay}</span>
+                  <a href={`tel:${BRAND.phoneFranceRaw}`} className="text-white hover:text-sky-300 font-mono transition-colors block">
+                    <span className="text-slate-400 block text-[10px]">Bureau Europe (Paris) :</span>
+                    {BRAND.phoneFranceDisplay}
                   </a>
                 </li>
-
-                <li className="flex items-start gap-2 pt-1 text-slate-400">
-                  <MapPin className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
-                  <span>Casablanca & Paris</span>
+                <li>
+                  <a href={BRAND.whatsappLink} target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1.5 pt-1">
+                    <MessageCircle className="w-3.5 h-3.5" />
+                    <span>Ligne Directe WhatsApp</span>
+                  </a>
                 </li>
               </ul>
             </div>
 
           </div>
 
-          {/* Bottom Bar */}
-          <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+          {/* 3. SQLI LEGAL & BOTTOM ROW */}
+          <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-sans">
             <div>
-              © {new Date().getFullYear()} CLIXA Consulting (<a href="https://clixaconseil.com" className="text-slate-400 hover:text-white">clixaconseil.com</a>). Tous droits réservés.
+              © {new Date().getFullYear()} CLIXA Consulting. Tous droits réservés. Cabinet de Conseil & Ingénierie SI.
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+            <div className="flex items-center gap-6">
               <button
                 onClick={() => openLegal('mentions')}
                 className="hover:text-slate-300 transition-colors cursor-pointer"
@@ -216,12 +229,13 @@ export const Footer: React.FC = () => {
                 onClick={() => openLegal('privacy')}
                 className="hover:text-slate-300 transition-colors cursor-pointer"
               >
-                Confidentialité & CNDP / RGPD
+                Politique de Confidentialité (CNDP / RGPD)
               </button>
               <button
                 onClick={scrollToTop}
-                className="p-2 rounded-xl bg-slate-900 border border-white/[0.08] hover:bg-slate-850 text-slate-400 hover:text-white transition-colors cursor-pointer ml-2"
-                title="Retour en haut"
+                className="p-2 rounded-xl bg-slate-900 border border-white/[0.08] text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+                title="Haut de page"
+                aria-label="Retour en haut de page"
               >
                 <ArrowUp className="w-4 h-4" />
               </button>
@@ -231,12 +245,14 @@ export const Footer: React.FC = () => {
         </div>
       </footer>
 
-      {/* Legal & Privacy Modal */}
-      <LegalModal
-        isOpen={legalModalOpen}
-        onClose={() => setLegalModalOpen(false)}
-        type={legalType}
-      />
+      {/* Modal Juridique */}
+      {legalModalOpen && (
+        <LegalModal
+          isOpen={legalModalOpen}
+          onClose={() => setLegalModalOpen(false)}
+          type={legalType}
+        />
+      )}
     </>
   );
 };

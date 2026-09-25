@@ -11,15 +11,26 @@ export const TrustBanner: React.FC = () => {
     { icon: Award, label: "Double Hub Casablanca & Paris", desc: "Casablanca Finance City & Paris", tag: "Présence Directe" },
     { icon: TrendingUp, label: "Pilotage Financier & BFR", desc: "Tableaux de bord DAF & Trésorerie", tag: "Performance" },
     { icon: Globe, label: "Solutions Web & Extranets", desc: "Portails clients & Automatisation API", tag: "Digitalisation" },
+    { icon: Building2, label: "Casablanca Finance City (CFC)", desc: "Statut International & Rayonnement Régional", tag: "Hub Stratégique" },
   ];
 
   return (
-    <div className="border-y border-white/[0.08] bg-[#070b16] relative overflow-hidden py-10">
+    <div className="border-y border-white/[0.08] bg-[#070b16] relative overflow-hidden py-12">
       {/* Subtle background glow */}
       <div className="absolute inset-0 bg-gradient-to-r from-sky-500/[0.03] via-transparent to-blue-500/[0.03] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
         
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-8">
+          <span className="text-[11px] font-mono uppercase tracking-widest text-sky-400 font-bold">
+            Garanties Institutionnelles & Rigueur C-Suite
+          </span>
+          <h2 className="text-xl sm:text-2xl font-bold text-white font-heading mt-1">
+            Les Standards d'Excellence du Cabinet
+          </h2>
+        </div>
+
         {/* Upper Part: 4 Key Executive Metrics (Bloomberg/Financial Times Style) */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {KEY_METRICS.map((metric, idx) => (
@@ -43,10 +54,10 @@ export const TrustBanner: React.FC = () => {
 
       </div>
 
-      {/* SQLI-Style Continuous Infinite Marquee Slider */}
+      {/* SQLI-Style Continuous Infinite Marquee Slider (client-logo-slider__marquee) */}
       <div className="relative w-full overflow-hidden border-t border-white/[0.05] pt-6">
         <div className="flex animate-marquee-infinite gap-4 sm:gap-6">
-          {/* First loop */}
+          {/* Loop 1 */}
           {trustMarqueeItems.map((item, idx) => {
             const Icon = item.icon;
             return (
@@ -74,7 +85,7 @@ export const TrustBanner: React.FC = () => {
             );
           })}
 
-          {/* Duplicated loop for infinite seamless scroll */}
+          {/* Loop 2 (duplicate for seamless 360 infinite flow) */}
           {trustMarqueeItems.map((item, idx) => {
             const Icon = item.icon;
             return (

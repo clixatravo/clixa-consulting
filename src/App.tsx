@@ -156,7 +156,9 @@ export const App: React.FC = () => {
 
       {/* 2. Main Face Viewport (Chaque Face est isolée, majestueuse & sans encombrement) */}
       <main className="flex-1 min-h-[80vh]">
-        {renderActiveFace()}
+        <div key={currentFace} className="animate-face-enter">
+          {renderActiveFace()}
+        </div>
       </main>
 
       {/* 3. Footer Institutionnel SQLI Standard */}

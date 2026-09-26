@@ -9,7 +9,6 @@ import {
   Check,
   Bot
 } from 'lucide-react';
-import { RobotIcon } from './RobotIcon';
 import { BRAND } from '../data/content';
 
 interface NavbarProps {
@@ -78,10 +77,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
   const handleNavClick = (faceId: string) => {
     setMobileMenuOpen(false);
     onNavigateFace(faceId);
-  };
-
-  const openAiAssistant = () => {
-    window.dispatchEvent(new CustomEvent('clixa:open-chat'));
   };
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -246,24 +241,9 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
               })}
             </nav>
 
-            {/* Right Suite: Assistant IA Button + Clean Underline Search Input */}
+            {/* Right Suite: Clean Underline Search Input */}
             <div className="hidden md:flex items-center gap-3 lg:gap-4 shrink-0">
               
-              {/* 🤖 Dedicated C-Suite Chatbot Header Button */}
-              <button
-                onClick={openAiAssistant}
-                className={`px-3 py-1.5 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 rounded-none border ${
-                  isDarkHero
-                    ? 'bg-sky-500/20 text-sky-300 border-sky-400/40 hover:bg-sky-500/30 shadow-sm'
-                    : 'bg-blue-50 text-blue-800 border-blue-300 hover:bg-blue-100 hover:border-blue-500 shadow-sm'
-                }`}
-                title="Poser une question à l'Assistant IA Clixa sur nos expertises et formations"
-              >
-                <RobotIcon className="w-4 h-4" />
-                <span className="font-heading">Assistant IA</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              </button>
-
               {/* SQLI-Style Search Underline */}
               <form 
                 onSubmit={handleSearchSubmit}
@@ -299,14 +279,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
 
             {/* Mobile Hamburger Button */}
             <div className="flex items-center gap-2 lg:hidden">
-              <button
-                onClick={openAiAssistant}
-                className="p-2 text-xs font-bold text-sky-400 bg-slate-900 border border-slate-700 flex items-center gap-1"
-                aria-label="Assistant IA"
-              >
-                <RobotIcon className="w-4 h-4" />
-                <span>IA</span>
-              </button>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className={`p-2 rounded-md transition-colors cursor-pointer ${
@@ -378,17 +350,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
             })}
 
             <div className="pt-6 border-t border-[#e7e2d8] space-y-3">
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  openAiAssistant();
-                }}
-                className="w-full py-3.5 bg-blue-600 text-white font-bold text-sm rounded-none hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
-              >
-                <RobotIcon className="w-4 h-4" />
-                <span>Interroger l'Assistant IA</span>
-              </button>
-
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);

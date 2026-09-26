@@ -100,25 +100,49 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
   return (
     <div className="w-full animate-in fade-in duration-300 font-sans">
       
-      {/* 1. HERO LIGHT STEEL BLUE (SQLI-style professional bright hero) */}
+      {/* 1. HERO LIGHT STEEL BLUE + CINEMATIC VIDEO TRAILER */}
       <section className="relative min-h-[92vh] flex flex-col justify-center pt-32 sm:pt-40 pb-20 overflow-hidden border-b border-slate-200"
         style={{ background: 'linear-gradient(135deg, #e8f4fd 0%, #dbeeff 30%, #c7e3ff 60%, #f0f7ff 100%)' }}
       >
 
+        {/* 🎬 LOOPING BACKGROUND VIDEO TRAILER — visible on light bg with blue blend */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          <video
+            ref={videoRef}
+            autoPlay
+            loop
+            muted={videoMuted}
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover scale-[1.06]"
+            style={{ opacity: 0.13, mixBlendMode: 'multiply' }}
+          >
+            <source
+              src="https://assets.mixkit.co/videos/preview/mixkit-software-developer-working-on-code-screen-close-up-1728-large.mp4"
+              type="video/mp4"
+            />
+          </video>
+          {/* light gradient to fade video at edges */}
+          <div className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(120deg, rgba(232,244,253,0.85) 0%, rgba(219,238,255,0.4) 50%, rgba(232,244,253,0.75) 100%)'
+            }}
+          />
+        </div>
+
         {/* Subtle geometric grid overlay */}
         <div className="absolute inset-0 pointer-events-none z-0"
           style={{
-            backgroundImage: 'linear-gradient(rgba(31,100,200,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(31,100,200,0.05) 1px, transparent 1px)',
+            backgroundImage: 'linear-gradient(rgba(31,100,200,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(31,100,200,0.04) 1px, transparent 1px)',
             backgroundSize: '48px 48px'
           }}
         />
 
-        {/* Large soft blue orb background accent */}
+        {/* Large soft blue orbs */}
         <div className="absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full pointer-events-none z-0"
-          style={{ background: 'radial-gradient(circle, rgba(56,152,255,0.18) 0%, transparent 70%)' }}
+          style={{ background: 'radial-gradient(circle, rgba(56,152,255,0.16) 0%, transparent 70%)' }}
         />
         <div className="absolute bottom-0 -left-32 w-[400px] h-[400px] rounded-full pointer-events-none z-0"
-          style={{ background: 'radial-gradient(circle, rgba(96,185,255,0.12) 0%, transparent 70%)' }}
+          style={{ background: 'radial-gradient(circle, rgba(96,185,255,0.1) 0%, transparent 70%)' }}
         />
 
         {/* Main Content Container */}
@@ -126,7 +150,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
           
           <div className="max-w-4xl space-y-6 text-left">
             {/* Top Kicker Pill */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/80 border border-blue-200 text-xs font-semibold text-blue-800 shadow-sm backdrop-blur-md">
+            <div className="animation-scroll fade-in-bottom inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/80 border border-blue-200 text-xs font-semibold text-blue-800 shadow-sm backdrop-blur-md">
               <span className="flex h-2 w-2 relative">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
@@ -136,26 +160,26 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
               </span>
             </div>
 
-            {/* Authoritative Clean Headline — dark on light bg */}
-            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-extrabold tracking-tight text-[#0a1628] leading-[1.06] font-heading">
+            {/* Authoritative Clean Headline */}
+            <h1 className="animation-scroll fade-in-bottom delay-100 text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-extrabold tracking-tight text-[#0a1628] leading-[1.06] font-heading">
               L'Excellence du Conseil Stratégique <br />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-sky-500 to-blue-400">
                 & de la Transformation Digitale
               </span>
             </h1>
 
-            {/* High-Impact Editorial Subtitle */}
-            <p className="text-base sm:text-xl text-slate-600 max-w-3xl font-normal leading-relaxed font-sans">
+            {/* Subtitle */}
+            <p className="animation-scroll fade-in-bottom delay-200 text-base sm:text-xl text-slate-600 max-w-3xl font-normal leading-relaxed font-sans">
               Nous accompagnons les comités de direction au Maroc et en Europe pour <strong className="text-slate-900 font-semibold">structurer leurs processus</strong>,{' '}
               <strong className="text-slate-900 font-semibold">intégrer l'ERP Odoo sur-mesure</strong>, former leurs cadres via <strong className="text-slate-900 font-semibold">CLIXA Institute</strong> et{' '}
               <strong className="text-slate-900 font-semibold">sécuriser 100% de conformité fiscale DGI & DGFIP</strong>.
             </p>
 
-            {/* SQLI Signature Action Suite */}
-            <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+            {/* CTA Buttons */}
+            <div className="animation-scroll fade-in-bottom delay-300 pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
               <button
                 onClick={() => onOpenConsultation("Cadrage Stratégique Général")}
-                className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl text-sm sm:text-base font-bold text-white transition-all active:scale-[0.98] cursor-pointer font-heading shadow-lg shadow-blue-300/40"
+                className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl text-sm sm:text-base font-bold text-white transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer font-heading shadow-lg shadow-blue-300/40"
                 style={{ background: 'linear-gradient(135deg, #1d6cf5 0%, #0ea5e9 100%)' }}
               >
                 <span>Démarrer un cadrage stratégique</span>
@@ -164,7 +188,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
               
               <button
                 onClick={() => onNavigateFace('formations')}
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-sm sm:text-base font-semibold text-slate-800 bg-white/90 hover:bg-white border border-slate-200 transition-all shadow-sm active:scale-[0.98] cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-sm sm:text-base font-semibold text-slate-800 bg-white/90 hover:bg-white border border-slate-200 hover:border-blue-300 transition-all shadow-sm active:scale-[0.98] cursor-pointer"
               >
                 <GraduationCap className="w-4 h-4 text-blue-600" />
                 <span>Formations Exécutives Institute</span>
@@ -172,14 +196,13 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
             </div>
 
             {/* C-Suite Trust Strip */}
-            <div className="pt-6 flex flex-wrap items-center gap-6 text-xs text-slate-500 border-t border-blue-100">
+            <div className="animation-scroll fade-in-bottom delay-400 pt-6 flex flex-wrap items-center gap-6 text-xs text-slate-500 border-t border-blue-100">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-emerald-600" />
                 <span>Interventions sous accord strict de confidentialité (NDA)</span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-blue-500" />
-
                 <span>Bureaux à Casablanca Finance City 🇲🇦 & Paris 🇫🇷</span>
               </div>
             </div>
@@ -188,30 +211,25 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
 
         </div>
 
-        {/* 🎬 FLOATING VIDEO TRAILER CONTROLS (Corner Badge) */}
-        <div className="absolute bottom-6 right-6 z-20 hidden sm:flex items-center gap-2 bg-slate-950/80 border border-white/[0.1] px-3.5 py-1.5 rounded-full backdrop-blur-md shadow-2xl text-[11px] text-slate-300">
-          <div className="flex items-center gap-1.5 font-mono text-sky-400">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+        {/* 🎬 TRAILER CONTROLS BADGE */}
+        <div className="absolute bottom-6 right-6 z-20 hidden sm:flex items-center gap-2 bg-white/70 border border-blue-200 px-3.5 py-1.5 rounded-full backdrop-blur-md shadow-lg text-[11px] text-slate-600">
+          <div className="flex items-center gap-1.5 font-mono text-blue-600">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span className="font-bold">TRAILER 4K</span>
           </div>
-
-          <div className="h-3 w-px bg-white/[0.1] mx-1" />
-
+          <div className="h-3 w-px bg-slate-300 mx-1" />
           <button
             onClick={togglePlay}
-            className="hover:text-white transition-colors p-1 cursor-pointer flex items-center gap-1"
-            title={videoPlaying ? "Mettre en pause" : "Lancer le trailer"}
+            className="hover:text-blue-700 transition-colors p-1 cursor-pointer flex items-center gap-1"
           >
-            {videoPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 text-sky-400" />}
+            {videoPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 text-blue-600" />}
             <span>{videoPlaying ? "Pause" : "Play"}</span>
           </button>
-
           <button
             onClick={toggleMute}
-            className="hover:text-white transition-colors p-1 cursor-pointer"
-            title={videoMuted ? "Activer le son" : "Couper le son"}
+            className="hover:text-blue-700 transition-colors p-1 cursor-pointer"
           >
-            {videoMuted ? <VolumeX className="w-3.5 h-3.5 text-slate-400" /> : <Volume2 className="w-3.5 h-3.5 text-sky-400" />}
+            {videoMuted ? <VolumeX className="w-3.5 h-3.5 text-slate-400" /> : <Volume2 className="w-3.5 h-3.5 text-blue-600" />}
           </button>
         </div>
 

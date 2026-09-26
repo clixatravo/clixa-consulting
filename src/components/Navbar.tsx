@@ -346,7 +346,49 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
               );
             })}
 
-            <div className="pt-6 border-t border-[#e7e2d8] space-y-3">
+            {/* Hub & Language Switchers for Mobile */}
+            <div className="pt-4 pb-2 border-t border-[#e7e2d8] flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setSelectedCountry('Morocco')}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-none border transition-colors cursor-pointer ${
+                    selectedCountry === 'Morocco'
+                      ? 'bg-[#0c1222] text-white border-[#0c1222]'
+                      : 'bg-white text-slate-700 border-slate-300'
+                  }`}
+                >
+                  🇲🇦 Casablanca
+                </button>
+                <button
+                  onClick={() => setSelectedCountry('France')}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-none border transition-colors cursor-pointer ${
+                    selectedCountry === 'France'
+                      ? 'bg-[#0c1222] text-white border-[#0c1222]'
+                      : 'bg-white text-slate-700 border-slate-300'
+                  }`}
+                >
+                  🇫🇷 Toulouse
+                </button>
+              </div>
+
+              <div className="flex items-center gap-2 text-xs font-bold">
+                <button
+                  onClick={() => setCurrentLang('FR')}
+                  className={`cursor-pointer ${currentLang === 'FR' ? 'text-blue-600 underline font-bold' : 'text-slate-500 hover:text-black'}`}
+                >
+                  FR
+                </button>
+                <span className="text-slate-300">|</span>
+                <button
+                  onClick={() => setCurrentLang('EN')}
+                  className={`cursor-pointer ${currentLang === 'EN' ? 'text-blue-600 underline font-bold' : 'text-slate-500 hover:text-black'}`}
+                >
+                  EN
+                </button>
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-[#e7e2d8] space-y-3">
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);

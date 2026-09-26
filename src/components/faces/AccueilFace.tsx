@@ -684,7 +684,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
       <section className="py-20 sm:py-24 bg-[#FAF7F2]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div 
-            className="p-10 sm:p-16 border border-blue-200 text-center space-y-6 shadow-lg relative overflow-hidden"
+            className="p-6 sm:p-16 border border-blue-200 text-center space-y-6 shadow-lg relative overflow-hidden"
             style={{
               background: 'linear-gradient(135deg, #e9f3fc 0%, #d8ecfe 50%, #cae3fb 100%)'
             }}
@@ -694,18 +694,18 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
               <span>Mobilisation sous 72h · Casablanca CFC 🇲🇦 & Toulouse 🇫🇷</span>
             </div>
 
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0a1628] font-heading">
+            <h2 className="text-2xl sm:text-5xl font-extrabold text-[#0a1628] font-heading">
               Prêt à structurer vos processus & sécuriser votre ERP ?
             </h2>
 
-            <p className="text-base text-slate-700 font-sans max-w-xl mx-auto leading-relaxed">
+            <p className="text-sm sm:text-base text-slate-700 font-sans max-w-xl mx-auto leading-relaxed">
               Échangez en direct avec un associé senior pour cadrer les objectifs, le budget et le planning de votre projet d'organisation ou d'intégration Odoo.
             </p>
 
-            <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="pt-3 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4">
               <button
                 onClick={() => onOpenConsultation("Cadrage Stratégique Général")}
-                className="px-8 py-4 text-sm font-bold text-white font-heading flex items-center gap-2.5 cursor-pointer shadow-md transition-all hover:bg-blue-700 active:scale-[0.98]"
+                className="w-full sm:w-auto px-8 py-4 text-sm font-bold text-white font-heading flex items-center justify-center gap-2.5 cursor-pointer shadow-md transition-all hover:bg-blue-700 active:scale-[0.98]"
                 style={{ background: '#1f24e9' }}
               >
                 <span>Prendre un rendez-vous stratégique</span>
@@ -714,7 +714,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
 
               <button
                 onClick={() => onNavigateFace('contact')}
-                className="px-7 py-4 text-sm font-semibold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 font-sans flex items-center gap-2 cursor-pointer shadow-sm transition-all active:scale-[0.98]"
+                className="w-full sm:w-auto px-7 py-4 text-sm font-semibold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 font-sans flex items-center justify-center gap-2 cursor-pointer shadow-sm transition-all active:scale-[0.98]"
               >
                 <span>Voir nos adresses à Casablanca & Toulouse</span>
                 <ArrowRight className="w-4 h-4 text-blue-600" />

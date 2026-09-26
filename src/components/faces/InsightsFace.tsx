@@ -513,7 +513,7 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
         </div>
 
         {/* 4. C-SUITE ROI SIMULATOR BANNER & INTERACTIVE LAB */}
-        <div className="border border-[#e2dcd2] bg-white p-8 sm:p-12 shadow-sm">
+        <div className="border border-[#e2dcd2] bg-white p-5 sm:p-12 shadow-sm">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8 pb-8 border-b border-slate-100">
             <div>
               <span className="text-xs font-mono font-bold uppercase tracking-wider text-blue-600 block mb-2">

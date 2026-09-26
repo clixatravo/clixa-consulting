@@ -161,7 +161,35 @@ export const MethodologieFace: React.FC<MethodologieFaceProps> = ({ onOpenConsul
             </h2>
           </div>
 
-          <div className="overflow-x-auto">
+          {/* Mobile Responsive Cards View */}
+          <div className="block md:hidden space-y-4">
+            {COMPARISON_ITEMS.map((item, idx) => (
+              <div key={idx} className="p-4 border border-slate-200 bg-[#FAF7F2]">
+                <div className="text-xs font-bold text-slate-900 font-heading mb-3 pb-2 border-b border-slate-200">
+                  {item.critere}
+                </div>
+                <div className="space-y-2 text-xs">
+                  <div className="p-2.5 bg-red-50/60 border border-red-200/80 flex items-start gap-2">
+                    <X className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-bold text-slate-600 block text-[10px] uppercase tracking-wider">Intégrateurs Classiques</span>
+                      <span className="text-slate-600 font-sans">{item.classique}</span>
+                    </div>
+                  </div>
+                  <div className="p-2.5 bg-blue-50 border border-blue-200 flex items-start gap-2">
+                    <Check className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-bold text-blue-900 block text-[10px] uppercase tracking-wider">Engagement Clixa Consulting</span>
+                      <span className="text-slate-900 font-semibold font-sans">{item.clixa}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop Table View */}
+          <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
                 <tr className="border-b border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-500">

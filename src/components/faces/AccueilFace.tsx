@@ -553,40 +553,103 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
               </div>
             </div>
 
-            {/* Right Column: Case Studies Highlights */}
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
-              {CASE_STUDIES.slice(0, 2).map((item) => (
-                <div
-                  key={item.id}
-                  onClick={() => onNavigateFace('cas-clients')}
-                  className="p-7 bg-white border border-[#e2dcd2] hover:border-blue-500 hover:shadow-md transition-all duration-200 cursor-pointer group flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex items-center justify-between gap-2 mb-4">
-                      <span className="text-[10px] font-mono uppercase text-blue-700 bg-blue-50 px-2 py-0.5 border border-blue-200 font-bold">
-                        {item.tag}
-                      </span>
-                      <span className="text-xs text-slate-500 font-medium">{item.location}</span>
-                    </div>
-
-                    <div className="text-3xl sm:text-4xl font-black text-blue-700 font-heading mb-1">
-                      {item.metric}
-                    </div>
-                    <div className="text-xs text-slate-700 font-bold mb-3">
-                      {item.metricLabel}
-                    </div>
-
-                    <h3 className="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors font-heading mb-2">
-                      {item.title}
-                    </h3>
+            {/* Right Column: Case Studies Highlights with Magnetic Photos */}
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div
+                onClick={() => onNavigateFace('cas-clients')}
+                className="group cursor-pointer flex flex-col bg-white border border-[#e2dcd2] p-5 hover:border-blue-500 hover:shadow-xl transition-all duration-300"
+              >
+                <div className="photo-frame w-full aspect-[16/10] bg-slate-900 mb-4 relative">
+                  <img
+                    src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1000&q=85"
+                    alt="Industrie & BTP Odoo 18"
+                    className="photo-zoom-img w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="photo-overlay-scrim" />
+                  <div className="absolute top-3 left-3 z-10 pointer-events-none">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider bg-[#0a1628]/90 text-white px-2.5 py-1 backdrop-blur-md border border-white/20">
+                      Industrie & BTP
+                    </span>
                   </div>
-
-                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-blue-600 group-hover:text-blue-800 transition-colors">
-                    <span>Consulter le dossier</span>
-                    <ArrowUpRight className="w-4 h-4" />
+                  <div className="absolute bottom-3 right-3 z-10 pointer-events-none">
+                    <span className="text-xs font-bold text-white bg-[#1f24e9] px-2.5 py-1 shadow-md">
+                      -32% Délais
+                    </span>
                   </div>
                 </div>
-              ))}
+
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <span className="text-[10px] font-mono uppercase text-blue-700 bg-blue-50 px-2 py-0.5 border border-blue-200 font-bold">
+                    Odoo 18 Enterprise
+                  </span>
+                  <span className="text-xs text-slate-500 font-medium">Casablanca 🇲🇦</span>
+                </div>
+
+                <div className="text-2xl sm:text-3xl font-black text-blue-700 font-heading mb-1">
+                  -32%
+                </div>
+                <div className="text-xs text-slate-700 font-bold mb-2">
+                  sur les délais logistiques multi-usines
+                </div>
+
+                <h3 className="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors font-heading mb-3 line-clamp-2">
+                  Refonte ERP Odoo 18 & Supply Chain : 8 sites industriels synchronisés sans rupture
+                </h3>
+
+                <div className="mt-auto pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-blue-600 group-hover:text-blue-800 transition-colors">
+                  <span>Consulter le dossier d'impact</span>
+                  <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </div>
+              </div>
+
+              <div
+                onClick={() => onNavigateFace('cas-clients')}
+                className="group cursor-pointer flex flex-col bg-white border border-[#e2dcd2] p-5 hover:border-blue-500 hover:shadow-xl transition-all duration-300"
+              >
+                <div className="photo-frame w-full aspect-[16/10] bg-slate-900 mb-4 relative">
+                  <img
+                    src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1000&q=85"
+                    alt="Distribution & Facturation DGI"
+                    className="photo-zoom-img w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="photo-overlay-scrim" />
+                  <div className="absolute top-3 left-3 z-10 pointer-events-none">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider bg-[#0a1628]/90 text-white px-2.5 py-1 backdrop-blur-md border border-white/20">
+                      Distribution & Négoce
+                    </span>
+                  </div>
+                  <div className="absolute bottom-3 right-3 z-10 pointer-events-none">
+                    <span className="text-xs font-bold text-white bg-[#1f24e9] px-2.5 py-1 shadow-md">
+                      100% DGI Conforme
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <span className="text-[10px] font-mono uppercase text-blue-700 bg-blue-50 px-2 py-0.5 border border-blue-200 font-bold">
+                    Facturation DGI & EDI
+                  </span>
+                  <span className="text-xs text-slate-500 font-medium">Casablanca 🇲🇦</span>
+                </div>
+
+                <div className="text-2xl sm:text-3xl font-black text-blue-700 font-heading mb-1">
+                  140 000
+                </div>
+                <div className="text-xs text-slate-700 font-bold mb-2">
+                  factures automatisées et 0 redressement
+                </div>
+
+                <h3 className="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors font-heading mb-3 line-clamp-2">
+                  Conformité Fiscale DGI : Automatisation des flux et suppression des rejets
+                </h3>
+
+                <div className="mt-auto pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-blue-600 group-hover:text-blue-800 transition-colors">
+                  <span>Consulter le dossier d'impact</span>
+                  <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </div>
+              </div>
             </div>
 
           </div>

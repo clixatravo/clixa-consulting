@@ -242,17 +242,28 @@ export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, 
           {filtered.map((s) => (
             <article 
               key={s.id}
-              className="group cursor-pointer flex flex-col"
+              className="group cursor-pointer flex flex-col bg-white border border-[#e2dcd2] p-6 hover:border-blue-500 hover:shadow-xl transition-all duration-300"
               onClick={() => onOpenConsultation(`Consultation Secteur : ${s.industry}`)}
             >
-              {/* Image */}
-              <div className="w-full aspect-[4/3] sm:aspect-[16/11] bg-slate-200 overflow-hidden mb-5">
+              {/* Magnetic Photo Frame with Light-Sweep Animation & Badges */}
+              <div className="photo-frame w-full aspect-[16/10] bg-slate-900 mb-5 relative">
                 <img
                   src={s.image}
                   alt={s.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  className="photo-zoom-img w-full h-full object-cover"
                   loading="lazy"
                 />
+                <div className="photo-overlay-scrim" />
+                <div className="absolute top-3.5 left-3.5 z-10 pointer-events-none">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider bg-[#0a1628]/90 text-white px-3 py-1 backdrop-blur-md border border-white/20 shadow-sm">
+                    {s.industry}
+                  </span>
+                </div>
+                <div className="absolute bottom-3.5 right-3.5 z-10 pointer-events-none">
+                  <span className="text-xs font-bold text-white bg-[#1f24e9] px-3 py-1 shadow-md">
+                    {s.reg}
+                  </span>
+                </div>
               </div>
 
               {/* Title */}
@@ -262,7 +273,7 @@ export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, 
 
               {/* Category */}
               <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
-                {s.industry} • <span className="text-blue-600">{s.reg}</span>
+                <span className="text-blue-600 font-bold">{s.reg}</span> • <span>Contraintes Réglementaires Maîtrisées</span>
               </div>
 
               {/* Description */}

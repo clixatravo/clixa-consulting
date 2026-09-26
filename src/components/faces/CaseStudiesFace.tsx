@@ -1,3 +1,4 @@
+import { useScrollReveal } from '../../hooks/useScrollReveal';
 import React, { useState } from 'react';
 import { CASE_STUDIES } from '../../data/content';
 import { ChevronDown, ArrowUpRight, Check } from 'lucide-react';
@@ -18,6 +19,8 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
     tech: 'All',
     country: 'All',
   });
+
+  useScrollReveal();
 
   const caseStudiesExtended = [
     {

@@ -262,31 +262,27 @@
 }
 
 /* ---------------------------------------------------------------------------
-   SQLI Face-to-Face Page Transition (Cinematic slide-up fade)
+   SQLI Face-to-Face Page Transition — Cinematic (like sqli.com navigation)
    ------------------------------------------------------------------------- */
 @keyframes faceEnter {
-  from {
+  0% {
     opacity: 0;
-    transform: translateY(22px);
+    transform: translateY(36px);
+    filter: blur(4px);
   }
-  to {
+  60% {
+    filter: blur(0px);
+  }
+  100% {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes faceExit {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
+    filter: blur(0px);
   }
 }
 
 .animate-face-enter {
-  animation: faceEnter 0.52s cubic-bezier(0.22, 1, 0.36, 1) both;
-  will-change: opacity, transform;
+  animation: faceEnter 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: opacity, transform, filter;
 }
 
 /* Hide scrollbar utility */
@@ -299,34 +295,56 @@
 }
 
 /* ---------------------------------------------------------------------------
-   SQLI Scroll Reveal & Face-to-Face Transition Classes
+   SQLI Scroll Reveal — Intersection Observer powered
    ------------------------------------------------------------------------- */
 .animation-scroll {
   opacity: 0;
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
 .animation-scroll.fade-in-bottom {
-  transform: translateY(32px);
+  transform: translateY(40px);
 }
 
 .animation-scroll.slide-right {
-  transform: translateX(-32px);
+  transform: translateX(-40px);
 }
 
 .animation-scroll.slide-left {
-  transform: translateX(32px);
+  transform: translateX(40px);
 }
+
+.animation-scroll.scale-in {
+  transform: scale(0.94);
+}
+
+/* Stagger delay utilities */
+.animation-scroll.delay-100 { transition-delay: 0.1s; }
+.animation-scroll.delay-200 { transition-delay: 0.2s; }
+.animation-scroll.delay-300 { transition-delay: 0.3s; }
+.animation-scroll.delay-400 { transition-delay: 0.4s; }
+.animation-scroll.delay-500 { transition-delay: 0.5s; }
 
 .animation-scroll--scrolled {
   opacity: 1 !important;
-  transform: translate(0, 0) !important;
+  transform: translate(0, 0) scale(1) !important;
 }
 
 .face-section {
   scroll-margin-top: 5.5rem;
-  transition: opacity 0.4s ease-in-out;
+}
+
+/* SQLI editorial card hover */
+.sqli-card {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sqli-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.14);
 }
 
 /* ---------------------------------------------------------------------------

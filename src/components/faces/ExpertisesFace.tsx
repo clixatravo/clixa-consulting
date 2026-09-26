@@ -1,3 +1,4 @@
+import { useScrollReveal } from '../../hooks/useScrollReveal';
 import React, { useState } from 'react';
 import { ChevronDown, ArrowUpRight, Check } from 'lucide-react';
 
@@ -11,12 +12,13 @@ export const ExpertisesFace: React.FC<ExpertisesFaceProps> = ({ onOpenConsultati
   const [selectedTech, setSelectedTech] = useState<string>('All');
   const [selectedHub, setSelectedHub] = useState<string>('Morocco');
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-
   const [appliedFilters, setAppliedFilters] = useState({
     domain: 'All',
     tech: 'All',
     hub: 'All',
   });
+
+  useScrollReveal();
 
   const expertises = [
     {

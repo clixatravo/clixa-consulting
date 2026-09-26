@@ -25,6 +25,7 @@ import {
 import { BRAND, KEY_METRICS, EXPERTISES, CASE_STUDIES } from '../../data/content';
 import { FORMATIONS_CATALOGUE } from '../../data/formations';
 import { RobotIcon } from '../RobotIcon';
+import { useScrollReveal } from '../../hooks/useScrollReveal';
 
 interface AccueilFaceProps {
   onOpenConsultation: (topic?: string) => void;
@@ -35,6 +36,8 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
   const [videoPlaying, setVideoPlaying] = useState(true);
   const [videoMuted, setVideoMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  useScrollReveal();
 
   useEffect(() => {
     if (videoRef.current) {

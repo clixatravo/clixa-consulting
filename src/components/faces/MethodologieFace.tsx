@@ -1,3 +1,4 @@
+import { useScrollReveal } from '../../hooks/useScrollReveal';
 import React, { useState } from 'react';
 import { METHODE_STEPS, COMPARISON_ITEMS, FAQ_ITEMS } from '../../data/content';
 import { 

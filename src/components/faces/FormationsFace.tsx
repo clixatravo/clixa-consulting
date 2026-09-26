@@ -1,3 +1,4 @@
+import { useScrollReveal } from '../../hooks/useScrollReveal';
 import React, { useState } from 'react';
 import { FORMATIONS_CATALOGUE, TARIFS_INSTITUTE, FormationProgramme } from '../../data/formations';
 import { ChevronDown, ArrowUpRight, Check, Bot, GraduationCap, Clock, Award, ShieldCheck } from 'lucide-react';
@@ -16,6 +17,8 @@ export const FormationsFace: React.FC<FormationsFaceProps> = ({ onOpenConsultati
     spec: 'All',
     cert: 'All',
   });
+
+  useScrollReveal();
 
   const handleApply = () => {
     setAppliedFilters({

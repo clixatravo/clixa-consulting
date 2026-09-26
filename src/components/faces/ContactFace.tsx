@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useScrollReveal } from '../../hooks/useScrollReveal';
 import { BRAND } from '../../data/content';
 import { 
   PhoneCall, 
@@ -18,12 +19,16 @@ interface ContactFaceProps {
 
 export const ContactFace: React.FC<ContactFaceProps> = ({ onOpenConsultation, onNavigateFace }) => {
   const [name, setName] = useState('');
+  useScrollReveal();
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  useScrollReveal();
   const [company, setCompany] = useState('');
   const [topic, setTopic] = useState('Intégration ERP Odoo');
+  useScrollReveal();
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  useScrollReveal();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

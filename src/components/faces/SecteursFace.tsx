@@ -1,3 +1,4 @@
+import { useScrollReveal } from '../../hooks/useScrollReveal';
 import React, { useState } from 'react';
 import { ChevronDown, ArrowUpRight, Check } from 'lucide-react';
 
@@ -17,6 +18,8 @@ export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, 
     reg: 'All',
     hub: 'All',
   });
+
+  useScrollReveal();
 
   const sectors = [
     {

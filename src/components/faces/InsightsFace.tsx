@@ -1,3 +1,4 @@
+import { useScrollReveal } from '../../hooks/useScrollReveal';
 import React, { useState } from 'react';
 import { ChevronDown, ArrowUpRight, Calculator, Zap, Check, ArrowRight } from 'lucide-react';
 
@@ -39,6 +40,8 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
 
   // Simulator toggle
   const [showRoiSimulator, setShowRoiSimulator] = useState(false);
+
+  useScrollReveal();
 
   // ROI Calculator state
   const [employees, setEmployees] = useState<number>(25);

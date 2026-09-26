@@ -301,3 +301,48 @@
   transition: opacity 0.4s ease-in-out;
 }
 
+/* ---------------------------------------------------------------------------
+   SQLI Hero Background Video Trailer & Cinematic Overlays
+   ------------------------------------------------------------------------- */
+.node-home-page__head__media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.video-in-place {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.video-in-place iframe,
+.video-in-place video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  min-width: 177.78vh;
+  min-height: 56.25vw;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  pointer-events: none;
+  border: 0;
+}
+
+.node-home-page__head__shade {
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(115deg, rgba(5, 8, 17, 0.88) 10%, rgba(5, 8, 17, 0.58) 50%, rgba(5, 8, 17, 0.86) 90%),
+    radial-gradient(circle at 75% 25%, rgba(2, 132, 199, 0.22) 0%, rgba(5, 8, 17, 0) 65%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+

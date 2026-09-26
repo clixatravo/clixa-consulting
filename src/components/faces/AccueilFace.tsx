@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   ArrowUpRight, 
   Sparkles, 
@@ -15,7 +15,13 @@ import {
   Building2,
   FileCheck2,
   Cpu,
-  Lock
+  Lock,
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  FileText,
+  Workflow
 } from 'lucide-react';
 import { BRAND, KEY_METRICS, EXPERTISES, CASE_STUDIES } from '../../data/content';
 
@@ -25,6 +31,9 @@ interface AccueilFaceProps {
 }
 
 export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, onNavigateFace }) => {
+  const [videoPlaying, setVideoPlaying] = useState(true);
+  const [videoMuted, setVideoMuted] = useState(true);
+
   const trustMarqueeItems = [
     { icon: Cpu, label: "Écosystème ERP Odoo 17 & 18", desc: "Intégration & Paramétrage Métier", tag: "ERP Certifié" },
     { icon: FileCheck2, label: "Facturation Électronique", desc: "Conformité DGI (MA) & DGFIP (FR)", tag: "Agrément Fiscal" },
@@ -33,15 +42,41 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
     { icon: Award, label: "Double Hub Casablanca & Paris", desc: "Casablanca Finance City & Paris", tag: "Présence Directe" },
     { icon: TrendingUp, label: "Pilotage Financier & BFR", desc: "Tableaux de bord DAF & Trésorerie", tag: "Performance" },
     { icon: Globe, label: "Solutions Web & Extranets", desc: "Portails clients & Automatisation API", tag: "Digitalisation" },
+    { icon: Building2, label: "Casablanca Finance City (CFC)", desc: "Statut International & Rayonnement Régional", tag: "Hub Stratégique" },
+  ];
+
+  const insightsArticles = [
+    {
+      tag: "Intelligence Artificielle & ERP",
+      title: "L'impact des agents IA autonomes sur le pilotage des processus ERP en 2026",
+      desc: "Comment l'orchestration par IA transforme la saisie comptable, la réconciliation bancaire et la planification des stocks.",
+      date: "Septembre 2026",
+      readTime: "4 min"
+    },
+    {
+      tag: "Réglementation Fiscale DGI",
+      title: "Réforme de la Facturation Électronique au Maroc : Guide stratégique pour Comités de Direction",
+      desc: "Anticiper les obligations légales DGI 2025/2026, fiabiliser les télédéclarations et sécuriser les interfaçages API.",
+      date: "Août 2026",
+      readTime: "6 min"
+    },
+    {
+      tag: "Gouvernance & AMOA",
+      title: "Pourquoi 70% des projets ERP échouent et comment le cadrage Big 4 garantit le succès",
+      desc: "Analyse des dérives budgétaires courantes des SSII classiques et méthodologie de sécurisation par jalons contractuels.",
+      date: "Juillet 2026",
+      readTime: "5 min"
+    }
   ];
 
   return (
     <div className="w-full animate-in fade-in duration-300 font-sans">
       
-      {/* 1. CINEMATIC HERO (SQLI node-home-page__head) */}
-      <section className="relative min-h-[85vh] flex flex-col justify-center pt-32 sm:pt-36 pb-20 overflow-hidden bg-[#050811] border-b border-white/[0.08]">
-        {/* SVG Liquid Glass Filter */}
-        <svg className="absolute w-0 h-0 pointer-events-none" aria-hidden="true" focusable="false">
+      {/* 1. CINEMATIC HERO WITH LOOPING TRAILER (SQLI node-home-page__head) */}
+      <section className="relative min-h-[92vh] flex flex-col justify-center pt-32 sm:pt-40 pb-20 overflow-hidden bg-[#050811] border-b border-white/[0.08]">
+        
+        {/* SVG Liquid Glass Distortion Filter */}
+        <svg className="node-home-page__head__liquid-filter absolute w-0 h-0 pointer-events-none" aria-hidden="true" focusable="false">
           <defs>
             <filter id="home-liquid-glass-distortion" x="-20%" y="-20%" width="140%" height="140%" colorInterpolationFilters="sRGB">
               <feTurbulence type="fractalNoise" baseFrequency="0.007 0.012" numOctaves="2" seed="24" result="noise" />
@@ -51,16 +86,34 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
           </defs>
         </svg>
 
-        {/* Ambient Glows & Grid */}
-        <div className="absolute inset-0 bg-executive-grid opacity-20 pointer-events-none" />
-        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[1200px] h-[650px] bg-gradient-to-b from-sky-500/10 via-blue-600/5 to-transparent blur-[160px] rounded-full pointer-events-none transform-gpu animate-pulse-glow" />
-        <div className="absolute bottom-0 right-10 w-[550px] h-[550px] bg-indigo-600/[0.04] blur-[140px] rounded-full pointer-events-none transform-gpu" />
+        {/* 🎬 LOOPING BACKGROUND TRAILER VIDEO (SQLI node-home-page__head__media) */}
+        <div className="node-home-page__head__media">
+          <div className="video-in-place video-in-place--decorative">
+            {videoPlaying ? (
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/IoMvKj3iOBA?autoplay=1&mute=${videoMuted ? '1' : '0'}&loop=1&playlist=IoMvKj3iOBA&controls=0&showinfo=0&rel=0&iv_load_policy=3&disablekb=1&playsinline=1`}
+                title="SQLI Digital & Technology Trailer"
+                className="w-full h-full object-cover scale-[1.05] opacity-35 transition-opacity duration-1000"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              />
+            ) : (
+              <div className="w-full h-full bg-[#070c1a] opacity-40" />
+            )}
+          </div>
+        </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        {/* Cinematic Dark Gradient Shade Overlay (SQLI node-home-page__head__shade) */}
+        <div className="node-home-page__head__shade" />
+
+        {/* Subtle Ambient Grid */}
+        <div className="absolute inset-0 bg-executive-grid opacity-15 pointer-events-none z-1" />
+
+        {/* Main Content Container (SQLI node-home-page__head__wrapper) */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           
           <div className="max-w-4xl space-y-6 text-left">
-            {/* Kicker Pill */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-slate-900/90 border border-white/[0.1] text-xs font-semibold text-slate-200 shadow-xl backdrop-blur-md">
+            {/* Top Kicker Pill */}
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-slate-900/90 border border-white/[0.12] text-xs font-semibold text-slate-200 shadow-2xl backdrop-blur-md">
               <span className="flex h-2 w-2 relative">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-400" />
@@ -71,10 +124,10 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
             </div>
 
             {/* Authoritative Clean Headline */}
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.08] font-heading">
-              Conseil Stratégique, Architecture SI <br />
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-extrabold tracking-tight text-white leading-[1.06] font-heading">
+              L'Excellence du Conseil Stratégique <br />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-sky-200 to-sky-400">
-                & Intégration Odoo d'Excellence
+                & de la Transformation Digitale
               </span>
             </h1>
 
@@ -85,7 +138,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
               <strong className="text-white font-semibold">sécuriser 100% de conformité fiscale DGI & DGFIP</strong>.
             </p>
 
-            {/* Action Suite (SQLI Signature Link CTA with Diagonal Arrow) */}
+            {/* SQLI Signature Action Suite */}
             <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
               <button
                 onClick={() => onOpenConsultation("Cadrage Stratégique Général")}
@@ -98,10 +151,10 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
               </button>
               
               <button
-                onClick={() => onNavigateFace('expertises')}
+                onClick={() => onNavigateFace('cas-clients')}
                 className="executive-btn-secondary inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-sm sm:text-base font-semibold text-slate-200 transition-all shadow-sm active:scale-[0.98] cursor-pointer"
               >
-                <span>Explorer nos 5 expertises</span>
+                <span>Explorer nos réalisations</span>
                 <ArrowRight className="w-4 h-4 text-sky-400" />
               </button>
             </div>
@@ -121,9 +174,37 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
           </div>
 
         </div>
+
+        {/* 🎬 FLOATING VIDEO TRAILER CONTROLS (Corner Badge) */}
+        <div className="absolute bottom-6 right-6 z-20 hidden sm:flex items-center gap-2 bg-slate-950/80 border border-white/[0.1] px-3.5 py-1.5 rounded-full backdrop-blur-md shadow-2xl text-[11px] text-slate-300">
+          <div className="flex items-center gap-1.5 font-mono text-sky-400">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="font-bold">TRAILER 4K</span>
+          </div>
+
+          <div className="h-3 w-px bg-white/[0.1] mx-1" />
+
+          <button
+            onClick={() => setVideoPlaying(!videoPlaying)}
+            className="hover:text-white transition-colors p-1 cursor-pointer flex items-center gap-1"
+            title={videoPlaying ? "Mettre en pause" : "Lancer le trailer"}
+          >
+            {videoPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 text-sky-400" />}
+            <span>{videoPlaying ? "Pause" : "Play"}</span>
+          </button>
+
+          <button
+            onClick={() => setVideoMuted(!videoMuted)}
+            className="hover:text-white transition-colors p-1 cursor-pointer"
+            title={videoMuted ? "Activer le son" : "Couper le son"}
+          >
+            {videoMuted ? <VolumeX className="w-3.5 h-3.5 text-slate-400" /> : <Volume2 className="w-3.5 h-3.5 text-sky-400" />}
+          </button>
+        </div>
+
       </section>
 
-      {/* 2. SQLI INFINITE CONTINUOUS MARQUEE SLIDER */}
+      {/* 2. SQLI INFINITE CONTINUOUS MARQUEE SLIDER (client-logo-slider__marquee) */}
       <section className="border-b border-white/[0.08] bg-[#070b16] py-10 overflow-hidden relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 text-center">
           <span className="text-[11px] font-mono uppercase tracking-widest text-slate-400 font-semibold">
@@ -163,33 +244,32 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
         </div>
       </section>
 
-      {/* 3. SQLI PUSH-SERVICES TEASER (Direct Face Switcher to Expertises) */}
+      {/* 3. SQLI PUSH-SERVICES SPLIT 2-COLUMN SECTION (push-services) */}
       <section className="py-24 bg-[#050811] border-b border-white/[0.08] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             
             {/* Left Column (Sticky Editorial) */}
-            <div className="lg:col-span-5 space-y-5">
+            <div className="lg:col-span-5 space-y-5 lg:sticky lg:top-28">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs font-semibold text-sky-400 shadow-sm">
                 <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                 <span className="font-heading uppercase tracking-wider text-[11px]">Pôles d'Excellence</span>
               </div>
 
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight font-heading">
-                Expertise & Architecture SI
+                Expertise
               </h2>
 
               <p className="text-sm sm:text-base text-slate-300 font-sans leading-relaxed">
-                Nous combinons la rigueur des méthodes de conseil Big 4, l'ingénierie applicative et l'expertise ERP pour bâtir des systèmes d'information robustes, scalables et fiscalement conformes.
+                Nous combinons stratégie, technologie, données et créativité pour bâtir des actifs digitaux pérennes, optimiser l'efficacité opérationnelle et accélérer une croissance durable.
               </p>
 
-              {/* Action to switch to full face */}
               <div className="pt-2">
                 <button
                   onClick={() => onNavigateFace('expertises')}
                   className="link-cta-sqli cursor-pointer text-base"
                 >
-                  <span>Consulter toutes nos expertises</span>
+                  <span>Explorer toutes nos expertises</span>
                   <div className="icon-circle">
                     <ArrowUpRight className="w-4 h-4" />
                   </div>
@@ -197,9 +277,9 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
               </div>
             </div>
 
-            {/* Right Column: 3 Top Flagship Push Rows */}
+            {/* Right Column: Interactive Capability Cards */}
             <div className="lg:col-span-7 space-y-4">
-              {EXPERTISES.slice(0, 3).map((exp, idx) => (
+              {EXPERTISES.map((exp, idx) => (
                 <div
                   key={exp.id}
                   onClick={() => onNavigateFace('expertises')}
@@ -229,33 +309,100 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
         </div>
       </section>
 
-      {/* 4. SQLI PUSH-USE-CASES TEASER (Direct Face Switcher to Cas Clients) */}
+      {/* 4. SQLI PUSH-NEWS / INSIGHTS (push-news) */}
       <section className="py-24 bg-[#060913] border-b border-white/[0.08] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             
             {/* Left Column (Sticky Editorial) */}
-            <div className="lg:col-span-5 space-y-5">
+            <div className="lg:col-span-5 space-y-5 lg:sticky lg:top-28">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs font-semibold text-sky-400 shadow-sm">
-                <Award className="w-3.5 h-3.5 text-amber-400" />
-                <span className="font-heading uppercase tracking-wider text-[11px]">Résultats Concrets & Chiffrés</span>
+                <FileText className="w-3.5 h-3.5 text-sky-400" />
+                <span className="font-heading uppercase tracking-wider text-[11px]">Veille Stratégique</span>
               </div>
 
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight font-heading">
-                Case Studies & Impact
+                Insights
               </h2>
 
               <p className="text-sm sm:text-base text-slate-300 font-sans leading-relaxed">
-                Des transformations mesurables engagées avec obligation de résultat auprès de comités de direction et directions financières.
+                L'inspiration est partout. Retrouvez nos réflexions, benchmarks et analyses stratégiques pour éclairer vos décisions technologiques et managériales.
               </p>
 
-              {/* Action to switch to full face */}
+              <div className="pt-2">
+                <button
+                  onClick={() => onNavigateFace('simulateur-roi')}
+                  className="link-cta-sqli cursor-pointer text-base"
+                >
+                  <span>Accéder à l'Executive Lab</span>
+                  <div className="icon-circle">
+                    <ArrowUpRight className="w-4 h-4" />
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            {/* Right Column: Insights Editorial Cards */}
+            <div className="lg:col-span-7 space-y-5">
+              {insightsArticles.map((article, idx) => (
+                <article
+                  key={idx}
+                  onClick={() => onNavigateFace('simulateur-roi')}
+                  className="p-7 rounded-3xl bg-slate-900/60 border border-white/[0.08] hover:border-sky-500/40 hover:bg-slate-900/80 transition-all duration-300 cursor-pointer group space-y-3"
+                >
+                  <div className="flex items-center justify-between text-xs text-slate-400">
+                    <span className="text-[10px] font-mono font-semibold uppercase text-sky-400 bg-sky-500/10 px-2.5 py-1 rounded border border-sky-500/20">
+                      {article.tag}
+                    </span>
+                    <span>{article.date} • {article.readTime}</span>
+                  </div>
+
+                  <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-sky-300 transition-colors font-heading leading-snug">
+                    {article.title}
+                  </h3>
+
+                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
+                    {article.desc}
+                  </p>
+
+                  <div className="pt-3 border-t border-white/[0.06] flex items-center justify-between text-xs font-bold text-sky-400 group-hover:text-white transition-colors">
+                    <span>Lire l'analyse complète</span>
+                    <ArrowUpRight className="w-4 h-4" />
+                  </div>
+                </article>
+              ))}
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* 5. SQLI PUSH-USE-CASES (push-use-cases) */}
+      <section className="py-24 bg-[#050811] border-b border-white/[0.08] relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            
+            {/* Left Column (Sticky Editorial) */}
+            <div className="lg:col-span-5 space-y-5 lg:sticky lg:top-28">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs font-semibold text-sky-400 shadow-sm">
+                <Award className="w-3.5 h-3.5 text-amber-400" />
+                <span className="font-heading uppercase tracking-wider text-[11px]">Résultats & Impact</span>
+              </div>
+
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight font-heading">
+                Case Studies
+              </h2>
+
+              <p className="text-sm sm:text-base text-slate-300 font-sans leading-relaxed">
+                Nous sommes fiers de collaborer avec des entreprises d'envergure, en transformant durablement leurs opérations et leur rentabilité.
+              </p>
+
               <div className="pt-2">
                 <button
                   onClick={() => onNavigateFace('cas-clients')}
                   className="link-cta-sqli cursor-pointer text-base"
                 >
-                  <span>Découvrir toutes les études de cas</span>
+                  <span>Voir tous les cas clients</span>
                   <div className="icon-circle">
                     <ArrowUpRight className="w-4 h-4" />
                   </div>
@@ -269,7 +416,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
                 <div
                   key={item.id}
                   onClick={() => onNavigateFace('cas-clients')}
-                  className="p-6 rounded-3xl bg-slate-900/70 border border-white/[0.08] hover:border-sky-500/50 hover:bg-slate-900/90 transition-all duration-300 cursor-pointer group flex flex-col justify-between"
+                  className="p-7 rounded-3xl bg-slate-900/70 border border-white/[0.08] hover:border-sky-500/50 hover:bg-slate-900/90 transition-all duration-300 cursor-pointer group flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-center justify-between gap-2 mb-4">
@@ -279,7 +426,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
                       <span className="text-xs text-slate-400">{item.location}</span>
                     </div>
 
-                    <div className="text-3xl font-black text-white font-heading mb-1 text-sky-300">
+                    <div className="text-3xl sm:text-4xl font-black text-white font-heading mb-1 text-sky-300">
                       {item.metric}
                     </div>
                     <div className="text-xs text-slate-300 font-semibold mb-3">
@@ -292,7 +439,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
                   </div>
 
                   <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs font-bold text-sky-400 group-hover:text-white transition-colors">
-                    <span>Voir le dossier complet</span>
+                    <span>Consulter le dossier</span>
                     <ArrowUpRight className="w-4 h-4" />
                   </div>
                 </div>
@@ -303,8 +450,8 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
         </div>
       </section>
 
-      {/* 5. 4 KEY EXECUTIVE FIGURES (Bloomberg Style) */}
-      <section className="py-16 bg-[#050811] border-b border-white/[0.08]">
+      {/* 6. 4 KEY EXECUTIVE FIGURES (Bloomberg Style) */}
+      <section className="py-16 bg-[#060913] border-b border-white/[0.08]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {KEY_METRICS.map((metric, idx) => (
@@ -327,16 +474,16 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
         </div>
       </section>
 
-      {/* 6. CALL TO ACTION C-LEVEL BANNER */}
-      <section className="py-20 bg-gradient-to-b from-[#050811] to-[#03060d]">
+      {/* 7. CALL TO ACTION C-LEVEL BANNER */}
+      <section className="py-24 bg-gradient-to-b from-[#050811] to-[#03060d]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-white/[0.1] text-xs font-semibold text-sky-400">
             <Clock className="w-3.5 h-3.5 text-sky-400" />
-            <span>Mobilisation sous 72h · Casablanca & Paris</span>
+            <span>Mobilisation sous 72h · Casablanca CFC 🇲🇦 & Paris 🇫🇷</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white font-heading">
-            Prêt à structurer votre transformation SI ?
+            Prêt à accélérer votre transformation ?
           </h2>
 
           <p className="text-base text-slate-300 font-sans max-w-xl mx-auto">
@@ -353,11 +500,11 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
             </button>
 
             <button
-              onClick={() => onNavigateFace('simulateur-roi')}
+              onClick={() => onNavigateFace('contact')}
               className="executive-btn-secondary px-7 py-4 rounded-xl text-sm font-semibold text-slate-200 font-sans flex items-center gap-2 cursor-pointer"
             >
-              <span>Calculer votre ROI estimé</span>
-              <ArrowRight className="w-4 h-4 text-emerald-400" />
+              <span>Voir nos adresses & hubs</span>
+              <ArrowRight className="w-4 h-4 text-sky-400" />
             </button>
           </div>
         </div>

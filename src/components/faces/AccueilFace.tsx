@@ -133,6 +133,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
                 title="CLIXA Technology & Consulting Trailer"
                 className="w-full h-full object-cover scale-[1.08] opacity-30 transition-opacity duration-1000"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                loading="lazy"
               />
             ) : (
               <div className="w-full h-full bg-blue-100/30" />

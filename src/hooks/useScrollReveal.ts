@@ -7,30 +7,33 @@ import { useEffect } from 'react';
  */
 export function useScrollReveal() {
   useEffect(() => {
+    let observer: IntersectionObserver | null = null;
+
     // Small delay to let the face render completely
     const timer = setTimeout(() => {
       const elements = document.querySelectorAll<HTMLElement>('.animation-scroll:not(.animation-scroll--scrolled)');
       if (!elements.length) return;
 
-      const observer = new IntersectionObserver(
+      observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               entry.target.classList.add('animation-scroll--scrolled');
-              observer.unobserve(entry.target);
+              observer?.unobserve(entry.target);
             }
           });
         },
         { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
       );
 
-      elements.forEach((el) => observer.observe(el));
-
-      return () => observer.disconnect();
+      elements.forEach((el) => observer?.observe(el));
     }, 80);
 
-    return () => clearTimeout(timer);
-  });
-  // Note: no dependency array — runs on every render so new elements after
-  // face navigation are always picked up
+    return () => {
+      clearTimeout(timer);
+      if (observer) {
+        observer.disconnect();
+      }
+    };
+  }, []);
 }

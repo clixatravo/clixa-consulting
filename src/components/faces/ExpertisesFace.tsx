@@ -10,7 +10,7 @@ interface ExpertisesFaceProps {
 export const ExpertisesFace: React.FC<ExpertisesFaceProps> = ({ onOpenConsultation, onNavigateFace }) => {
   const [selectedDomain, setSelectedDomain] = useState<string>('All');
   const [selectedTech, setSelectedTech] = useState<string>('All');
-  const [selectedHub, setSelectedHub] = useState<string>('Morocco');
+  const [selectedHub, setSelectedHub] = useState<string>('All');
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [appliedFilters, setAppliedFilters] = useState({
     domain: 'All',
@@ -217,24 +217,114 @@ export const ExpertisesFace: React.FC<ExpertisesFaceProps> = ({ onOpenConsultati
             </div>
 
             {/* Filter Buttons: Apply & Reset */}
-            <div className="flex items-center gap-2 sm:ml-auto">
+            <div className="flex items-center gap-2.5 sm:ml-auto">
               <button
                 onClick={handleApply}
-                className="bg-[#1f24e9] hover:bg-[#151ad0] text-white px-7 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
+                className={`relative px-7 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm flex items-center gap-2 ${
+                  (selectedDomain !== appliedFilters.domain || selectedTech !== appliedFilters.tech || selectedHub !== appliedFilters.hub)
+                    ? 'bg-[#1f24e9] hover:bg-[#151ad0] text-white ring-2 ring-blue-500 ring-offset-1 shadow-blue-500/30'
+                    : 'bg-[#1f24e9] hover:bg-[#151ad0] text-white'
+                }`}
               >
-                Apply
+                <span>Apply</span>
+                {(selectedDomain !== appliedFilters.domain || selectedTech !== appliedFilters.tech || selectedHub !== appliedFilters.hub) && (
+                  <span className="w-2 h-2 rounded-full bg-amber-300 animate-ping inline-block" />
+                )}
               </button>
 
               <button
                 onClick={handleReset}
-                className="bg-[#0b101d] hover:bg-black text-white px-7 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
+                className={`px-6 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-all cursor-pointer border ${
+                  (appliedFilters.domain !== 'All' || appliedFilters.tech !== 'All' || appliedFilters.hub !== 'All' || selectedDomain !== 'All' || selectedTech !== 'All' || selectedHub !== 'All')
+                    ? 'bg-slate-900 hover:bg-black text-white border-transparent'
+                    : 'bg-white text-slate-400 border-slate-200 hover:border-slate-300 hover:text-slate-600'
+                }`}
+                title="Réinitialiser tous les filtres"
               >
                 Reset
               </button>
             </div>
 
           </div>
+
+          {/* Active Filter Chips Bar & Live Counter */}
+          <div className="mt-4 pt-4 border-t border-slate-200/60 flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-slate-500 font-mono text-[11px]">Filtres actifs :</span>
+              {appliedFilters.domain === 'All' && appliedFilters.tech === 'All' && appliedFilters.hub === 'All' ? (
+                <span className="text-slate-400 italic text-[11px]">Toutes les expertises affichées</span>
+              ) : (
+                <>
+                  {appliedFilters.domain !== 'All' && (
+                    <button
+                      onClick={() => {
+                        setSelectedDomain('All');
+                        setAppliedFilters(prev => ({ ...prev, domain: 'All' }));
+                      }}
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-800 border border-blue-200 font-semibold hover:bg-blue-100 transition-colors cursor-pointer text-[11px]"
+                    >
+                      <span>Domaine: {appliedFilters.domain}</span>
+                      <span className="font-bold">✕</span>
+                    </button>
+                  )}
+                  {appliedFilters.tech !== 'All' && (
+                    <button
+                      onClick={() => {
+                        setSelectedTech('All');
+                        setAppliedFilters(prev => ({ ...prev, tech: 'All' }));
+                      }}
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-800 border border-blue-200 font-semibold hover:bg-blue-100 transition-colors cursor-pointer text-[11px]"
+                    >
+                      <span>Tech: {appliedFilters.tech}</span>
+                      <span className="font-bold">✕</span>
+                    </button>
+                  )}
+                  {appliedFilters.hub !== 'All' && (
+                    <button
+                      onClick={() => {
+                        setSelectedHub('All');
+                        setAppliedFilters(prev => ({ ...prev, hub: 'All' }));
+                      }}
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-800 border border-blue-200 font-semibold hover:bg-blue-100 transition-colors cursor-pointer text-[11px]"
+                    >
+                      <span>Hub: {appliedFilters.hub === 'Morocco' ? 'Casablanca 🇲🇦' : 'Toulouse 🇫🇷'}</span>
+                      <span className="font-bold">✕</span>
+                    </button>
+                  )}
+                  <button
+                    onClick={handleReset}
+                    className="text-[11px] text-blue-700 underline font-semibold hover:text-blue-900 ml-2 cursor-pointer"
+                  >
+                    Effacer tout
+                  </button>
+                </>
+              )}
+            </div>
+
+            <div className="font-mono text-slate-600 text-[11px] font-bold">
+              Affichage de {filtered.length} sur {expertises.length} expertises
+            </div>
+          </div>
+
         </div>
+
+        {/* Empty state fallback */}
+        {filtered.length === 0 && (
+          <div className="text-center py-16 bg-white border border-[#e2dcd2] mb-20 p-8 space-y-4">
+            <h3 className="text-xl font-bold text-slate-900 font-heading">
+              Aucune expertise ne correspond aux critères sélectionnés
+            </h3>
+            <p className="text-sm text-slate-600 max-w-md mx-auto font-sans">
+              Modifiez votre combinaison de filtres ou réinitialisez pour afficher l'ensemble de notre matrice d'expertises.
+            </p>
+            <button
+              onClick={handleReset}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#1f24e9] text-white font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
+            >
+              <span>Réinitialiser les filtres</span>
+            </button>
+          </div>
+        )}
 
         {/* 3. EDITORIAL EXPERTISE GRID (SQLI Standard: 2-Columns) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 mb-20">

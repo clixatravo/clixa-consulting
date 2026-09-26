@@ -24,7 +24,7 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
   // Filter states matching screenshot
   const [selectedContentType, setSelectedContentType] = useState<string>('All');
   const [selectedTopic, setSelectedTopic] = useState<string>('All');
-  const [selectedCountry, setSelectedCountry] = useState<string>('Morocco');
+  const [selectedCountry, setSelectedCountry] = useState<string>('All');
   const [selectedLanguage, setSelectedLanguage] = useState<string>('All');
 
   // Dropdown open states
@@ -57,8 +57,9 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
     {
       id: 'frontend-expertise',
       title: "Front-end expertise is required in web application projects",
-      date: "20 May 2020",
-      image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+      category: "Architecture & Modern UI",
+      date: "20 May 2026",
+      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80",
       contentType: 'Article',
       topic: 'Technology',
       country: 'Global',
@@ -68,8 +69,8 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
     {
       id: 'devops-breakthroughs',
       title: "DevOps : the 4 breakthroughs enabling continuous change",
-      category: "Technology",
-      date: "14 Oct 2021",
+      category: "Ingénierie & CI/CD",
+      date: "14 Oct 2026",
       image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80",
       contentType: 'Article',
       topic: 'Technology',
@@ -159,6 +160,39 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
     return true;
   });
 
+  const hasFilterChanges = (
+    selectedContentType !== appliedFilters.contentType ||
+    selectedTopic !== appliedFilters.topic ||
+    selectedCountry !== appliedFilters.country ||
+    selectedLanguage !== appliedFilters.language
+  );
+
+  const hasAnyFilterActive = (
+    appliedFilters.contentType !== 'All' ||
+    appliedFilters.topic !== 'All' ||
+    appliedFilters.country !== 'All' ||
+    appliedFilters.language !== 'All' ||
+    selectedContentType !== 'All' ||
+    selectedTopic !== 'All' ||
+    selectedCountry !== 'All' ||
+    selectedLanguage !== 'All'
+  );
+
+  const getPillBadgeStyle = (type: Article['contentType']) => {
+    switch (type) {
+      case 'Article':
+        return 'bg-slate-900 text-white';
+      case 'Whitepaper':
+        return 'bg-[#1f24e9] text-white';
+      case 'Regulatory':
+        return 'bg-purple-700 text-white';
+      case 'Benchmark':
+        return 'bg-amber-600 text-white';
+      default:
+        return 'bg-slate-900 text-white';
+    }
+  };
+
   return (
     <div className="w-full bg-[#FAF7F2] text-slate-900 font-sans min-h-screen pt-32 sm:pt-40 pb-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-8">
@@ -173,8 +207,8 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
           </p>
         </div>
 
-        {/* 2. SQLI SIGNATURE FILTER BAR (Exact match to screenshot) */}
-        <div className="mb-14 pb-8 border-b border-[#e2dcd2]">
+        {/* 2. SQLI SIGNATURE FILTER BAR */}
+        <div className="mb-14 pb-6 border-b border-[#e2dcd2]">
           <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm font-medium">
             
             {/* Filter: Content type ⌵ */}
@@ -237,14 +271,14 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
               )}
             </div>
 
-            {/* Filter: Countries (1) ⌵ */}
+            {/* Filter: Countries ⌵ */}
             <div className="relative">
               <button
                 onClick={() => setOpenDropdown(openDropdown === 'countries' ? null : 'countries')}
                 className="flex items-center gap-1.5 py-1 text-slate-800 hover:text-black transition-colors cursor-pointer"
               >
                 <span>Countries</span>
-                <span className="text-xs font-bold text-slate-900">({selectedCountry === 'All' ? 'All' : '1'})</span>
+                {selectedCountry !== 'All' && <span className="text-xs text-blue-600 font-bold">({selectedCountry})</span>}
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'countries' ? 'rotate-180' : ''}`} />
               </button>
 
@@ -269,14 +303,14 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
               )}
             </div>
 
-            {/* Filter: Languages (1) ⌵ */}
+            {/* Filter: Languages ⌵ */}
             <div className="relative">
               <button
                 onClick={() => setOpenDropdown(openDropdown === 'languages' ? null : 'languages')}
                 className="flex items-center gap-1.5 py-1 text-slate-800 hover:text-black transition-colors cursor-pointer"
               >
                 <span>Languages</span>
-                <span className="text-xs font-bold text-slate-900">({selectedLanguage === 'All' ? 'All' : '1'})</span>
+                {selectedLanguage !== 'All' && <span className="text-xs text-blue-600 font-bold">({selectedLanguage})</span>}
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'languages' ? 'rotate-180' : ''}`} />
               </button>
 
@@ -301,53 +335,162 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
               )}
             </div>
 
-            {/* Filter Buttons: Apply & Reset (SQLI exact rectangle button style) */}
+            {/* Filter Buttons: Apply & Reset */}
             <div className="flex items-center gap-2 sm:ml-auto">
               <button
                 onClick={handleApply}
-                className="bg-[#1f24e9] hover:bg-[#151ad0] text-white px-7 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
+                className="relative bg-[#1f24e9] hover:bg-[#151ad0] text-white px-7 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm flex items-center gap-2"
               >
-                Apply
+                <span>Apply</span>
+                {hasFilterChanges && (
+                  <span className="w-2 h-2 rounded-full bg-amber-300 animate-ping inline-block" />
+                )}
               </button>
 
               <button
                 onClick={handleReset}
-                className="bg-[#0b101d] hover:bg-black text-white px-7 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
+                className={`px-7 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-all cursor-pointer border ${
+                  hasAnyFilterActive
+                    ? 'bg-slate-900 hover:bg-black text-white border-transparent'
+                    : 'bg-white text-slate-400 border-slate-200 hover:border-slate-300 hover:text-slate-600'
+                }`}
+                title="Réinitialiser tous les filtres"
               >
                 Reset
               </button>
             </div>
 
           </div>
+
+          {/* Active Filter Chips Bar & Live Counter */}
+          <div className="mt-4 pt-4 border-t border-slate-200/60 flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-slate-500 font-mono text-[11px]">Filtres actifs :</span>
+              {appliedFilters.contentType === 'All' && appliedFilters.topic === 'All' && appliedFilters.country === 'All' && appliedFilters.language === 'All' ? (
+                <span className="text-slate-400 italic text-[11px]">Tous les articles affichés</span>
+              ) : (
+                <>
+                  {appliedFilters.contentType !== 'All' && (
+                    <button
+                      onClick={() => {
+                        setSelectedContentType('All');
+                        setAppliedFilters(prev => ({ ...prev, contentType: 'All' }));
+                      }}
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-800 border border-blue-200 font-semibold hover:bg-blue-100 transition-colors cursor-pointer text-[11px]"
+                    >
+                      <span>Format: {appliedFilters.contentType}</span>
+                      <span className="font-bold">✕</span>
+                    </button>
+                  )}
+                  {appliedFilters.topic !== 'All' && (
+                    <button
+                      onClick={() => {
+                        setSelectedTopic('All');
+                        setAppliedFilters(prev => ({ ...prev, topic: 'All' }));
+                      }}
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-800 border border-blue-200 font-semibold hover:bg-blue-100 transition-colors cursor-pointer text-[11px]"
+                    >
+                      <span>Sujet: {appliedFilters.topic}</span>
+                      <span className="font-bold">✕</span>
+                    </button>
+                  )}
+                  {appliedFilters.country !== 'All' && (
+                    <button
+                      onClick={() => {
+                        setSelectedCountry('All');
+                        setAppliedFilters(prev => ({ ...prev, country: 'All' }));
+                      }}
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-800 border border-blue-200 font-semibold hover:bg-blue-100 transition-colors cursor-pointer text-[11px]"
+                    >
+                      <span>Zone: {appliedFilters.country === 'Morocco' ? '🇲🇦 Maroc' : '🇫🇷 France'}</span>
+                      <span className="font-bold">✕</span>
+                    </button>
+                  )}
+                  {appliedFilters.language !== 'All' && (
+                    <button
+                      onClick={() => {
+                        setSelectedLanguage('All');
+                        setAppliedFilters(prev => ({ ...prev, language: 'All' }));
+                      }}
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-800 border border-blue-200 font-semibold hover:bg-blue-100 transition-colors cursor-pointer text-[11px]"
+                    >
+                      <span>Langue: {appliedFilters.language}</span>
+                      <span className="font-bold">✕</span>
+                    </button>
+                  )}
+                  <button
+                    onClick={handleReset}
+                    className="text-[11px] text-blue-700 underline font-semibold hover:text-blue-900 ml-2 cursor-pointer"
+                  >
+                    Effacer tout
+                  </button>
+                </>
+              )}
+            </div>
+
+            <div className="font-mono text-slate-600 text-[11px] font-bold">
+              Affichage de {filteredArticles.length} sur {articles.length} publications
+            </div>
+          </div>
+
         </div>
 
-        {/* 3. EDITORIAL ARTICLE GRID (SQLI 2-Column Standard in Screenshot) */}
+        {/* Empty state fallback */}
+        {filteredArticles.length === 0 && (
+          <div className="text-center py-16 bg-white border border-[#e2dcd2] mb-20 p-8 space-y-4">
+            <h3 className="text-xl font-bold text-slate-900 font-heading">
+              Aucun article ne correspond aux critères sélectionnés
+            </h3>
+            <p className="text-sm text-slate-600 max-w-md mx-auto font-sans">
+              Modifiez votre combinaison de filtres ou réinitialisez pour afficher l'ensemble de nos publications et livres blancs.
+            </p>
+            <button
+              onClick={handleReset}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#1f24e9] text-white font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
+            >
+              <span>Réinitialiser les filtres</span>
+            </button>
+          </div>
+        )}
+
+        {/* 3. EDITORIAL ARTICLE GRID (SQLI 2-Column Standard with Magnetic Photos) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 mb-20">
           {filteredArticles.map((article) => (
             <article 
               key={article.id} 
-              className="group cursor-pointer flex flex-col"
+              className="group cursor-pointer flex flex-col bg-white border border-[#e2dcd2] p-6 hover:border-blue-500 hover:shadow-xl transition-all duration-300"
               onClick={() => onOpenConsultation(`Question sur l'article : ${article.title}`)}
             >
-              {/* Photo matching SQLI 4:3 or square format */}
-              <div className="w-full aspect-[4/3] sm:aspect-[16/11] bg-slate-200 overflow-hidden mb-5">
+              {/* Photo Frame with light sweep and dynamic floating badges */}
+              <div className="photo-frame w-full aspect-[16/10] bg-slate-900 mb-5 relative">
                 <img
                   src={article.image}
                   alt={article.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  className="photo-zoom-img w-full h-full object-cover"
                   loading="lazy"
                 />
+                <div className="photo-overlay-scrim" />
+                <div className="absolute top-3.5 left-3.5 z-10 pointer-events-none">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider bg-[#0a1628]/90 text-white px-3 py-1 backdrop-blur-md border border-white/20 shadow-sm">
+                    {article.category || article.topic}
+                  </span>
+                </div>
+                <div className="absolute bottom-3.5 right-3.5 z-10 pointer-events-none">
+                  <span className={`text-xs font-bold px-3 py-1 shadow-md ${getPillBadgeStyle(article.contentType)}`}>
+                    {article.contentType}
+                  </span>
+                </div>
               </div>
 
               {/* Title */}
-              <h2 className="text-xl sm:text-2xl font-bold text-[#0a0e1a] tracking-tight leading-snug group-hover:text-blue-600 transition-colors font-heading mb-3">
+              <h2 className="text-xl sm:text-2xl font-bold text-[#0a0e1a] tracking-tight leading-snug group-hover:text-blue-600 transition-colors font-heading mb-2">
                 {article.title}
               </h2>
 
               {/* Subtitle / Category */}
               {article.category && (
-                <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
-                  {article.category}
+                <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
+                  <span className="text-blue-600 font-bold">{article.topic}</span> • <span>{article.category}</span>
                 </div>
               )}
 
@@ -358,9 +501,12 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
                 </p>
               )}
 
-              {/* Date */}
-              <div className="mt-auto text-xs text-slate-400 font-sans">
-                {article.date}
+              {/* Date & Country */}
+              <div className="mt-auto text-xs text-slate-400 font-sans pt-2 border-t border-slate-200 flex items-center justify-between">
+                <span>{article.date}</span>
+                <span className="font-mono text-slate-500 font-semibold">
+                  {article.country === 'Morocco' ? '🇲🇦 Casablanca' : article.country === 'France' ? '🇫🇷 Toulouse' : '🌐 International'}
+                </span>
               </div>
             </article>
           ))}

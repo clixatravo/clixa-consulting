@@ -85,6 +85,71 @@ export const MethodologieFace: React.FC<MethodologieFaceProps> = ({ onOpenConsul
           </div>
         </div>
 
+        {/* 2.5 EXECUTIVE GOVERNANCE BANNER WITH MAGNETIC PHOTO */}
+        <div className="mb-16 bg-white border border-[#e2dcd2] p-6 sm:p-10 shadow-sm">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            {/* Left Photo with light sweep and floating badges */}
+            <div className="lg:col-span-6">
+              <div className="photo-frame w-full aspect-[16/10] bg-slate-900 relative">
+                <img
+                  src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=80"
+                  alt="Comité de Direction Clixa Consulting"
+                  className="photo-zoom-img w-full h-full object-cover"
+                  loading="lazy"
+                />
+                <div className="photo-overlay-scrim" />
+                <div className="absolute top-3.5 left-3.5 z-10 pointer-events-none">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-wider bg-[#0a1628]/90 text-white px-3 py-1 backdrop-blur-md border border-white/20 shadow-sm">
+                    Gouvernance C-Suite & AMOA
+                  </span>
+                </div>
+                <div className="absolute bottom-3.5 right-3.5 z-10 pointer-events-none">
+                  <span className="text-xs font-bold text-white bg-[#1f24e9] px-3 py-1 shadow-md">
+                    Engagement 100% Forfait
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Content */}
+            <div className="lg:col-span-6 space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 border border-blue-200 text-xs font-semibold text-blue-700">
+                <ShieldCheck className="w-3.5 h-3.5 text-blue-600" />
+                <span className="font-heading uppercase tracking-wider text-[11px] font-bold">Sécurisation Contractuelle</span>
+              </div>
+
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-heading leading-tight">
+                Zéro Dérive Budgétaire, Jalons Validés en Comité Stratégique
+              </h2>
+
+              <p className="text-sm text-slate-600 font-sans leading-relaxed">
+                Chaque étape d'intégration ou de réorganisation est supervisée par un Directeur de Mission senior. Aucun passage en production n'est validé sans tests d'acceptation utilisateurs (UAT) complets et rapprochement financier à l'euro ou au dirham près.
+              </p>
+
+              <div className="grid grid-cols-2 gap-3 pt-2">
+                <div className="p-3 bg-[#FAF7F2] border border-[#e2dcd2]">
+                  <div className="text-lg font-black text-blue-700 font-mono">100%</div>
+                  <div className="text-[11px] text-slate-700 font-semibold">Projets livrés au forfait ferme</div>
+                </div>
+                <div className="p-3 bg-[#FAF7F2] border border-[#e2dcd2]">
+                  <div className="text-lg font-black text-blue-700 font-mono">48H</div>
+                  <div className="text-[11px] text-slate-700 font-semibold">Délai d'arbitrage COPIL</div>
+                </div>
+              </div>
+
+              <div className="pt-2">
+                <button
+                  onClick={() => onOpenConsultation("Cadrage Stratégique & Comité de Pilotage")}
+                  className="bg-[#1f24e9] hover:bg-[#151ad0] text-white px-7 py-3 rounded-none font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer inline-flex items-center gap-2"
+                >
+                  <span>Planifier un Comité de Cadrage</span>
+                  <ArrowUpRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* 3. COMPARATIVE BENCHMARK: CLIXA VS SSII CLASSIQUES */}
         <div className="mb-16 bg-white border border-[#e2dcd2] p-8 sm:p-12 shadow-sm">
           <div className="mb-8">

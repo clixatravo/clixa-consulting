@@ -29,7 +29,7 @@ export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, 
       reg: "Attachements & Loi DGI",
       hub: "Morocco",
       date: "12 Oct 2026",
-      image: "https://images.unsplash.com/photo-1541888946425-d0fbb18615f8?auto=format&fit=crop&w=1200&q=80",
+      image: "https://images.unsplash.com/photo-1541971875076-8f970d573be6?auto=format&fit=crop&w=1200&q=80",
       description: "Suivi budgétaire par affaire et par jalon de chantier, gestion des situations de travaux, retenues de garantie et traçabilité des engins.",
       highlights: ["Comptabilité analytique par chantier", "Gestion des situations de travaux & UAT", "Pointage main d'œuvre mobile"]
     },
@@ -76,6 +76,17 @@ export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, 
       image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1200&q=80",
       description: "Feuilles de temps collaboratives, facturation aux régies ou forfaits, gestion des notes de frais avec reconnaissance OCR et taux de staffing.",
       highlights: ["Feuilles de temps & facturation automatique", "Suivi de la rentabilité des missions", "Gestion des notes de frais OCR"]
+    },
+    {
+      id: 'agro-export',
+      title: "Agro-Industrie, Conditionnement & Export International",
+      industry: "Agro-Industrie & Export",
+      reg: "Normes Export & Sanitaire",
+      hub: "Morocco",
+      date: "04 Apr 2026",
+      image: "https://images.unsplash.com/photo-1595246140625-573b715d11dc?auto=format&fit=crop&w=1200&q=80",
+      description: "Gestion des filières agricoles, pesées aux ponts-bascules, calibres, traçabilité ascendante/descendante et certification pour l'export européen.",
+      highlights: ["Suivi parcellaire & récolte", "Gestion des stations de conditionnement", "Édition automatique des certificats phytosanitaires"]
     }
   ];
 
@@ -138,7 +149,7 @@ export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, 
 
               {openDropdown === 'industry' && (
                 <div className="absolute left-0 mt-2 w-56 bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
-                  {['All', 'BTP & Immobilier', 'Industrie & Usinage', 'Distribution & Négoce', 'Santé & Médical', 'Services & BPO'].map((ind) => (
+                  {['All', 'BTP & Immobilier', 'Industrie & Usinage', 'Distribution & Négoce', 'Santé & Médical', 'Services & BPO', 'Agro-Industrie & Export'].map((ind) => (
                     <button
                       key={ind}
                       onClick={() => {

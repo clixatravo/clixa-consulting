@@ -7,28 +7,19 @@ import {
   MessageCircle, 
   Search, 
   Globe, 
-  MapPin, 
-  Database, 
-  Award, 
-  Layers, 
-  Calculator,
-  Workflow,
-  Sparkles,
-  Phone,
-  ShieldCheck,
-  Building2,
   ChevronDown
 } from 'lucide-react';
 import { BRAND } from '../data/content';
 
 interface NavbarProps {
+  currentFace: string;
+  onNavigateFace: (faceId: string) => void;
   onOpenConsultation: (topic?: string) => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
+export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onOpenConsultation }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>('accueil');
   const [locationDropdownOpen, setLocationDropdownOpen] = useState(false);
   const [currentLang, setCurrentLang] = useState<'FR' | 'EN'>('FR');
   const [searchOpen, setSearchOpen] = useState(false);
@@ -54,29 +45,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
     }
   }, [searchOpen]);
 
-  // Scroll listener for sticky styling and active section spy
+  // Scroll listener for top styling
   useEffect(() => {
-    let ticking = false;
     const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          setScrolled(window.scrollY > 25);
-
-          const sections = ['accueil', 'expertises', 'secteurs', 'cas-clients', 'simulateur-roi', 'methode', 'a-propos', 'contact'];
-          const scrollPosition = window.scrollY + 140;
-
-          for (let i = sections.length - 1; i >= 0; i--) {
-            const section = document.getElementById(sections[i]);
-            if (section && section.offsetTop <= scrollPosition) {
-              setActiveSection(sections[i]);
-              break;
-            }
-          }
-
-          ticking = false;
-        });
-        ticking = true;
-      }
+      setScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -95,34 +67,20 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
   }, [mobileMenuOpen]);
 
   const navLinks = [
-    { id: 'accueil', label: currentLang === 'FR' ? 'Accueil' : 'Home', href: '#accueil' },
-    { id: 'expertises', label: currentLang === 'FR' ? 'Expertises & SI' : 'Expertise & IS', href: '#expertises' },
-    { id: 'secteurs', label: currentLang === 'FR' ? 'Secteurs' : 'Industries', href: '#secteurs' },
-    { id: 'cas-clients', label: currentLang === 'FR' ? 'Cas Clients' : 'Case Studies', href: '#cas-clients' },
-    { id: 'simulateur-roi', label: currentLang === 'FR' ? 'Simulateur ROI' : 'ROI Simulator', href: '#simulateur-roi' },
-    { id: 'methode', label: currentLang === 'FR' ? 'Méthodologie' : 'Methodology', href: '#methode' },
-    { id: 'contact', label: currentLang === 'FR' ? 'Contact' : 'Contact', href: '#contact' },
+    { id: 'accueil', label: currentLang === 'FR' ? 'Accueil' : 'Home' },
+    { id: 'expertises', label: currentLang === 'FR' ? 'Expertises & SI' : 'Expertise & IS' },
+    { id: 'secteurs', label: currentLang === 'FR' ? 'Secteurs' : 'Industries' },
+    { id: 'cas-clients', label: currentLang === 'FR' ? 'Cas Clients' : 'Case Studies' },
+    { id: 'simulateur-roi', label: currentLang === 'FR' ? 'Executive Lab' : 'ROI Lab' },
+    { id: 'methode', label: currentLang === 'FR' ? 'Méthodologie' : 'Methodology' },
+    { id: 'contact', label: currentLang === 'FR' ? 'Contact' : 'Contact' },
   ];
 
-  const handleNavClick = (e: React.MouseEvent, href: string) => {
+  const handleNavClick = (e: React.MouseEvent, faceId: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
     setSearchOpen(false);
-
-    if (href === '#' || href === '#accueil') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      setActiveSection('accueil');
-      return;
-    }
-
-    const targetId = href.replace('#', '');
-    const element = document.getElementById(targetId);
-    if (element) {
-      const navOffset = 95;
-      const elementY = element.getBoundingClientRect().top + window.pageYOffset - navOffset;
-      window.scrollTo({ top: elementY, behavior: 'smooth' });
-      setActiveSection(targetId);
-    }
+    onNavigateFace(faceId);
   };
 
   const handleQuickSearch = (keyword: string) => {
@@ -131,40 +89,31 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
     setSearchQuery('');
     
     if (k.includes('odoo') || k.includes('erp') || k.includes('amoa') || k.includes('finance') || k.includes('dgi') || k.includes('dgfip')) {
-      const el = document.getElementById('expertises');
-      if (el) window.scrollTo({ top: el.offsetTop - 95, behavior: 'smooth' });
+      onNavigateFace('expertises');
     } else if (k.includes('btp') || k.includes('industrie') || k.includes('sante') || k.includes('secteur') || k.includes('négoce')) {
-      const el = document.getElementById('secteurs');
-      if (el) window.scrollTo({ top: el.offsetTop - 95, behavior: 'smooth' });
+      onNavigateFace('secteurs');
     } else if (k.includes('cas') || k.includes('client') || k.includes('projet') || k.includes('résultat')) {
-      const el = document.getElementById('cas-clients');
-      if (el) window.scrollTo({ top: el.offsetTop - 95, behavior: 'smooth' });
-    } else if (k.includes('roi') || k.includes('simulateur') || k.includes('calcul') || k.includes('gain') || k.includes('payback')) {
-      const el = document.getElementById('simulateur-roi');
-      if (el) window.scrollTo({ top: el.offsetTop - 95, behavior: 'smooth' });
-    } else if (k.includes('audit') || k.includes('diagnostic') || k.includes('48h')) {
-      const el = document.getElementById('audit-flash');
-      if (el) window.scrollTo({ top: el.offsetTop - 95, behavior: 'smooth' });
-    } else if (k.includes('methode') || k.includes('gouvernance') || k.includes('jalon')) {
-      const el = document.getElementById('methode');
-      if (el) window.scrollTo({ top: el.offsetTop - 95, behavior: 'smooth' });
+      onNavigateFace('cas-clients');
+    } else if (k.includes('roi') || k.includes('simulateur') || k.includes('calcul') || k.includes('audit') || k.includes('48h')) {
+      onNavigateFace('simulateur-roi');
+    } else if (k.includes('methode') || k.includes('gouvernance') || k.includes('jalon') || k.includes('ssii') || k.includes('faq')) {
+      onNavigateFace('methode');
     } else {
-      const el = document.getElementById('contact');
-      if (el) window.scrollTo({ top: el.offsetTop - 95, behavior: 'smooth' });
+      onNavigateFace('contact');
     }
   };
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 font-sans ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-sans ${
           scrolled
-            ? 'bg-[#050811]/95 backdrop-blur-xl border-b border-white/[0.08] shadow-2xl shadow-black/80'
-            : 'bg-[#050811]/80 backdrop-blur-md border-b border-white/[0.04]'
+            ? 'bg-[#050811]/98 backdrop-blur-xl border-b border-white/[0.08] shadow-2xl shadow-black/80'
+            : 'bg-[#050811]/90 backdrop-blur-md border-b border-white/[0.05]'
         }`}
       >
-        {/* 1. SQLI TOP UTILITY STRIP (Locations, Language Selector & Fast Contacts) */}
-        <div className="border-b border-white/[0.05] bg-[#03060d]/80 py-1.5 hidden md:block">
+        {/* 1. TOP UTILITY STRIP (Locations & Language Selector) */}
+        <div className="border-b border-white/[0.05] bg-[#03060d]/90 py-1.5 hidden md:block">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between text-[11px] text-slate-400">
             {/* Left: International Locations Dropdown */}
             <div className="relative" ref={locationRef}>
@@ -186,7 +135,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
                   </div>
                   
                   {/* Hub Casablanca */}
-                  <div className="p-2.5 rounded-xl hover:bg-white/[0.04] transition-colors border border-transparent hover:border-white/[0.05] cursor-pointer">
+                  <div 
+                    onClick={() => {
+                      setLocationDropdownOpen(false);
+                      onNavigateFace('contact');
+                    }}
+                    className="p-2.5 rounded-xl hover:bg-white/[0.04] transition-colors border border-transparent hover:border-white/[0.05] cursor-pointer"
+                  >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <span className="text-sm">🇲🇦</span>
@@ -200,7 +155,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
                   </div>
 
                   {/* Hub Paris */}
-                  <div className="p-2.5 rounded-xl hover:bg-white/[0.04] transition-colors border border-transparent hover:border-white/[0.05] cursor-pointer mt-1">
+                  <div 
+                    onClick={() => {
+                      setLocationDropdownOpen(false);
+                      onNavigateFace('contact');
+                    }}
+                    className="p-2.5 rounded-xl hover:bg-white/[0.04] transition-colors border border-transparent hover:border-white/[0.05] cursor-pointer mt-1"
+                  >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <span className="text-sm">🇫🇷</span>
@@ -211,14 +172,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
                     <p className="text-[10px] text-slate-400 mt-1 pl-6">
                       AMOA Stratégique & Conformité Factur-X Europe
                     </p>
-                  </div>
-
-                  <div className="mt-2 pt-2 border-t border-white/[0.06] px-2 flex items-center justify-between text-[10px]">
-                    <span className="text-slate-400">Interventions Globales</span>
-                    <span className="text-emerald-400 font-semibold flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      Disponible sous 72h
-                    </span>
                   </div>
                 </div>
               )}
@@ -258,17 +211,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
           </div>
         </div>
 
-        {/* 2. SQLI MAIN NAVIGATION ROW */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
+        {/* 2. MAIN NAVIGATION ROW */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex items-center justify-between gap-4">
             
-            {/* SQLI-Inspired Typographic Brand Logo with Signature Dual Accent Bars */}
-            <a 
-              href="#" 
-              onClick={(e) => handleNavClick(e, '#accueil')}
-              className="flex items-center gap-3.5 shrink-0 group cursor-pointer"
+            {/* SQLI Typographic Logo */}
+            <button 
+              onClick={(e) => handleNavClick(e, 'accueil')}
+              className="flex items-center gap-3.5 shrink-0 group cursor-pointer text-left"
             >
-              {/* SQLI-Style Graphic Accent Marks (Two vertical rectangles) */}
               <div className="flex items-end gap-1 h-7">
                 <div className="w-1.5 h-7 rounded-sm bg-gradient-to-t from-sky-600 to-sky-400 group-hover:scale-y-110 transition-transform origin-bottom" />
                 <div className="w-1.5 h-4.5 rounded-sm bg-gradient-to-t from-blue-700 to-sky-500 group-hover:scale-y-125 transition-transform origin-bottom delay-75" />
@@ -287,20 +238,19 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
                   Digital & Tech Advisory · Casablanca • Paris
                 </span>
               </div>
-            </a>
+            </button>
 
-            {/* Desktop Navigation Links */}
+            {/* Desktop Navigation Links (Face Switchers) */}
             <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
               {navLinks.map((link) => {
-                const isActive = activeSection === link.id;
+                const isActive = currentFace === link.id;
                 return (
-                  <a
+                  <button
                     key={link.id}
-                    href={link.href}
-                    onClick={(e) => handleNavClick(e, link.href)}
+                    onClick={(e) => handleNavClick(e, link.id)}
                     className={`relative px-3.5 py-2 rounded-xl text-xs xl:text-sm font-semibold transition-all duration-200 cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
                       isActive
-                        ? 'text-white bg-white/[0.08] shadow-sm'
+                        ? 'text-white bg-white/[0.08] shadow-sm font-bold'
                         : 'text-slate-300 hover:text-white hover:bg-white/[0.04]'
                     }`}
                   >
@@ -308,14 +258,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
                     {isActive && (
                       <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
                     )}
-                  </a>
+                  </button>
                 );
               })}
             </nav>
 
-            {/* Right Action Suite (Search Toggle, WhatsApp, Primary Executive CTA) */}
+            {/* Right Action Suite */}
             <div className="hidden lg:flex items-center gap-3 shrink-0">
-              {/* Quick Search Toggle Button */}
+              {/* Quick Search */}
               <button
                 onClick={() => setSearchOpen(!searchOpen)}
                 className={`p-2.5 rounded-xl border transition-all cursor-pointer ${
@@ -340,7 +290,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
                 <MessageCircle className="w-4 h-4" />
               </a>
 
-              {/* SQLI Signature CTA Button with Diagonal Arrow */}
+              {/* Primary Appointment Button */}
               <button
                 onClick={() => onOpenConsultation()}
                 className="link-cta-sqli bg-gradient-to-r from-sky-600 via-sky-500 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white px-4 py-2 rounded-xl border border-sky-400/30 shadow-lg shadow-sky-500/20 active:scale-[0.98] transition-all cursor-pointer"
@@ -374,7 +324,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
           </div>
         </div>
 
-        {/* 3. QUICK SEARCH EXPANDABLE BAR */}
+        {/* 3. QUICK SEARCH BAR */}
         {searchOpen && (
           <div className="border-t border-white/[0.08] bg-slate-950/95 backdrop-blur-xl px-4 py-3 animate-in fade-in slide-in-from-top-2 duration-150">
             <div className="max-w-3xl mx-auto flex items-center gap-3">
@@ -398,7 +348,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
               </button>
             </div>
 
-            {/* Quick suggested chips */}
             <div className="max-w-3xl mx-auto mt-2 flex flex-wrap items-center gap-2 text-xs">
               <span className="text-[10px] font-mono text-slate-500 uppercase">Suggestions :</span>
               {['ERP Odoo 18', 'Facturation DGI 2026', 'Calculateur ROI', 'BTP & Industrie', 'Diagnostic 48H'].map((chip) => (
@@ -435,7 +384,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
           </div>
 
           <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-2">
-            {/* Locations Pill for Mobile */}
             <div className="p-3 rounded-2xl bg-slate-900/80 border border-white/[0.08] mb-4 text-xs text-slate-300 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Globe className="w-4 h-4 text-sky-400" />
@@ -447,13 +395,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
             </div>
 
             {navLinks.map((link) => {
-              const isActive = activeSection === link.id;
+              const isActive = currentFace === link.id;
               return (
-                <a
+                <button
                   key={link.id}
-                  href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  className={`flex items-center justify-between p-3.5 rounded-2xl border transition-all text-sm font-semibold cursor-pointer ${
+                  onClick={(e) => handleNavClick(e, link.id)}
+                  className={`w-full flex items-center justify-between p-3.5 rounded-2xl border transition-all text-sm font-semibold cursor-pointer text-left ${
                     isActive
                       ? 'bg-slate-900 border-sky-400 text-white shadow-md'
                       : 'bg-slate-950/60 border-white/[0.06] text-slate-300 hover:text-white hover:bg-slate-900'
@@ -461,7 +408,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
                 >
                   <span>{link.label}</span>
                   <ChevronRight className="w-4 h-4 text-slate-500" />
-                </a>
+                </button>
               );
             })}
 
@@ -486,10 +433,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenConsultation }) => {
                 <MessageCircle className="w-4 h-4 text-emerald-400" />
                 <span>Ligne Directe WhatsApp</span>
               </a>
-
-              <div className="text-center pt-2 text-[11px] text-slate-500 font-mono">
-                CLIXA Consulting · Cabinet de Direction Générale
-              </div>
             </div>
           </div>
         </div>

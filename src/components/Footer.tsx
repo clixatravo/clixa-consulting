@@ -3,7 +3,11 @@ import { BRAND } from '../data/content';
 import { Mail, Phone, MapPin, ArrowUp, MessageCircle, Send, CheckCircle2, ShieldCheck, Lock, FileText, Globe, ArrowUpRight } from 'lucide-react';
 import { LegalModal } from './LegalModal';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onNavigateFace?: (faceId: string) => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onNavigateFace }) => {
   const [legalModalOpen, setLegalModalOpen] = useState(false);
   const [legalType, setLegalType] = useState<'mentions' | 'privacy'>('mentions');
   const [newsletterEmail, setNewsletterEmail] = useState('');
@@ -22,6 +26,12 @@ export const Footer: React.FC = () => {
   const openLegal = (type: 'mentions' | 'privacy') => {
     setLegalType(type);
     setLegalModalOpen(true);
+  };
+
+  const navigateTo = (faceId: string) => {
+    if (onNavigateFace) {
+      onNavigateFace(faceId);
+    }
   };
 
   return (
@@ -75,8 +85,10 @@ export const Footer: React.FC = () => {
             
             {/* Brand Col */}
             <div className="lg:col-span-2 space-y-4">
-              <div className="flex items-center gap-3">
-                {/* SQLI Twin Rectangles Emblem */}
+              <button 
+                onClick={() => navigateTo('accueil')}
+                className="flex items-center gap-3 cursor-pointer text-left"
+              >
                 <div className="flex items-end gap-1 h-6">
                   <div className="w-1.5 h-6 rounded-sm bg-sky-400" />
                   <div className="w-1.5 h-4 rounded-sm bg-blue-600" />
@@ -89,7 +101,7 @@ export const Footer: React.FC = () => {
                     CONSULTING
                   </span>
                 </div>
-              </div>
+              </button>
 
               <p className="text-xs text-sky-400 font-medium tracking-wide uppercase font-mono">
                 {BRAND.tagline}
@@ -119,32 +131,32 @@ export const Footer: React.FC = () => {
               </h4>
               <ul className="space-y-2 text-xs sm:text-sm">
                 <li>
-                  <a href="#expertises" className="hover:text-sky-400 transition-colors flex items-center gap-1.5">
+                  <button onClick={() => navigateTo('expertises')} className="hover:text-sky-400 transition-colors flex items-center gap-1.5 cursor-pointer text-left">
                     <span className="text-sky-400 text-xs">★</span>
                     <span className="text-slate-200 font-medium">Intégration ERP Odoo</span>
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a href="#expertises" className="hover:text-sky-400 transition-colors flex items-center gap-1.5">
+                  <button onClick={() => navigateTo('expertises')} className="hover:text-sky-400 transition-colors flex items-center gap-1.5 cursor-pointer text-left">
                     <span className="text-sky-400 text-xs">★</span>
                     <span className="text-slate-200 font-medium">Web & Solutions Digitales</span>
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a href="#expertises" className="hover:text-sky-400 transition-colors flex items-center gap-1.5">
+                  <button onClick={() => navigateTo('expertises')} className="hover:text-sky-400 transition-colors flex items-center gap-1.5 cursor-pointer text-left">
                     <span className="text-sky-400 text-xs">★</span>
                     <span className="text-slate-200 font-medium">AMOA Systèmes d'Info</span>
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a href="#expertises" className="hover:text-sky-400 transition-colors">
+                  <button onClick={() => navigateTo('expertises')} className="hover:text-sky-400 transition-colors cursor-pointer text-left">
                     Performance & Finance
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a href="#expertises" className="hover:text-sky-400 transition-colors">
+                  <button onClick={() => navigateTo('expertises')} className="hover:text-sky-400 transition-colors cursor-pointer text-left">
                     Facturation Électronique DGI/DGFIP
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -156,29 +168,29 @@ export const Footer: React.FC = () => {
               </h4>
               <ul className="space-y-2 text-xs sm:text-sm">
                 <li>
-                  <a href="#cas-clients" className="hover:text-sky-400 transition-colors">
+                  <button onClick={() => navigateTo('cas-clients')} className="hover:text-sky-400 transition-colors cursor-pointer text-left">
                     Cas Clients & ROI
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a href="#simulateur-roi" className="hover:text-sky-400 transition-colors">
+                  <button onClick={() => navigateTo('simulateur-roi')} className="hover:text-sky-400 transition-colors cursor-pointer text-left">
                     Simulateur de Rentabilité
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a href="#simulateur-roi" className="hover:text-sky-400 transition-colors">
+                  <button onClick={() => navigateTo('simulateur-roi')} className="hover:text-sky-400 transition-colors cursor-pointer text-left">
                     Diagnostic Flash 48H
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a href="#methode" className="hover:text-sky-400 transition-colors">
+                  <button onClick={() => navigateTo('methode')} className="hover:text-sky-400 transition-colors cursor-pointer text-left">
                     Méthodologie en 4 Phases
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a href="#secteurs" className="hover:text-sky-400 transition-colors">
+                  <button onClick={() => navigateTo('secteurs')} className="hover:text-sky-400 transition-colors cursor-pointer text-left">
                     Spécialisations Métiers
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -206,6 +218,12 @@ export const Footer: React.FC = () => {
                     <MessageCircle className="w-3.5 h-3.5" />
                     <span>Ligne Directe WhatsApp</span>
                   </a>
+                </li>
+                <li>
+                  <button onClick={() => navigateTo('contact')} className="text-sky-400 hover:text-white font-semibold text-xs pt-1 flex items-center gap-1 cursor-pointer">
+                    <span>Ouvrir la page Contact</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </button>
                 </li>
               </ul>
             </div>

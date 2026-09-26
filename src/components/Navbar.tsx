@@ -215,7 +215,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
               </div>
             </button>
 
-            {/* Desktop Navigation Links (Simple, clean, well-aligned) */}
+            {/* Desktop Navigation Links (Forward-pop on hover) */}
             <nav className="hidden lg:flex items-center gap-5 xl:gap-7">
               {navLinks.map((link) => {
                 const isActive = currentFace === link.id;
@@ -223,10 +223,10 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
                   <button
                     key={link.id}
                     onClick={() => handleNavClick(link.id)}
-                    className={`text-sm font-semibold transition-all duration-150 cursor-pointer whitespace-nowrap relative py-1 ${
+                    className={`nav-face-link text-sm font-semibold cursor-pointer whitespace-nowrap relative py-1 px-1 ${
                       isActive
-                        ? (isDarkHero ? 'text-white font-bold' : 'text-black font-bold')
-                        : (isDarkHero ? 'text-slate-300 hover:text-white' : 'text-slate-800 hover:text-black')
+                        ? (isDarkHero ? 'text-white font-bold' : 'text-blue-700 font-bold')
+                        : (isDarkHero ? 'text-slate-300 hover:text-white' : 'text-slate-800 hover:text-blue-600')
                     }`}
                   >
                     <span>{link.label}</span>
@@ -329,19 +329,23 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
             </form>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-6 space-y-4">
+          <div className="flex-1 overflow-y-auto p-6 space-y-3">
             {navLinks.map((link) => {
               const isActive = currentFace === link.id;
               return (
                 <button
                   key={link.id}
                   onClick={() => handleNavClick(link.id)}
-                  className={`w-full text-left py-2 text-lg font-bold transition-colors cursor-pointer flex items-center justify-between ${
-                    isActive ? 'text-blue-600' : 'text-slate-800 hover:text-black'
+                  className={`mobile-drawer-face-btn w-full text-left py-2.5 px-3 text-lg font-bold transition-all cursor-pointer flex items-center justify-between rounded-sm ${
+                    isActive ? 'text-blue-600 bg-blue-50/70 border border-blue-200' : 'text-slate-800 hover:text-black hover:bg-slate-100/60'
                   }`}
                 >
                   <span>{link.label}</span>
-                  {isActive && <span className="w-2 h-2 rounded-full bg-blue-600" />}
+                  {isActive ? (
+                    <span className="w-2 h-2 rounded-full bg-blue-600" />
+                  ) : (
+                    <ArrowUpRight className="w-4 h-4 text-slate-400 opacity-60" />
+                  )}
                 </button>
               );
             })}

@@ -197,11 +197,11 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
               <strong className="text-slate-950 font-semibold">sécuriser 100% de conformité fiscale DGI & DGFIP</strong>.
             </p>
 
-            {/* SQLI Signature Action Suite */}
+            {/* SQLI Signature Action Suite with 3D Forward Pop */}
             <div className="animation-scroll fade-in-bottom delay-300 pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
               <button
                 onClick={() => onOpenConsultation("Cadrage Stratégique & Organisation")}
-                className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-none text-sm sm:text-base font-bold text-white transition-all hover:bg-blue-700 active:scale-[0.98] cursor-pointer font-heading shadow-md"
+                className="face-cta-forward animate-forward-breath inline-flex items-center justify-center gap-3 px-8 py-4 rounded-none text-sm sm:text-base font-bold text-white transition-all cursor-pointer font-heading shadow-md"
                 style={{ background: '#1f24e9' }}
               >
                 <span>Démarrer un cadrage stratégique</span>
@@ -210,7 +210,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
               
               <button
                 onClick={() => onNavigateFace('expertises')}
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-none text-sm sm:text-base font-semibold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 hover:border-blue-400 transition-all shadow-sm active:scale-[0.98] cursor-pointer"
+                className="face-cta-forward inline-flex items-center justify-center gap-2 px-7 py-4 rounded-none text-sm sm:text-base font-semibold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 hover:border-blue-400 transition-all shadow-sm cursor-pointer"
               >
                 <span>Découvrir nos Expertises</span>
                 <ArrowRight className="w-4 h-4 text-blue-600" />
@@ -324,7 +324,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
               <div className="pt-2">
                 <button
                   onClick={() => onNavigateFace('expertises')}
-                  className="link-cta-sqli text-blue-600 hover:text-blue-800 text-sm font-bold flex items-center gap-2 cursor-pointer"
+                  className="face-cta-forward link-cta-sqli text-blue-600 hover:text-blue-800 text-sm font-bold flex items-center gap-2 cursor-pointer"
                 >
                   <span>Explorer toute la matrice d'expertises</span>
                   <div className="icon-circle bg-blue-50 border-blue-200 text-blue-600">
@@ -410,7 +410,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
               <div className="pt-2">
                 <button
                   onClick={() => onNavigateFace('methode')}
-                  className="link-cta-sqli text-blue-600 hover:text-blue-800 text-sm font-bold flex items-center gap-2 cursor-pointer"
+                  className="face-cta-forward link-cta-sqli text-blue-600 hover:text-blue-800 text-sm font-bold flex items-center gap-2 cursor-pointer"
                 >
                   <span>Découvrir notre démarche en 4 phases</span>
                   <div className="icon-circle bg-blue-50 border-blue-200 text-blue-600">
@@ -475,7 +475,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
               <div className="pt-2">
                 <button
                   onClick={() => onNavigateFace('insights')}
-                  className="link-cta-sqli text-blue-600 hover:text-blue-800 text-sm font-bold flex items-center gap-2 cursor-pointer"
+                  className="face-cta-forward link-cta-sqli text-blue-600 hover:text-blue-800 text-sm font-bold flex items-center gap-2 cursor-pointer"
                 >
                   <span>Accéder à tous les Insights</span>
                   <div className="icon-circle bg-blue-50 border-blue-200 text-blue-600">
@@ -543,7 +543,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
               <div className="pt-2">
                 <button
                   onClick={() => onNavigateFace('cas-clients')}
-                  className="link-cta-sqli text-blue-600 hover:text-blue-800 text-sm font-bold flex items-center gap-2 cursor-pointer"
+                  className="face-cta-forward link-cta-sqli text-blue-600 hover:text-blue-800 text-sm font-bold flex items-center gap-2 cursor-pointer"
                 >
                   <span>Voir tous les cas clients</span>
                   <div className="icon-circle bg-blue-50 border-blue-200 text-blue-600">
@@ -705,7 +705,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
             <div className="pt-3 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4">
               <button
                 onClick={() => onOpenConsultation("Cadrage Stratégique Général")}
-                className="w-full sm:w-auto px-8 py-4 text-sm font-bold text-white font-heading flex items-center justify-center gap-2.5 cursor-pointer shadow-md transition-all hover:bg-blue-700 active:scale-[0.98]"
+                className="face-cta-forward animate-forward-breath w-full sm:w-auto px-8 py-4 text-sm font-bold text-white font-heading flex items-center justify-center gap-2.5 cursor-pointer shadow-md transition-all"
                 style={{ background: '#1f24e9' }}
               >
                 <span>Prendre un rendez-vous stratégique</span>
@@ -714,7 +714,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
 
               <button
                 onClick={() => onNavigateFace('contact')}
-                className="w-full sm:w-auto px-7 py-4 text-sm font-semibold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 font-sans flex items-center justify-center gap-2 cursor-pointer shadow-sm transition-all active:scale-[0.98]"
+                className="face-cta-forward w-full sm:w-auto px-7 py-4 text-sm font-semibold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 font-sans flex items-center justify-center gap-2 cursor-pointer shadow-sm transition-all"
               >
                 <span>Voir nos adresses à Casablanca & Toulouse</span>
                 <ArrowRight className="w-4 h-4 text-blue-600" />

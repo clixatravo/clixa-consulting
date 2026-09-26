@@ -53,7 +53,7 @@ export const ContactFace: React.FC<ContactFaceProps> = ({ onOpenConsultation, on
         {/* 2. MAIN 2-COLUMN CONTACT LAYOUT */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 mb-16">
           
-          {/* Left Column: Hubs Casablanca & Paris */}
+          {/* Left Column: Hubs Casablanca & Toulouse */}
           <div className="lg:col-span-5 space-y-8">
             
             {/* Hub Casablanca */}
@@ -92,12 +92,12 @@ export const ContactFace: React.FC<ContactFaceProps> = ({ onOpenConsultation, on
               </p>
             </div>
 
-            {/* Hub Paris */}
+            {/* Hub Toulouse */}
             <div className="p-8 bg-white border border-[#e2dcd2] shadow-sm">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
                   <span className="text-2xl">🇫🇷</span>
-                  <h3 className="text-xl font-bold text-slate-900 font-heading">Paris Hub</h3>
+                  <h3 className="text-xl font-bold text-slate-900 font-heading">Toulouse Hub</h3>
                 </div>
                 <span className="text-xs font-mono font-bold text-slate-700 bg-slate-100 px-2.5 py-1">
                   Bureau Europe
@@ -107,7 +107,7 @@ export const ContactFace: React.FC<ContactFaceProps> = ({ onOpenConsultation, on
               <div className="space-y-3 text-sm text-slate-600 mb-6 font-sans">
                 <div className="flex items-start gap-3">
                   <MapPin className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
-                  <span>8ème Arrondissement, Paris, France</span>
+                  <span>Toulouse (Occitanie), France</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <PhoneCall className="w-4 h-4 text-blue-600 shrink-0" />

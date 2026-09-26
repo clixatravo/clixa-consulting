@@ -67,7 +67,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
   const navLinks = [
     { id: 'expertises', label: currentLang === 'EN' ? 'Expertise' : 'Expertises' },
     { id: 'cas-clients', label: currentLang === 'EN' ? 'Case Studies' : 'Cas Clients' },
-    { id: 'formations', label: 'Formations' },
     { id: 'insights', label: 'Insights' },
     { id: 'secteurs', label: currentLang === 'EN' ? 'Secteurs' : 'Secteurs' },
     { id: 'methode', label: currentLang === 'EN' ? 'About' : 'À Propos' },
@@ -84,9 +83,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
     if (!searchQuery.trim()) return;
     const q = searchQuery.toLowerCase();
     
-    if (q.includes('formation') || q.includes('pmp') || q.includes('institute') || q.includes('cours') || q.includes('certif') || q.includes('daf')) {
-      onNavigateFace('formations');
-    } else if (q.includes('odoo') || q.includes('erp') || q.includes('amoa') || q.includes('tech') || q.includes('expertise')) {
+    if (q.includes('odoo') || q.includes('erp') || q.includes('amoa') || q.includes('tech') || q.includes('expertise') || q.includes('conseil') || q.includes('formation')) {
       onNavigateFace('expertises');
     } else if (q.includes('case') || q.includes('cas') || q.includes('client') || q.includes('projet') || q.includes('study')) {
       onNavigateFace('cas-clients');
@@ -165,7 +162,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
                       <span className="text-sm">🇫🇷</span>
                       <div>
                         <div className="font-bold text-slate-900">France</div>
-                        <div className="text-[10px] text-slate-600">Paris (8ème Arrondissement)</div>
+                        <div className="text-[10px] text-slate-600">Toulouse (Occitanie & Europe)</div>
                       </div>
                     </div>
                     {selectedCountry === 'France' && <Check className="w-3.5 h-3.5 text-blue-600" />}

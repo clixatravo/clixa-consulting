@@ -8,16 +8,16 @@ type Message = { role: 'user' | 'assistant'; content: string };
 const CLE_STOCKAGE = 'clixa-assistant';
 
 const SUGGESTIONS = [
-  'Quelles formations proposez-vous ?',
-  'Prochaine session et prix de la formation DAF ?',
-  'Comment se passe une intégration Odoo ?',
-  'Wach kayn khlas b tranches ?',
+  'Comment se déroule un cadrage ERP Odoo ?',
+  'Quels sont vos modules d’organisation des processus ?',
+  'Conformité Facturation Électronique DGI au Maroc ?',
+  'Quels sont vos délais d’intervention à Casablanca et Toulouse ?',
 ];
 
 const ACCUEIL: Message = {
   role: 'assistant',
   content:
-    "Bonjour 👋 Je suis l'assistant IA de **CLIXA**. Posez-moi vos questions sur nos **formations** (programmes, dates, prix) ou nos **services de conseil** (ERP Odoo, AMOA, digital…).",
+    "Bonjour 👋 Je suis l'assistant IA exécutif de **CLIXA Consulting**. Posez-moi vos questions sur nos **missions de conseil**, l'**organisation de vos processus**, l'**intégration ERP Odoo Enterprise** ou la **conformité fiscale DGI & DGFIP**.",
 };
 
 const lireHistorique = (): Message[] => {
@@ -190,7 +190,7 @@ export const ChatPanel: React.FC<{ ouvert: boolean; onFermer: () => void }> = ({
           </span>
           <div className="leading-tight">
             <p className="text-sm font-bold text-white">Assistant IA CLIXA</p>
-            <p className="text-[11px] text-slate-400">Formations · Conseil</p>
+            <p className="text-[11px] text-slate-400">Conseil Stratégique · ERP Odoo & AMOA</p>
           </div>
         </div>
         <div className="flex items-center gap-1">

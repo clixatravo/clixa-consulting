@@ -147,7 +147,7 @@ export const TeamPedigree: React.FC<TeamPedigreeProps> = ({ onOpenConsultation }
 
           <div className="mt-8 pt-6 border-t border-slate-850 flex flex-col sm:flex-row items-center justify-between gap-4">
             <span className="text-xs text-slate-400 text-center sm:text-left">
-              Bureaux à Casablanca & Paris • Interventions au Maroc, en France et à l'International.
+              Bureaux à Casablanca & Toulouse • Interventions au Maroc, en France et à l'International.
             </span>
             <button
               onClick={() => onOpenConsultation("Échange avec un consultant senior")}

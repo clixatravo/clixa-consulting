@@ -119,7 +119,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateFace }) => {
                 </div>
                 <div className="flex items-center gap-2 text-slate-300">
                   <span>🇫🇷</span>
-                  <span><strong>Paris :</strong> 8ème Arrondissement (Europe & AMOA)</span>
+                  <span><strong>Toulouse :</strong> Occitanie & Europe (AMOA & SI)</span>
                 </div>
               </div>
             </div>
@@ -209,7 +209,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateFace }) => {
                 </li>
                 <li>
                   <a href={`tel:${BRAND.phoneFranceRaw}`} className="text-white hover:text-sky-300 font-mono transition-colors block">
-                    <span className="text-slate-400 block text-[10px]">Bureau Europe (Paris) :</span>
+                    <span className="text-slate-400 block text-[10px]">Bureau Europe (Toulouse) :</span>
                     {BRAND.phoneFranceDisplay}
                   </a>
                 </li>

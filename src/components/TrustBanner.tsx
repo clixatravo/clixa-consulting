@@ -8,7 +8,7 @@ export const TrustBanner: React.FC = () => {
     { icon: FileCheck2, label: "Facturation Électronique", desc: "Conformité DGI (MA) & DGFIP (FR)", tag: "Agrément Fiscal" },
     { icon: ShieldCheck, label: "Standards AMOA Big 4", desc: "Cadrage, Spécifications & Recette", tag: "Gouvernance SI" },
     { icon: Lock, label: "Secret Professionnel (NDA)", desc: "Confidentialité Totale CNDP / RGPD", tag: "Données Sécurisées" },
-    { icon: Award, label: "Double Hub Casablanca & Paris", desc: "Casablanca Finance City & Paris", tag: "Présence Directe" },
+    { icon: Award, label: "Double Hub Casablanca & Toulouse", desc: "Casablanca Finance City & Toulouse", tag: "Présence Directe" },
     { icon: TrendingUp, label: "Pilotage Financier & BFR", desc: "Tableaux de bord DAF & Trésorerie", tag: "Performance" },
     { icon: Globe, label: "Solutions Web & Extranets", desc: "Portails clients & Automatisation API", tag: "Digitalisation" },
     { icon: Building2, label: "Casablanca Finance City (CFC)", desc: "Statut International & Rayonnement Régional", tag: "Hub Stratégique" },

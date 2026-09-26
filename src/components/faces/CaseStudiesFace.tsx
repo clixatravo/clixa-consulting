@@ -268,7 +268,7 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
 
               {/* Date */}
               <div className="mt-auto text-xs text-slate-400 font-sans pt-2 border-t border-slate-200">
-                {cs.date} · {cs.country === 'Morocco' ? 'Casablanca 🇲🇦' : 'Paris 🇫🇷'}
+                {cs.date} · {cs.country === 'Morocco' ? 'Casablanca 🇲🇦' : 'Toulouse 🇫🇷'}
               </div>
             </article>
           ))}

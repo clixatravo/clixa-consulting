@@ -8,7 +8,6 @@ import { AccueilFace } from './components/faces/AccueilFace';
 import { ExpertisesFace } from './components/faces/ExpertisesFace';
 import { SecteursFace } from './components/faces/SecteursFace';
 import { CaseStudiesFace } from './components/faces/CaseStudiesFace';
-import { FormationsFace } from './components/faces/FormationsFace';
 import { InsightsFace } from './components/faces/InsightsFace';
 import { ExecutiveLabFace } from './components/faces/ExecutiveLabFace';
 import { MethodologieFace } from './components/faces/MethodologieFace';
@@ -38,7 +37,7 @@ export const App: React.FC = () => {
 
   // Hash-based Face Router: matches SQLI URL / Face separation
   useEffect(() => {
-    const validFaces = ['accueil', 'expertises', 'secteurs', 'cas-clients', 'formations', 'insights', 'simulateur-roi', 'methode', 'contact'];
+    const validFaces = ['accueil', 'expertises', 'secteurs', 'cas-clients', 'insights', 'simulateur-roi', 'methode', 'contact'];
 
     const getHashFace = () => {
       const raw = window.location.hash.replace(/^#\/?/, '');
@@ -95,13 +94,6 @@ export const App: React.FC = () => {
       case 'cas-clients':
         return (
           <CaseStudiesFace
-            onOpenConsultation={handleOpenConsultation}
-            onNavigateFace={handleNavigateFace}
-          />
-        );
-      case 'formations':
-        return (
-          <FormationsFace
             onOpenConsultation={handleOpenConsultation}
             onNavigateFace={handleNavigateFace}
           />

@@ -66,7 +66,7 @@ export const CTASection: React.FC<CTASectionProps> = ({ onOpenConsultation }) =>
             <div className="flex items-center gap-3.5">
               <span className="text-2xl">🇫🇷</span>
               <div>
-                <div className="text-[11px] text-slate-400 font-medium">Direction Europe (Paris)</div>
+                <div className="text-[11px] text-slate-400 font-medium">Direction Europe (Toulouse)</div>
                 <a
                   href={`tel:${BRAND.phoneFranceRaw}`}
                   className="font-mono text-base font-bold text-white hover:text-sky-300 transition-colors"
@@ -78,7 +78,7 @@ export const CTASection: React.FC<CTASectionProps> = ({ onOpenConsultation }) =>
             <a
               href={`tel:${BRAND.phoneFranceRaw}`}
               className="p-3 rounded-xl bg-slate-800 border border-white/[0.08] text-sky-400 hover:bg-sky-500 hover:text-white transition-all shadow-sm"
-              title="Appeler Paris"
+              title="Appeler Toulouse"
             >
               <PhoneCall className="w-4 h-4" />
             </a>

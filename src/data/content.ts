@@ -89,9 +89,9 @@ export const BRAND = {
   phoneFranceDisplay: "+33 7 53 97 01 86",
   whatsappLink: "https://wa.me/212661344054?text=Bonjour%20CLIXA%20Consulting,%20je%20souhaite%20%C3%A9changer%20sur%20un%20projet.",
   
-  address: "Casablanca & Paris • Interventions Maroc, France & International",
+  address: "Casablanca & Toulouse • Interventions Maroc, France & International",
   addressMaroc: "Casablanca, Maroc",
-  addressFrance: "Paris, France",
+  addressFrance: "Toulouse, France",
 };
 
 export const KEY_METRICS = [
@@ -274,7 +274,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     tag: "Performance & Finance",
     title: "Refonte du contrôle de gestion & reporting décisionnel",
     clientSector: "Société de Services & Ingénierie",
-    location: "Paris • 45 M€ de CA",
+    location: "Toulouse • 45 M€ de CA",
     metric: "3 jours",
     metricLabel: "pour la clôture mensuelle (vs 14 jours auparavant)",
     challenge: "Prolifération de fichiers Excel non sécurisés, retards de reporting et absence de visibilité trésorerie pour les associés.",
@@ -354,7 +354,7 @@ export const FAQ_ITEMS: FAQItem[] = [
   {
     category: "Présence & Disponibilité",
     question: "Vos consultants interviennent-ils sur site au Maroc et en France ?",
-    answer: "Absolument. Avec nos bureaux à Casablanca et à Paris, nous combinons présence physique dans vos locaux pour les étapes clés (ateliers de cadrage, formations, comités de pilotage) et suivi opérationnel agile pour garantir réactivité et proximité culturelle."
+    answer: "Absolument. Avec nos bureaux à Casablanca et à Toulouse, nous combinons présence physique dans vos locaux pour les étapes clés (ateliers de cadrage, comités de pilotage) et suivi opérationnel agile pour garantir réactivité et proximité culturelle."
   },
   {
     category: "Propriété & Liberté",
@@ -574,7 +574,7 @@ export const TESTIMONIALS: TestimonialItem[] = [
     name: "Thomas M.",
     role: "Directeur des Opérations",
     companyType: "Société de Conseil & Services IT (60 collab.)",
-    location: "Paris, France",
+    location: "Toulouse, France",
     flag: "🇫🇷",
     quote:
       "La rigueur AMOA de CLIXA nous a évité les dépassements habituels de budget. Le portail client sur-mesure et l'interconnexion avec notre CRM ont transformé notre suivi commercial et notre facturation récurrente.",

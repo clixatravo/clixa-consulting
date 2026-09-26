@@ -207,7 +207,7 @@ export const ExpertisesFace: React.FC<ExpertisesFaceProps> = ({ onOpenConsultati
                       className="w-full px-4 py-2 text-left text-xs hover:bg-slate-100 flex items-center justify-between cursor-pointer"
                     >
                       <span className={selectedHub === h ? 'font-bold text-blue-600' : 'text-slate-700'}>
-                        {h === 'Morocco' ? '🇲🇦 Casablanca CFC' : h === 'France' ? '🇫🇷 Paris' : 'All Hubs'}
+                        {h === 'Morocco' ? '🇲🇦 Casablanca CFC' : h === 'France' ? '🇫🇷 Toulouse' : 'All Hubs'}
                       </span>
                       {selectedHub === h && <Check className="w-3.5 h-3.5 text-blue-600" />}
                     </button>
@@ -280,7 +280,7 @@ export const ExpertisesFace: React.FC<ExpertisesFaceProps> = ({ onOpenConsultati
 
               {/* Date */}
               <div className="mt-auto text-xs text-slate-400 font-sans pt-2 border-t border-slate-200">
-                {exp.date} · {exp.hub === 'Morocco' ? 'Casablanca 🇲🇦' : 'Paris 🇫🇷'}
+                {exp.date} · {exp.hub === 'Morocco' ? 'Casablanca 🇲🇦' : 'Toulouse 🇫🇷'}
               </div>
             </article>
           ))}

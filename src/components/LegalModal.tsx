@@ -73,7 +73,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, type })
                   Le site <strong>clixaconseil.com</strong> est édité par le cabinet <strong>CLIXA Consulting</strong>, cabinet de conseil en management, organisation, systèmes d'information et intégration ERP.
                 </p>
                 <p className="text-slate-400 mt-1">
-                  Implantations : Casablanca (Maroc) & Paris (France).<br />
+                  Implantations : Casablanca (Maroc) & Toulouse (France).<br />
                   Contact : <a href={`mailto:${BRAND.contactEmail}`} className="text-sky-400 hover:underline">{BRAND.contactEmail}</a> | Téléphone Maroc : {BRAND.phoneMarocDisplay} | Téléphone France : {BRAND.phoneFranceDisplay}.
                 </p>
 

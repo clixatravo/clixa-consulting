@@ -173,19 +173,19 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
       />
 
       {/* Modal Dialog */}
-      <div className="relative w-full max-w-2xl bg-white border border-[#e2dcd2] shadow-2xl shadow-slate-900/15 overflow-hidden my-4 sm:my-8 z-10 animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-2xl bg-white border border-[#e2dcd2] shadow-2xl shadow-slate-900/15 overflow-hidden my-auto z-10 animate-in fade-in zoom-in-95 duration-200 max-h-[92dvh] flex flex-col">
         
         {/* Header bar (SQLI Clean Ivory Style) */}
-        <div className="px-6 py-5 border-b border-slate-200 bg-[#FAF7F2] flex items-center justify-between">
+        <div className="px-5 sm:px-6 py-4 sm:py-5 border-b border-slate-200 bg-[#FAF7F2] flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 bg-blue-50 border border-blue-200 text-blue-700 flex items-center justify-center shadow-sm">
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-slate-900 font-heading leading-tight">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900 font-heading leading-tight">
                 Planifier un Cadrage avec CLIXA
               </h3>
-              <p className="text-xs text-slate-500 font-sans">
+              <p className="text-[11px] sm:text-xs text-slate-500 font-sans">
                 Consultants Associés Casablanca 🇲🇦 & Toulouse 🇫🇷 • Réponse sous 24h
               </p>
             </div>
@@ -201,7 +201,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
         </div>
 
         {/* Tab Selector: Planifier un Appel vs Message écrit */}
-        <div className="grid grid-cols-2 p-1.5 bg-slate-100 border-b border-slate-200 text-xs font-semibold">
+        <div className="grid grid-cols-2 p-1.5 bg-slate-100 border-b border-slate-200 text-xs font-semibold shrink-0">
           <button
             type="button"
             onClick={() => setMode('call')}
@@ -230,7 +230,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, ini
         </div>
 
         {/* Content Body */}
-        <div className="p-6 sm:p-8 bg-white">
+        <div className="p-5 sm:p-8 bg-white flex-1 overflow-y-auto overscroll-contain">
           {submitted ? (
             <div className="text-center py-6 space-y-4 animate-in fade-in zoom-in-95">
               <div className="w-16 h-16 bg-emerald-50 border border-emerald-200 text-emerald-600 mx-auto flex items-center justify-center shadow-sm">

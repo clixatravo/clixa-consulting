@@ -183,7 +183,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
             </div>
 
             {/* Authoritative Clean Headline */}
-            <h1 className="animation-scroll fade-in-bottom delay-100 text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-extrabold tracking-tight text-[#0a1628] leading-[1.06] font-heading">
+            <h1 className="animation-scroll fade-in-bottom delay-100 text-3xl sm:text-5xl md:text-7xl lg:text-[76px] font-extrabold tracking-tight text-[#0a1628] leading-[1.08] font-heading">
               L'Excellence du Conseil Stratégique <br />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-sky-600 to-blue-500">
                 & de l'Organisation des Processus

@@ -176,12 +176,20 @@ export const ChatPanel: React.FC<{ ouvert: boolean; onFermer: () => void }> = ({
   const affiches = [ACCUEIL, ...messages];
 
   return (
-    <section
-      role="dialog"
-      aria-label="Assistant IA CLIXA"
-      hidden={!ouvert}
-      className="fixed z-50 inset-x-0 bottom-0 h-[85dvh] sm:inset-x-auto sm:right-5 sm:bottom-[10.5rem] sm:h-[min(600px,calc(100dvh-12rem))] sm:w-[390px] flex flex-col overflow-hidden rounded-t-2xl sm:rounded-2xl border border-slate-700/80 bg-slate-950 shadow-2xl shadow-black/60"
-    >
+    <>
+      {ouvert && (
+        <div
+          onClick={onFermer}
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-xs sm:hidden animate-in fade-in duration-200"
+          aria-hidden="true"
+        />
+      )}
+      <section
+        role="dialog"
+        aria-label="Assistant IA CLIXA"
+        hidden={!ouvert}
+        className="fixed z-50 inset-x-0 bottom-0 h-[85dvh] sm:inset-x-auto sm:right-5 sm:bottom-[10.5rem] sm:h-[min(600px,calc(100dvh-12rem))] sm:w-[390px] flex flex-col overflow-hidden rounded-t-2xl sm:rounded-2xl border border-slate-700/80 bg-slate-950 shadow-2xl shadow-black/60"
+      >
       {/* En-tête */}
       <header className="flex items-center justify-between gap-3 border-b border-slate-800 bg-slate-900/80 px-4 py-3">
         <div className="flex items-center gap-2.5">
@@ -295,5 +303,6 @@ export const ChatPanel: React.FC<{ ouvert: boolean; onFermer: () => void }> = ({
         </p>
       </form>
     </section>
+  </>
   );
 };

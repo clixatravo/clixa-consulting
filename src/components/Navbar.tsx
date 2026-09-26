@@ -62,7 +62,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
   }, [mobileMenuOpen]);
 
   // Determine if header should be dark (over hero video) or light (SQLI ivory)
-  const isDarkHero = currentFace === 'accueil' && !scrolled;
+  const isDarkHero = false; // Hero is now light steel blue — navbar always light
 
   const navLinks = [
     { id: 'expertises', label: currentLang === 'EN' ? 'Expertise' : 'Expertises' },

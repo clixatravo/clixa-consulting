@@ -35,20 +35,7 @@ export const ChatAssistant: React.FC = () => {
       )}
 
       {/* Au-dessus du bouton WhatsApp */}
-      <div className="fixed bottom-[5.25rem] right-5 z-40 group flex items-center gap-2 sm:bottom-24">
-        {!ouvert && (
-          <button
-            type="button"
-            onClick={basculer}
-            className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#0c1222]/95 border border-sky-400/30 text-white text-xs font-bold shadow-xl backdrop-blur-md cursor-pointer hover:bg-black transition-colors"
-          >
-            <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-400" />
-            </span>
-            <span className="font-heading">Assistant IA · Conseil & Formations</span>
-          </button>
-        )}
+      <div className="fixed bottom-[5.25rem] right-5 z-40 sm:bottom-24">
         <button
           type="button"
           onClick={basculer}

@@ -100,104 +100,86 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
   return (
     <div className="w-full animate-in fade-in duration-300 font-sans">
       
-      {/* 1. CINEMATIC HERO WITH LOOPING TRAILER (SQLI node-home-page__head) */}
-      <section className="relative min-h-[92vh] flex flex-col justify-center pt-32 sm:pt-40 pb-20 overflow-hidden bg-[#050811] border-b border-white/[0.08]">
-        
-        {/* SVG Liquid Glass Distortion Filter */}
-        <svg className="node-home-page__head__liquid-filter absolute w-0 h-0 pointer-events-none" aria-hidden="true" focusable="false">
-          <defs>
-            <filter id="home-liquid-glass-distortion" x="-20%" y="-20%" width="140%" height="140%" colorInterpolationFilters="sRGB">
-              <feTurbulence type="fractalNoise" baseFrequency="0.007 0.012" numOctaves="2" seed="24" result="noise" />
-              <feGaussianBlur in="noise" stdDeviation="1.2" result="soft-noise" />
-              <feDisplacementMap in="SourceGraphic" in2="soft-noise" scale="16" xChannelSelector="R" yChannelSelector="G" />
-            </filter>
-          </defs>
-        </svg>
+      {/* 1. HERO LIGHT STEEL BLUE (SQLI-style professional bright hero) */}
+      <section className="relative min-h-[92vh] flex flex-col justify-center pt-32 sm:pt-40 pb-20 overflow-hidden border-b border-slate-200"
+        style={{ background: 'linear-gradient(135deg, #e8f4fd 0%, #dbeeff 30%, #c7e3ff 60%, #f0f7ff 100%)' }}
+      >
 
-        {/* 🎬 LOOPING BACKGROUND TRAILER VIDEO (HTML5 Direct 60FPS Video with zero black flashes) */}
-        <div className="node-home-page__head__media">
-          <div className="video-in-place video-in-place--decorative">
-            <video
-              ref={videoRef}
-              autoPlay
-              loop
-              muted={videoMuted}
-              playsInline
-              className="w-full h-full object-cover scale-[1.05] opacity-35 transition-opacity duration-1000"
-            >
-              <source 
-                src="https://assets.mixkit.co/videos/preview/mixkit-software-developer-working-on-code-screen-close-up-1728-large.mp4" 
-                type="video/mp4" 
-              />
-            </video>
-          </div>
-        </div>
+        {/* Subtle geometric grid overlay */}
+        <div className="absolute inset-0 pointer-events-none z-0"
+          style={{
+            backgroundImage: 'linear-gradient(rgba(31,100,200,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(31,100,200,0.05) 1px, transparent 1px)',
+            backgroundSize: '48px 48px'
+          }}
+        />
 
-        {/* Cinematic Dark Gradient Shade Overlay */}
-        <div className="node-home-page__head__shade" />
-
-        {/* Subtle Ambient Grid */}
-        <div className="absolute inset-0 bg-executive-grid opacity-15 pointer-events-none z-1" />
+        {/* Large soft blue orb background accent */}
+        <div className="absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full pointer-events-none z-0"
+          style={{ background: 'radial-gradient(circle, rgba(56,152,255,0.18) 0%, transparent 70%)' }}
+        />
+        <div className="absolute bottom-0 -left-32 w-[400px] h-[400px] rounded-full pointer-events-none z-0"
+          style={{ background: 'radial-gradient(circle, rgba(96,185,255,0.12) 0%, transparent 70%)' }}
+        />
 
         {/* Main Content Container */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           
           <div className="max-w-4xl space-y-6 text-left">
             {/* Top Kicker Pill */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-slate-900/90 border border-white/[0.12] text-xs font-semibold text-slate-200 shadow-2xl backdrop-blur-md">
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/80 border border-blue-200 text-xs font-semibold text-blue-800 shadow-sm backdrop-blur-md">
               <span className="flex h-2 w-2 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-400" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
               </span>
-              <span className="font-heading tracking-wider uppercase text-[10px] text-sky-400 font-bold">
+              <span className="font-heading tracking-wider uppercase text-[10px] text-blue-700 font-bold">
                 Cabinet de Conseil en Direction Générale & Architecture SI
               </span>
             </div>
 
-            {/* Authoritative Clean Headline */}
-            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-extrabold tracking-tight text-white leading-[1.06] font-heading">
+            {/* Authoritative Clean Headline — dark on light bg */}
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[76px] font-extrabold tracking-tight text-[#0a1628] leading-[1.06] font-heading">
               L'Excellence du Conseil Stratégique <br />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-sky-200 to-sky-400">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-sky-500 to-blue-400">
                 & de la Transformation Digitale
               </span>
             </h1>
 
             {/* High-Impact Editorial Subtitle */}
-            <p className="text-base sm:text-xl text-slate-300 max-w-3xl font-normal leading-relaxed font-sans">
-              Nous accompagnons les comités de direction au Maroc et en Europe pour <strong className="text-white font-semibold">structurer leurs processus</strong>,{' '}
-              <strong className="text-white font-semibold">intégrer l'ERP Odoo sur-mesure</strong>, former leurs cadres via <strong className="text-white font-semibold">CLIXA Institute</strong> et{' '}
-              <strong className="text-white font-semibold">sécuriser 100% de conformité fiscale DGI & DGFIP</strong>.
+            <p className="text-base sm:text-xl text-slate-600 max-w-3xl font-normal leading-relaxed font-sans">
+              Nous accompagnons les comités de direction au Maroc et en Europe pour <strong className="text-slate-900 font-semibold">structurer leurs processus</strong>,{' '}
+              <strong className="text-slate-900 font-semibold">intégrer l'ERP Odoo sur-mesure</strong>, former leurs cadres via <strong className="text-slate-900 font-semibold">CLIXA Institute</strong> et{' '}
+              <strong className="text-slate-900 font-semibold">sécuriser 100% de conformité fiscale DGI & DGFIP</strong>.
             </p>
 
             {/* SQLI Signature Action Suite */}
             <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
               <button
                 onClick={() => onOpenConsultation("Cadrage Stratégique Général")}
-                className="link-cta-sqli executive-btn-primary inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl text-sm sm:text-base font-bold text-white transition-all active:scale-[0.98] cursor-pointer border border-sky-400/30 font-heading"
+                className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl text-sm sm:text-base font-bold text-white transition-all active:scale-[0.98] cursor-pointer font-heading shadow-lg shadow-blue-300/40"
+                style={{ background: 'linear-gradient(135deg, #1d6cf5 0%, #0ea5e9 100%)' }}
               >
                 <span>Démarrer un cadrage stratégique</span>
-                <div className="icon-circle bg-white/20 border-white/30 text-white">
-                  <ArrowUpRight className="w-4 h-4" />
-                </div>
+                <ArrowUpRight className="w-5 h-5" />
               </button>
               
               <button
                 onClick={() => onNavigateFace('formations')}
-                className="executive-btn-secondary inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-sm sm:text-base font-semibold text-slate-200 transition-all shadow-sm active:scale-[0.98] cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-sm sm:text-base font-semibold text-slate-800 bg-white/90 hover:bg-white border border-slate-200 transition-all shadow-sm active:scale-[0.98] cursor-pointer"
               >
-                <GraduationCap className="w-4 h-4 text-sky-400" />
+                <GraduationCap className="w-4 h-4 text-blue-600" />
                 <span>Formations Exécutives Institute</span>
               </button>
             </div>
 
             {/* C-Suite Trust Strip */}
-            <div className="pt-6 flex flex-wrap items-center gap-6 text-xs text-slate-400 border-t border-white/[0.06]">
+            <div className="pt-6 flex flex-wrap items-center gap-6 text-xs text-slate-500 border-t border-blue-100">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                <ShieldCheck className="w-4 h-4 text-emerald-600" />
                 <span>Interventions sous accord strict de confidentialité (NDA)</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-sky-400" />
+                <CheckCircle2 className="w-4 h-4 text-blue-500" />
+
                 <span>Bureaux à Casablanca Finance City 🇲🇦 & Paris 🇫🇷</span>
               </div>
             </div>

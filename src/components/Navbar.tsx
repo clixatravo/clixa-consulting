@@ -2,12 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   Menu, 
   X, 
-  ArrowUpRight, 
-  ChevronRight, 
-  MessageCircle, 
   Search, 
-  Globe, 
-  ChevronDown
+  ChevronDown,
+  ArrowUpRight,
+  MessageCircle,
+  Check
 } from 'lucide-react';
 import { BRAND } from '../data/content';
 
@@ -20,32 +19,27 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onOpenConsultation }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [locationDropdownOpen, setLocationDropdownOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState<'FR' | 'EN'>('FR');
-  const [searchOpen, setSearchOpen] = useState(false);
+  const [countryDropdownOpen, setCountryDropdownOpen] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState<'Morocco' | 'France'>('Morocco');
+  const [currentLang, setCurrentLang] = useState<'EN' | 'FR'>('EN');
   const [searchQuery, setSearchQuery] = useState('');
-  const locationRef = useRef<HTMLDivElement>(null);
+  const [searchFocused, setSearchFocused] = useState(false);
+  
+  const countryRef = useRef<HTMLDivElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  // Close dropdowns on outside click
+  // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (locationRef.current && !locationRef.current.contains(event.target as Node)) {
-        setLocationDropdownOpen(false);
+      if (countryRef.current && !countryRef.current.contains(event.target as Node)) {
+        setCountryDropdownOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Focus search input when opened
-  useEffect(() => {
-    if (searchOpen && searchInputRef.current) {
-      searchInputRef.current.focus();
-    }
-  }, [searchOpen]);
-
-  // Scroll listener for top styling
+  // Scroll listener
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -54,7 +48,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Lock body scroll when mobile menu is open
+  // Lock body scroll on mobile
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -66,37 +60,37 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
     };
   }, [mobileMenuOpen]);
 
+  // Determine if header should be dark (over hero video) or light (SQLI ivory)
+  const isDarkHero = currentFace === 'accueil' && !scrolled;
+
   const navLinks = [
-    { id: 'accueil', label: currentLang === 'FR' ? 'Accueil' : 'Home' },
-    { id: 'expertises', label: currentLang === 'FR' ? 'Expertises & SI' : 'Expertise & IS' },
-    { id: 'secteurs', label: currentLang === 'FR' ? 'Secteurs' : 'Industries' },
-    { id: 'cas-clients', label: currentLang === 'FR' ? 'Cas Clients' : 'Case Studies' },
-    { id: 'simulateur-roi', label: currentLang === 'FR' ? 'Executive Lab' : 'ROI Lab' },
-    { id: 'methode', label: currentLang === 'FR' ? 'Méthodologie' : 'Methodology' },
-    { id: 'contact', label: currentLang === 'FR' ? 'Contact' : 'Contact' },
+    { id: 'expertises', label: currentLang === 'EN' ? 'Expertise' : 'Expertises' },
+    { id: 'cas-clients', label: currentLang === 'EN' ? 'Case Studies' : 'Cas Clients' },
+    { id: 'insights', label: 'Insights' },
+    { id: 'secteurs', label: currentLang === 'EN' ? 'Secteurs' : 'Secteurs' },
+    { id: 'methode', label: currentLang === 'EN' ? 'About' : 'À Propos' },
+    { id: 'contact', label: currentLang === 'EN' ? 'Contact us' : 'Contact' },
   ];
 
-  const handleNavClick = (e: React.MouseEvent, faceId: string) => {
-    e.preventDefault();
+  const handleNavClick = (faceId: string) => {
     setMobileMenuOpen(false);
-    setSearchOpen(false);
     onNavigateFace(faceId);
   };
 
-  const handleQuickSearch = (keyword: string) => {
-    const k = keyword.toLowerCase();
-    setSearchOpen(false);
-    setSearchQuery('');
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+    const q = searchQuery.toLowerCase();
     
-    if (k.includes('odoo') || k.includes('erp') || k.includes('amoa') || k.includes('finance') || k.includes('dgi') || k.includes('dgfip')) {
+    if (q.includes('odoo') || q.includes('erp') || q.includes('amoa') || q.includes('tech') || q.includes('expertise')) {
       onNavigateFace('expertises');
-    } else if (k.includes('btp') || k.includes('industrie') || k.includes('sante') || k.includes('secteur') || k.includes('négoce')) {
-      onNavigateFace('secteurs');
-    } else if (k.includes('cas') || k.includes('client') || k.includes('projet') || k.includes('résultat')) {
+    } else if (q.includes('case') || q.includes('cas') || q.includes('client') || q.includes('projet') || q.includes('study')) {
       onNavigateFace('cas-clients');
-    } else if (k.includes('roi') || k.includes('simulateur') || k.includes('calcul') || k.includes('audit') || k.includes('48h')) {
-      onNavigateFace('simulateur-roi');
-    } else if (k.includes('methode') || k.includes('gouvernance') || k.includes('jalon') || k.includes('ssii') || k.includes('faq')) {
+    } else if (q.includes('insight') || q.includes('ia') || q.includes('ai') || q.includes('devops') || q.includes('front') || q.includes('roi')) {
+      onNavigateFace('insights');
+    } else if (q.includes('secteur') || q.includes('btp') || q.includes('industrie') || q.includes('sante') || q.includes('distribution')) {
+      onNavigateFace('secteurs');
+    } else if (q.includes('about') || q.includes('methode') || q.includes('method') || q.includes('cadrage')) {
       onNavigateFace('methode');
     } else {
       onNavigateFace('contact');
@@ -106,216 +100,185 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-sans ${
-          scrolled
-            ? 'bg-[#050811]/98 backdrop-blur-xl border-b border-white/[0.08] shadow-2xl shadow-black/80'
-            : 'bg-[#050811]/90 backdrop-blur-md border-b border-white/[0.05]'
+        className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 font-sans ${
+          isDarkHero
+            ? 'bg-[#050811]/90 backdrop-blur-md border-b border-white/[0.08] text-white'
+            : 'bg-[#FAF7F2]/98 backdrop-blur-md border-b border-[#e7e2d8] text-slate-900 shadow-sm'
         }`}
       >
-        {/* 1. TOP UTILITY STRIP (Locations & Language Selector) */}
-        <div className="border-b border-white/[0.05] bg-[#03060d]/90 py-1.5 hidden md:block">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between text-[11px] text-slate-400">
-            {/* Left: International Locations Dropdown */}
-            <div className="relative" ref={locationRef}>
+        {/* 1. TOP UTILITY STRIP (SQLI Country Pill & Language Switcher) */}
+        <div className={`py-1.5 px-4 sm:px-8 border-b ${isDarkHero ? 'border-white/[0.06] bg-black/30' : 'border-[#e7e2d8] bg-[#FAF7F2]'}`}>
+          <div className="max-w-7xl mx-auto flex items-center justify-end gap-6 text-[12px]">
+            
+            {/* Country Selector Pill (SQLI exact dark pill style: Morocco ⌵) */}
+            <div className="relative" ref={countryRef}>
               <button
-                onClick={() => setLocationDropdownOpen(!locationDropdownOpen)}
-                className="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer py-0.5 px-2 rounded-md hover:bg-white/[0.04]"
-                aria-label="Choisir la localisation"
+                onClick={() => setCountryDropdownOpen(!countryDropdownOpen)}
+                className={`flex items-center gap-2 px-3 py-1 rounded-sm text-xs font-semibold transition-all cursor-pointer shadow-sm ${
+                  isDarkHero
+                    ? 'bg-slate-900 text-white border border-white/[0.1] hover:bg-slate-800'
+                    : 'bg-[#0c1222] text-white hover:bg-black'
+                }`}
+                aria-label="Select Country"
               >
-                <Globe className="w-3.5 h-3.5 text-sky-400" />
-                <span className="font-semibold text-slate-300">Locations :</span>
-                <span className="text-sky-300 font-medium">Casablanca 🇲🇦 & Paris 🇫🇷</span>
-                <ChevronDown className={`w-3 h-3 text-slate-400 transition-transform duration-200 ${locationDropdownOpen ? 'rotate-180' : ''}`} />
+                <span className="w-2 h-2 rounded-full bg-red-600 inline-block shadow-sm" />
+                <span>{selectedCountry}</span>
+                <ChevronDown className={`w-3 h-3 text-slate-300 transition-transform duration-200 ${countryDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
 
-              {locationDropdownOpen && (
-                <div className="absolute left-0 mt-2 w-72 rounded-2xl bg-slate-900 border border-white/[0.1] shadow-2xl p-3 z-50 animate-in fade-in zoom-in-95 duration-150">
-                  <div className="text-[10px] uppercase font-mono tracking-wider text-slate-500 mb-2 px-2">
-                    Bureaux & Hubs Internationaux
+              {countryDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-56 rounded-md bg-white border border-slate-200 shadow-xl py-2 z-50 text-slate-800 animate-in fade-in zoom-in-95 duration-100">
+                  <div className="px-3 py-1 text-[10px] font-mono uppercase tracking-wider text-slate-600 font-bold">
+                    Sélectionner un Hub
                   </div>
-                  
-                  {/* Hub Casablanca */}
-                  <div 
+                  <button
                     onClick={() => {
-                      setLocationDropdownOpen(false);
+                      setSelectedCountry('Morocco');
+                      setCountryDropdownOpen(false);
                       onNavigateFace('contact');
                     }}
-                    className="p-2.5 rounded-xl hover:bg-white/[0.04] transition-colors border border-transparent hover:border-white/[0.05] cursor-pointer"
+                    className="w-full px-3 py-2 text-left text-xs hover:bg-slate-100 flex items-center justify-between font-medium cursor-pointer"
                   >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm">🇲🇦</span>
-                        <span className="text-xs font-bold text-white">Casablanca Hub</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm">🇲🇦</span>
+                      <div>
+                        <div className="font-bold text-slate-900">Morocco</div>
+                        <div className="text-[10px] text-slate-600">Casablanca Finance City</div>
                       </div>
-                      <span className="text-[9px] font-mono text-sky-400 bg-sky-500/10 px-1.5 py-0.5 rounded">CFC & Twin</span>
                     </div>
-                    <p className="text-[10px] text-slate-400 mt-1 pl-6">
-                      Direction Générale & Pôle Intégration Odoo
-                    </p>
-                  </div>
+                    {selectedCountry === 'Morocco' && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                  </button>
 
-                  {/* Hub Paris */}
-                  <div 
+                  <button
                     onClick={() => {
-                      setLocationDropdownOpen(false);
+                      setSelectedCountry('France');
+                      setCountryDropdownOpen(false);
                       onNavigateFace('contact');
                     }}
-                    className="p-2.5 rounded-xl hover:bg-white/[0.04] transition-colors border border-transparent hover:border-white/[0.05] cursor-pointer mt-1"
+                    className="w-full px-3 py-2 text-left text-xs hover:bg-slate-100 flex items-center justify-between font-medium cursor-pointer"
                   >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm">🇫🇷</span>
-                        <span className="text-xs font-bold text-white">Paris Hub</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm">🇫🇷</span>
+                      <div>
+                        <div className="font-bold text-slate-900">France</div>
+                        <div className="text-[10px] text-slate-600">Paris (8ème Arrondissement)</div>
                       </div>
-                      <span className="text-[9px] font-mono text-blue-400 bg-blue-500/10 px-1.5 py-0.5 rounded">8ème Arr.</span>
                     </div>
-                    <p className="text-[10px] text-slate-400 mt-1 pl-6">
-                      AMOA Stratégique & Conformité Factur-X Europe
-                    </p>
-                  </div>
+                    {selectedCountry === 'France' && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                  </button>
                 </div>
               )}
             </div>
 
-            {/* Right: Language switch + Direct lines */}
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 text-slate-400">
-                <span className="text-slate-500">Ligne C-Suite :</span>
-                <a href={`tel:${BRAND.phoneMarocRaw}`} className="text-slate-300 hover:text-white font-mono transition-colors">
-                  {BRAND.phoneMarocDisplay}
-                </a>
-              </div>
-
-              <div className="h-3 w-px bg-white/[0.1]" />
-
-              {/* Language Selector FR | EN */}
-              <div className="flex items-center rounded-lg bg-slate-950 p-0.5 border border-white/[0.08]">
-                <button
-                  onClick={() => setCurrentLang('FR')}
-                  className={`px-2 py-0.5 text-[10px] font-bold rounded transition-colors cursor-pointer ${
-                    currentLang === 'FR' ? 'bg-sky-500 text-white shadow-sm' : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  FR
-                </button>
-                <button
-                  onClick={() => setCurrentLang('EN')}
-                  className={`px-2 py-0.5 text-[10px] font-bold rounded transition-colors cursor-pointer ${
-                    currentLang === 'EN' ? 'bg-sky-500 text-white shadow-sm' : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  EN
-                </button>
-              </div>
+            {/* Language Switch: English | French */}
+            <div className={`flex items-center gap-1.5 text-xs font-semibold ${isDarkHero ? 'text-slate-300' : 'text-slate-800'}`}>
+              <button
+                onClick={() => setCurrentLang('EN')}
+                className={`transition-colors cursor-pointer ${
+                  currentLang === 'EN' ? (isDarkHero ? 'text-white underline font-bold' : 'text-slate-900 underline font-bold') : 'hover:text-sky-500'
+                }`}
+              >
+                English
+              </button>
+              <span className="text-slate-400">|</span>
+              <button
+                onClick={() => setCurrentLang('FR')}
+                className={`transition-colors cursor-pointer ${
+                  currentLang === 'FR' ? (isDarkHero ? 'text-white underline font-bold' : 'text-slate-900 underline font-bold') : 'hover:text-sky-500'
+                }`}
+              >
+                French
+              </button>
             </div>
+
           </div>
         </div>
 
-        {/* 2. MAIN NAVIGATION ROW */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-          <div className="flex items-center justify-between gap-4">
+        {/* 2. MAIN HEADER ROW (sqli typography & clean horizontal links) */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 py-4">
+          <div className="flex items-center justify-between gap-6">
             
-            {/* SQLI Typographic Logo */}
-            <button 
-              onClick={(e) => handleNavClick(e, 'accueil')}
-              className="flex items-center gap-3.5 shrink-0 group cursor-pointer text-left"
+            {/* SQLI-Style Lowercase Brand Logo */}
+            <button
+              onClick={() => handleNavClick('accueil')}
+              className="group cursor-pointer text-left shrink-0"
+              aria-label="Clixa Home"
             >
-              <div className="flex items-end gap-1 h-7">
-                <div className="w-1.5 h-7 rounded-sm bg-gradient-to-t from-sky-600 to-sky-400 group-hover:scale-y-110 transition-transform origin-bottom" />
-                <div className="w-1.5 h-4.5 rounded-sm bg-gradient-to-t from-blue-700 to-sky-500 group-hover:scale-y-125 transition-transform origin-bottom delay-75" />
-              </div>
-
-              <div className="flex flex-col">
-                <div className="flex items-baseline gap-1.5">
-                  <span className="font-extrabold text-xl sm:text-2xl tracking-tighter text-white group-hover:text-sky-400 transition-colors font-heading">
-                    CLIXA
-                  </span>
-                  <span className="text-slate-400 font-bold text-xs tracking-widest uppercase font-mono">
-                    CONSULTING
-                  </span>
-                </div>
-                <span className="text-[10px] text-slate-400 tracking-wide font-sans hidden sm:block">
-                  Digital & Tech Advisory · Casablanca • Paris
+              <div className="flex items-baseline gap-1">
+                <span className={`text-3xl sm:text-4xl font-extrabold tracking-tighter lowercase font-heading transition-colors ${
+                  isDarkHero ? 'text-white group-hover:text-sky-400' : 'text-[#0a0e1a] group-hover:text-blue-600'
+                }`}>
+                  clixa
                 </span>
+                <span className="w-2 h-2 rounded-full bg-blue-600 inline-block mb-1" />
               </div>
             </button>
 
-            {/* Desktop Navigation Links (Face Switchers) */}
-            <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+            {/* Desktop Navigation Links (Simple, clean, well-aligned) */}
+            <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
               {navLinks.map((link) => {
                 const isActive = currentFace === link.id;
                 return (
                   <button
                     key={link.id}
-                    onClick={(e) => handleNavClick(e, link.id)}
-                    className={`relative px-3.5 py-2 rounded-xl text-xs xl:text-sm font-semibold transition-all duration-200 cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
+                    onClick={() => handleNavClick(link.id)}
+                    className={`text-sm font-semibold transition-all duration-150 cursor-pointer whitespace-nowrap relative py-1 ${
                       isActive
-                        ? 'text-white bg-white/[0.08] shadow-sm font-bold'
-                        : 'text-slate-300 hover:text-white hover:bg-white/[0.04]'
+                        ? (isDarkHero ? 'text-white font-bold' : 'text-black font-bold')
+                        : (isDarkHero ? 'text-slate-300 hover:text-white' : 'text-slate-800 hover:text-black')
                     }`}
                   >
                     <span>{link.label}</span>
                     {isActive && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
+                      <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full" />
                     )}
                   </button>
                 );
               })}
             </nav>
 
-            {/* Right Action Suite */}
-            <div className="hidden lg:flex items-center gap-3 shrink-0">
-              {/* Quick Search */}
-              <button
-                onClick={() => setSearchOpen(!searchOpen)}
-                className={`p-2.5 rounded-xl border transition-all cursor-pointer ${
-                  searchOpen 
-                    ? 'bg-sky-500/20 text-sky-400 border-sky-500/40' 
-                    : 'bg-slate-900 border-white/[0.08] text-slate-400 hover:text-white hover:border-white/[0.15]'
+            {/* SQLI-Style Clean Underline Search Input */}
+            <div className="hidden md:flex items-center gap-4 shrink-0">
+              <form 
+                onSubmit={handleSearchSubmit}
+                className={`relative flex items-center border-b transition-all duration-200 pb-1 ${
+                  searchFocused 
+                    ? (isDarkHero ? 'border-sky-400' : 'border-blue-600') 
+                    : (isDarkHero ? 'border-white/30' : 'border-slate-400')
                 }`}
-                title="Rechercher une expertise, un secteur ou un livrable"
-                aria-label="Recherche rapide"
               >
-                <Search className="w-4 h-4" />
-              </button>
-
-              {/* WhatsApp Quick Direct Link */}
-              <a
-                href={BRAND.whatsappLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2.5 rounded-xl text-emerald-400 bg-emerald-950/40 border border-emerald-800/60 hover:bg-emerald-900/40 hover:border-emerald-600 transition-all shadow-sm hover:scale-105 active:scale-95"
-                title="Ligne directe WhatsApp"
-              >
-                <MessageCircle className="w-4 h-4" />
-              </a>
-
-              {/* Primary Appointment Button */}
-              <button
-                onClick={() => onOpenConsultation()}
-                className="link-cta-sqli bg-gradient-to-r from-sky-600 via-sky-500 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white px-4 py-2 rounded-xl border border-sky-400/30 shadow-lg shadow-sky-500/20 active:scale-[0.98] transition-all cursor-pointer"
-              >
-                <span className="font-bold text-xs sm:text-sm">
-                  {currentLang === 'FR' ? 'Prendre RDV' : 'Book Meeting'}
-                </span>
-                <div className="icon-circle bg-white/20 border-white/30 text-white">
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </div>
-              </button>
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onFocus={() => setSearchFocused(true)}
+                  onBlur={() => setSearchFocused(false)}
+                  placeholder="I am searching for"
+                  className={`w-36 lg:w-44 bg-transparent text-xs sm:text-sm focus:outline-none transition-all placeholder:text-slate-500 ${
+                    isDarkHero ? 'text-white' : 'text-slate-900'
+                  }`}
+                />
+                <button
+                  type="submit"
+                  className={`p-1 cursor-pointer transition-colors ${
+                    isDarkHero ? 'text-slate-300 hover:text-white' : 'text-slate-700 hover:text-black'
+                  }`}
+                  aria-label="Search"
+                >
+                  <Search className="w-4 h-4" />
+                </button>
+              </form>
             </div>
 
             {/* Mobile Hamburger Button */}
             <div className="flex items-center gap-2 lg:hidden">
               <button
-                onClick={() => onOpenConsultation()}
-                className="px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-sky-600 hover:bg-sky-500 transition-all cursor-pointer"
-              >
-                RDV
-              </button>
-              <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2.5 rounded-xl bg-slate-900/80 border border-white/[0.1] text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
-                aria-label="Menu"
+                className={`p-2 rounded-md transition-colors cursor-pointer ${
+                  isDarkHero ? 'text-white bg-slate-900' : 'text-slate-900 bg-slate-200'
+                }`}
+                aria-label="Toggle Menu"
               >
                 {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
@@ -323,104 +286,72 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
 
           </div>
         </div>
-
-        {/* 3. QUICK SEARCH BAR */}
-        {searchOpen && (
-          <div className="border-t border-white/[0.08] bg-slate-950/95 backdrop-blur-xl px-4 py-3 animate-in fade-in slide-in-from-top-2 duration-150">
-            <div className="max-w-3xl mx-auto flex items-center gap-3">
-              <Search className="w-4 h-4 text-sky-400 shrink-0" />
-              <input
-                ref={searchInputRef}
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && searchQuery) handleQuickSearch(searchQuery);
-                }}
-                placeholder="Rechercher : Odoo 18, Conformité DGI, BTP, AMOA, Diagnostic Flash..."
-                className="w-full bg-transparent text-sm text-white placeholder:text-slate-500 focus:outline-none"
-              />
-              <button
-                onClick={() => setSearchOpen(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-white"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <div className="max-w-3xl mx-auto mt-2 flex flex-wrap items-center gap-2 text-xs">
-              <span className="text-[10px] font-mono text-slate-500 uppercase">Suggestions :</span>
-              {['ERP Odoo 18', 'Facturation DGI 2026', 'Calculateur ROI', 'BTP & Industrie', 'Diagnostic 48H'].map((chip) => (
-                <button
-                  key={chip}
-                  onClick={() => handleQuickSearch(chip)}
-                  className="px-2.5 py-1 rounded-lg bg-slate-900 border border-white/[0.06] text-slate-300 hover:text-white hover:border-sky-500/40 text-[11px] transition-colors cursor-pointer"
-                >
-                  {chip}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
       </header>
 
-      {/* 4. FULLSCREEN MOBILE DRAWER */}
+      {/* 3. MOBILE MENU SLIDEOUT */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden flex flex-col bg-[#050811]/98 backdrop-blur-2xl animate-in fade-in duration-200">
-          <div className="p-4 sm:p-6 border-b border-white/[0.08] flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <div className="flex items-end gap-1 h-5">
-                <div className="w-1 h-5 rounded-sm bg-sky-400" />
-                <div className="w-1 h-3 rounded-sm bg-blue-600" />
-              </div>
-              <span className="font-extrabold text-lg text-white font-heading">CLIXA CONSULTING</span>
-            </div>
+        <div className="fixed inset-0 z-50 lg:hidden flex flex-col bg-[#FAF7F2] animate-in fade-in duration-200 text-slate-900 font-sans">
+          <div className="p-4 border-b border-[#e7e2d8] flex items-center justify-between">
+            <button
+              onClick={() => handleNavClick('accueil')}
+              className="flex items-baseline gap-1"
+            >
+              <span className="text-3xl font-black lowercase text-slate-900 tracking-tighter">
+                clixa
+              </span>
+              <span className="w-2 h-2 rounded-full bg-blue-600 mb-1" />
+            </button>
             <button
               onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-xl bg-slate-900 border border-white/[0.1] text-slate-300 hover:text-white cursor-pointer"
+              className="p-2 rounded-md bg-slate-200 text-slate-800"
+              aria-label="Close menu"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-2">
-            <div className="p-3 rounded-2xl bg-slate-900/80 border border-white/[0.08] mb-4 text-xs text-slate-300 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Globe className="w-4 h-4 text-sky-400" />
-                <span>Casablanca CFC 🇲🇦 & Paris 🇫🇷</span>
-              </div>
-              <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded">
-                Actif
-              </span>
-            </div>
+          {/* Search bar inside mobile drawer */}
+          <div className="p-4 border-b border-[#e7e2d8]">
+            <form onSubmit={handleSearchSubmit} className="flex items-center border-b border-slate-400 pb-1">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="I am searching for"
+                className="w-full bg-transparent text-sm focus:outline-none text-slate-900"
+              />
+              <button type="submit" className="p-1 text-slate-700">
+                <Search className="w-4 h-4" />
+              </button>
+            </form>
+          </div>
 
+          <div className="flex-1 overflow-y-auto p-6 space-y-4">
             {navLinks.map((link) => {
               const isActive = currentFace === link.id;
               return (
                 <button
                   key={link.id}
-                  onClick={(e) => handleNavClick(e, link.id)}
-                  className={`w-full flex items-center justify-between p-3.5 rounded-2xl border transition-all text-sm font-semibold cursor-pointer text-left ${
-                    isActive
-                      ? 'bg-slate-900 border-sky-400 text-white shadow-md'
-                      : 'bg-slate-950/60 border-white/[0.06] text-slate-300 hover:text-white hover:bg-slate-900'
+                  onClick={() => handleNavClick(link.id)}
+                  className={`w-full text-left py-2 text-lg font-bold transition-colors cursor-pointer flex items-center justify-between ${
+                    isActive ? 'text-blue-600' : 'text-slate-800 hover:text-black'
                   }`}
                 >
                   <span>{link.label}</span>
-                  <ChevronRight className="w-4 h-4 text-slate-500" />
+                  {isActive && <span className="w-2 h-2 rounded-full bg-blue-600" />}
                 </button>
               );
             })}
 
-            <div className="pt-6 space-y-3">
+            <div className="pt-8 border-t border-[#e7e2d8] space-y-3">
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
                   onOpenConsultation();
                 }}
-                className="w-full py-4 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-sky-600 to-blue-600 flex items-center justify-center gap-2 shadow-xl shadow-sky-500/20 font-heading cursor-pointer"
+                className="w-full py-3.5 bg-[#0c1222] text-white font-bold text-sm rounded-none hover:bg-black transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
-                <span>Planifier un Rendez-vous Exécutif</span>
+                <span>Planifier un Rendez-vous</span>
                 <ArrowUpRight className="w-4 h-4" />
               </button>
 
@@ -428,10 +359,10 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
                 href={BRAND.whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-3.5 rounded-xl text-sm font-semibold text-emerald-400 bg-emerald-950/40 border border-emerald-800/60 flex items-center justify-center gap-2"
+                className="w-full py-3.5 bg-emerald-700 text-white font-bold text-sm rounded-none hover:bg-emerald-800 transition-colors flex items-center justify-center gap-2"
               >
-                <MessageCircle className="w-4 h-4 text-emerald-400" />
-                <span>Ligne Directe WhatsApp</span>
+                <MessageCircle className="w-4 h-4" />
+                <span>WhatsApp Ligne Directe</span>
               </a>
             </div>
           </div>

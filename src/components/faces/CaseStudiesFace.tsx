@@ -1,17 +1,6 @@
 import React, { useState } from 'react';
-import { CASE_STUDIES, TESTIMONIALS } from '../../data/content';
-import { 
-  Award, 
-  ArrowRight, 
-  CheckCircle2, 
-  Building2, 
-  ArrowUpRight, 
-  Sparkles,
-  ChevronLeft,
-  ChevronRight,
-  Star,
-  Quote
-} from 'lucide-react';
+import { CASE_STUDIES } from '../../data/content';
+import { ChevronDown, ArrowUpRight, Check } from 'lucide-react';
 
 interface CaseStudiesFaceProps {
   onOpenConsultation: (topic?: string) => void;
@@ -19,276 +8,289 @@ interface CaseStudiesFaceProps {
 }
 
 export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsultation, onNavigateFace }) => {
-  const [currentSlide, setCurrentSlide] = useState<number>(0);
-  const totalSlides = CASE_STUDIES.length;
+  const [selectedSector, setSelectedSector] = useState<string>('All');
+  const [selectedTech, setSelectedTech] = useState<string>('All');
+  const [selectedCountry, setSelectedCountry] = useState<string>('Morocco');
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
-  const handleNext = () => setCurrentSlide((prev) => (prev + 1) % totalSlides);
-  const handlePrev = () => setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+  const [appliedFilters, setAppliedFilters] = useState({
+    sector: 'All',
+    tech: 'All',
+    country: 'All',
+  });
 
-  const item = CASE_STUDIES[currentSlide];
+  const caseStudiesExtended = [
+    {
+      id: 'btp-industrie',
+      title: "Refonte ERP Odoo 18 & Supply Chain : 8 sites industriels synchronisés sans rupture",
+      client: "Groupe Industriel & BTP Leaders",
+      sector: "Industrie & BTP",
+      tech: "Odoo 18 Enterprise",
+      country: "Morocco",
+      date: "14 Oct 2026",
+      image: "https://images.unsplash.com/photo-1541888946425-d0fbb18615f8?auto=format&fit=crop&w=1200&q=80",
+      impact: "-32% sur les délais logistiques, traçabilité des lots et valorisation en temps réel du BFR.",
+      quote: "L'approche méthodologique et la rigueur de cadrage de Clixa ont permis de basculer l'ensemble de nos usines en 6 mois."
+    },
+    {
+      id: 'dgi-fiscalite',
+      title: "Conformité Fiscale DGI & Factur-X : 140 000 factures automatisées et 0 redressement",
+      client: "Leader Distribution & Négoce Casablanca",
+      sector: "Distribution & Négoce",
+      tech: "Facturation DGI & EDI",
+      country: "Morocco",
+      date: "28 Aug 2026",
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80",
+      impact: "100% de conformité fiscale, suppression des rejets DGI, clôture mensuelle ramenée à J+3.",
+      quote: "Une sécurisation juridique et fiscale irréprochable face aux nouvelles exigences réglementaires marocaines."
+    },
+    {
+      id: 'finance-amoa',
+      title: "Gouvernance AMOA & Trésorerie Groupe : Clôture comptable ramenée de J+25 à J+4",
+      client: "Holding Financière & Services",
+      sector: "Finance & BPO",
+      tech: "AMOA Big 4 & BI",
+      country: "France",
+      date: "12 Jun 2026",
+      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
+      impact: "Visibilité en temps réel sur la trésorerie consolidée de 14 filiales et réduction drastique des écarts.",
+      quote: "L'assistance à maîtrise d'ouvrage Clixa a évité les surcoûts classiques des SSII avec un engagement ferme au forfait."
+    },
+    {
+      id: 'sante-clinique',
+      title: "Standardisation Métier Santé & Cliniques : Dossier patient et facturation unifiés",
+      client: "Réseau de Santé Privé",
+      sector: "Santé & Médical",
+      tech: "ERP Spécifique & API",
+      country: "Morocco",
+      date: "05 May 2026",
+      image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80",
+      impact: "Zéro perte de facturation d'actes, conformité aux données médicales sensibles CNDP.",
+      quote: "Nos équipes soignantes et administratives collaborent désormais sur une plateforme fluide et sécurisée."
+    }
+  ];
+
+  const handleApply = () => {
+    setAppliedFilters({
+      sector: selectedSector,
+      tech: selectedTech,
+      country: selectedCountry,
+    });
+    setOpenDropdown(null);
+  };
+
+  const handleReset = () => {
+    setSelectedSector('All');
+    setSelectedTech('All');
+    setSelectedCountry('All');
+    setAppliedFilters({
+      sector: 'All',
+      tech: 'All',
+      country: 'All',
+    });
+    setOpenDropdown(null);
+  };
+
+  const filteredCases = caseStudiesExtended.filter((c) => {
+    if (appliedFilters.sector !== 'All' && c.sector !== appliedFilters.sector) return false;
+    if (appliedFilters.tech !== 'All' && c.tech !== appliedFilters.tech) return false;
+    if (appliedFilters.country !== 'All' && c.country !== appliedFilters.country) return false;
+    return true;
+  });
 
   return (
-    <div className="w-full animate-in fade-in duration-300 font-sans pt-28 pb-20">
-      
-      {/* 1. FACE HEADER & BREADCRUMB */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-        <div className="flex items-center gap-2 text-xs font-mono text-slate-400 mb-4">
-          <button onClick={() => onNavigateFace('accueil')} className="hover:text-white transition-colors cursor-pointer">
-            Accueil
-          </button>
-          <span>/</span>
-          <span className="text-sky-400 font-bold">Cas Clients & Retours sur Investissement</span>
-        </div>
-
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs font-semibold text-sky-400 mb-3 shadow-sm">
-            <Award className="w-3.5 h-3.5 text-amber-400" />
-            <span className="font-heading uppercase tracking-wider text-[11px]">Dossiers d'Impact Vérifiés</span>
-          </div>
-
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight font-heading">
-            Dossiers d'Impact Exécutif & Résultats Concrets
+    <div className="w-full bg-[#FAF7F2] text-slate-900 font-sans min-h-screen pt-32 sm:pt-40 pb-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8">
+        
+        {/* 1. GIANT EDITORIAL TITLE (SQLI Standard: "Case Studies") */}
+        <div className="mb-10 sm:mb-14">
+          <h1 className="text-6xl sm:text-7xl lg:text-[84px] font-bold text-[#0a0e1a] tracking-tight leading-none font-heading">
+            Case Studies
           </h1>
-
-          <p className="text-base sm:text-lg text-slate-300 font-sans leading-relaxed mt-4">
-            Chaque mission est engagée avec des objectifs chiffrés. Découvrez comment nos interventions ont transformé des organisations au Maroc et en France en leaders agiles, rentables et 100% conformes.
+          <p className="text-base sm:text-lg text-slate-600 font-normal mt-4 max-w-2xl leading-relaxed">
+            Dossiers d'impact exécutif et transformations numériques réussies pour les leaders industriels et financiers au Maroc et en Europe.
           </p>
         </div>
-      </div>
 
-      {/* 2. SQLI PUSH-USE-CASES CAROUSEL */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          
-          {/* Left Column (Sticky Carousel Controls & Peer-to-Peer Box) */}
-          <div className="lg:col-span-5 lg:sticky lg:top-28 space-y-6">
-            <div className="p-6 rounded-3xl bg-slate-900/70 border border-white/[0.08] backdrop-blur-md space-y-4">
-              <span className="text-xs font-mono font-bold uppercase tracking-wider text-sky-400 block">
-                Navigation des Réalisations
-              </span>
-
-              {/* Counter: e.g. 01 / 03 */}
-              <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
-                <div className="flex items-center gap-2 font-mono text-sm text-slate-400">
-                  <span className="text-3xl font-black text-white font-heading">0{currentSlide + 1}</span>
-                  <span className="text-slate-600 font-light text-xl">/</span>
-                  <span className="text-slate-500 text-sm">0{totalSlides}</span>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={handlePrev}
-                    className="w-10 h-10 rounded-full bg-slate-900 border border-white/[0.1] flex items-center justify-center text-slate-300 hover:text-white hover:border-sky-500/50 hover:bg-slate-850 transition-all cursor-pointer shadow-md active:scale-95"
-                    title="Précédent"
-                  >
-                    <ChevronLeft className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={handleNext}
-                    className="w-10 h-10 rounded-full bg-slate-900 border border-white/[0.1] flex items-center justify-center text-slate-300 hover:text-white hover:border-sky-500/50 hover:bg-slate-850 transition-all cursor-pointer shadow-md active:scale-95"
-                    title="Suivant"
-                  >
-                    <ChevronRight className="w-5 h-5" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Quick Case Switcher Pills */}
-              <div className="space-y-2 pt-2">
-                {CASE_STUDIES.map((c, idx) => (
-                  <button
-                    key={c.id}
-                    onClick={() => setCurrentSlide(idx)}
-                    className={`w-full p-3 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between ${
-                      currentSlide === idx
-                        ? 'bg-sky-500/10 border-sky-400 text-white shadow-sm'
-                        : 'bg-slate-950/50 border-white/[0.05] text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    <div className="min-w-0 pr-2">
-                      <div className="text-[10px] font-mono uppercase text-slate-500">Cas 0{idx + 1} • {c.location}</div>
-                      <div className="text-xs font-bold truncate mt-0.5">{c.title}</div>
-                    </div>
-                    <span className="text-xs font-mono font-bold text-sky-400 shrink-0">{c.metric}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Peer-to-Peer Director Callout */}
-            <div className="p-6 rounded-2xl bg-slate-900/60 border border-white/[0.06] backdrop-blur-md space-y-3">
-              <div className="text-xs font-bold text-white uppercase tracking-wider font-heading flex items-center gap-2">
-                <Sparkles className="w-3.5 h-3.5 text-sky-400" />
-                Échange Pair à Pair C-Suite
-              </div>
-              <p className="text-xs text-slate-400 leading-relaxed font-sans">
-                Besoin d'un retour d'expérience indépendant ? Nous pouvons organiser un échange direct et confidentiel avec un dirigeant ayant déjà mené ce déploiement avec CLIXA.
-              </p>
+        {/* 2. SQLI SIGNATURE FILTER BAR */}
+        <div className="mb-14 pb-8 border-b border-[#e2dcd2]">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm font-medium">
+            
+            {/* Filter: Secteurs ⌵ */}
+            <div className="relative">
               <button
-                onClick={() => onOpenConsultation("Échange Pair à Pair Dirigeant")}
-                className="text-xs font-bold text-sky-400 hover:text-white flex items-center gap-1.5 transition-colors cursor-pointer"
+                onClick={() => setOpenDropdown(openDropdown === 'sector' ? null : 'sector')}
+                className="flex items-center gap-1.5 py-1 text-slate-800 hover:text-black transition-colors cursor-pointer"
               >
-                <span>Demander une mise en relation</span>
-                <ChevronRight className="w-3.5 h-3.5" />
+                <span>Secteurs</span>
+                {selectedSector !== 'All' && <span className="text-xs text-blue-600 font-bold">({selectedSector})</span>}
+                <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'sector' ? 'rotate-180' : ''}`} />
               </button>
-            </div>
-          </div>
 
-          {/* Right Column: Active Case Slide Card */}
-          <div className="lg:col-span-7">
-            <div
-              key={item.id}
-              className="p-8 sm:p-10 rounded-3xl bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border border-sky-500/50 shadow-2xl relative overflow-hidden animate-in fade-in duration-300"
-            >
-              {/* Top Accent Line */}
-              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-sky-400 to-transparent" />
-
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-6">
-                  <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-sky-400 bg-sky-500/10 px-3 py-1 rounded-md border border-sky-500/20">
-                    {item.tag}
-                  </span>
-                  <div className="flex items-center gap-1.5 text-slate-400 text-xs font-medium">
-                    <span>{item.location.includes('Maroc') ? '🇲🇦' : '🇫🇷'}</span>
-                    <span>{item.location}</span>
-                  </div>
-                </div>
-
-                {/* Big Metric Banner */}
-                <div className="p-6 rounded-2xl bg-slate-950/90 border border-white/[0.07] mb-6 shadow-inner">
-                  <div className="text-4xl sm:text-5xl font-black text-white font-heading mb-1 text-sky-300">
-                    {item.metric}
-                  </div>
-                  <div className="text-xs sm:text-sm text-slate-300 font-semibold">
-                    {item.metricLabel}
-                  </div>
-                </div>
-
-                <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 leading-snug font-heading">
-                  {item.title}
-                </h3>
-
-                <div className="flex items-center gap-2 text-xs text-slate-400 mb-6 pb-4 border-b border-white/[0.06]">
-                  <Building2 className="w-3.5 h-3.5 text-slate-500" />
-                  <span>{item.clientSector} • {item.location}</span>
-                </div>
-
-                {/* Challenge & Solution */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 text-xs text-slate-300">
-                  <div className="p-4 rounded-xl bg-slate-900/80 border border-white/[0.05]">
-                    <span className="font-semibold text-rose-400 block mb-1">Le Défi Initial :</span>
-                    <p className="text-slate-400 leading-relaxed font-sans">{item.challenge}</p>
-                  </div>
-                  <div className="p-4 rounded-xl bg-slate-900/80 border border-sky-500/20">
-                    <span className="font-semibold text-sky-400 block mb-1">Intervention Stratégique CLIXA :</span>
-                    <p className="text-slate-300 leading-relaxed font-sans">{item.solution}</p>
-                  </div>
-                </div>
-
-                {/* Key results bullets */}
-                <div className="space-y-2.5 pt-1 mb-8">
-                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-300 block">
-                    Bénéfices constatés après déploiement :
-                  </span>
-                  {item.results.map((res, rIdx) => (
-                    <div key={rIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-200">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                      <span>{res}</span>
-                    </div>
+              {openDropdown === 'sector' && (
+                <div className="absolute left-0 mt-2 w-52 bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
+                  {['All', 'Industrie & BTP', 'Distribution & Négoce', 'Finance & BPO', 'Santé & Médical'].map((sec) => (
+                    <button
+                      key={sec}
+                      onClick={() => {
+                        setSelectedSector(sec);
+                        setOpenDropdown(null);
+                      }}
+                      className="w-full px-4 py-2 text-left text-xs hover:bg-slate-100 flex items-center justify-between cursor-pointer"
+                    >
+                      <span className={selectedSector === sec ? 'font-bold text-blue-600' : 'text-slate-700'}>{sec}</span>
+                      {selectedSector === sec && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                    </button>
                   ))}
                 </div>
-              </div>
-
-              {/* Card Action Link */}
-              <div className="pt-5 border-t border-white/[0.08] flex items-center justify-between">
-                <button
-                  onClick={() => onOpenConsultation(`Revue Cas Client: ${item.title}`)}
-                  className="executive-btn-primary inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl text-xs sm:text-sm font-bold text-white font-heading cursor-pointer"
-                >
-                  <span>Analyser ce cas avec un associé</span>
-                  <ArrowUpRight className="w-4 h-4" />
-                </button>
-              </div>
+              )}
             </div>
+
+            {/* Filter: Technologies ⌵ */}
+            <div className="relative">
+              <button
+                onClick={() => setOpenDropdown(openDropdown === 'tech' ? null : 'tech')}
+                className="flex items-center gap-1.5 py-1 text-slate-800 hover:text-black transition-colors cursor-pointer"
+              >
+                <span>Technologies</span>
+                {selectedTech !== 'All' && <span className="text-xs text-blue-600 font-bold">({selectedTech})</span>}
+                <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'tech' ? 'rotate-180' : ''}`} />
+              </button>
+
+              {openDropdown === 'tech' && (
+                <div className="absolute left-0 mt-2 w-52 bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
+                  {['All', 'Odoo 18 Enterprise', 'Facturation DGI & EDI', 'AMOA Big 4 & BI', 'ERP Spécifique & API'].map((t) => (
+                    <button
+                      key={t}
+                      onClick={() => {
+                        setSelectedTech(t);
+                        setOpenDropdown(null);
+                      }}
+                      className="w-full px-4 py-2 text-left text-xs hover:bg-slate-100 flex items-center justify-between cursor-pointer"
+                    >
+                      <span className={selectedTech === t ? 'font-bold text-blue-600' : 'text-slate-700'}>{t}</span>
+                      {selectedTech === t && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Filter: Countries ⌵ */}
+            <div className="relative">
+              <button
+                onClick={() => setOpenDropdown(openDropdown === 'country' ? null : 'country')}
+                className="flex items-center gap-1.5 py-1 text-slate-800 hover:text-black transition-colors cursor-pointer"
+              >
+                <span>Countries</span>
+                <span className="text-xs font-bold text-slate-900">({selectedCountry === 'All' ? 'All' : '1'})</span>
+                <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'country' ? 'rotate-180' : ''}`} />
+              </button>
+
+              {openDropdown === 'country' && (
+                <div className="absolute left-0 mt-2 w-48 bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
+                  {['All', 'Morocco', 'France'].map((ctry) => (
+                    <button
+                      key={ctry}
+                      onClick={() => {
+                        setSelectedCountry(ctry);
+                        setOpenDropdown(null);
+                      }}
+                      className="w-full px-4 py-2 text-left text-xs hover:bg-slate-100 flex items-center justify-between cursor-pointer"
+                    >
+                      <span className={selectedCountry === ctry ? 'font-bold text-blue-600' : 'text-slate-700'}>
+                        {ctry === 'Morocco' ? '🇲🇦 Morocco' : ctry === 'France' ? '🇫🇷 France' : 'All Countries'}
+                      </span>
+                      {selectedCountry === ctry && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Filter Buttons: Apply & Reset */}
+            <div className="flex items-center gap-2 sm:ml-auto">
+              <button
+                onClick={handleApply}
+                className="bg-[#1f24e9] hover:bg-[#151ad0] text-white px-7 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
+              >
+                Apply
+              </button>
+
+              <button
+                onClick={handleReset}
+                className="bg-[#0b101d] hover:bg-black text-white px-7 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
+              >
+                Reset
+              </button>
+            </div>
+
           </div>
-
-        </div>
-      </div>
-
-      {/* 3. TESTIMONIALS C-LEVEL SECTION */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-sky-400">
-            Retours d'Expérience Dirigeants
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-heading mt-1">
-            La Confiance des Directeurs Généraux & DAF
-          </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {TESTIMONIALS.map((t) => (
-            <div
-              key={t.id}
-              className="p-7 rounded-3xl bg-slate-900/60 border border-white/[0.08] flex flex-col justify-between"
+        {/* 3. EDITORIAL CASE STUDY GRID (SQLI Standard: 2-Columns) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 mb-20">
+          {filteredCases.map((cs) => (
+            <article 
+              key={cs.id}
+              className="group cursor-pointer flex flex-col"
+              onClick={() => onOpenConsultation(`Consultation Cas Client : ${cs.client}`)}
             >
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-1 text-amber-400">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
-                    ))}
-                  </div>
-                  <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-800/60">
-                    Mission Vérifiée
-                  </span>
-                </div>
-
-                <p className="text-xs sm:text-sm text-slate-200 italic mb-6 leading-relaxed">
-                  "{t.quote}"
-                </p>
-
-                <div className="p-3 rounded-xl bg-slate-950 border border-white/[0.05] mb-6 flex items-center justify-between">
-                  <span className="text-[10px] font-mono text-slate-400 uppercase">{t.impactLabel} :</span>
-                  <span className="text-sm font-bold text-white font-heading">{t.impactMetric}</span>
-                </div>
+              {/* Image */}
+              <div className="w-full aspect-[4/3] sm:aspect-[16/11] bg-slate-200 overflow-hidden mb-5">
+                <img
+                  src={cs.image}
+                  alt={cs.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  loading="lazy"
+                />
               </div>
 
-              <div className="pt-4 border-t border-white/[0.06] flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-sky-400 font-bold text-xs shrink-0">
-                  {t.name.split(' ').map(n => n[0]).join('')}
-                </div>
-                <div className="min-w-0">
-                  <div className="text-xs font-bold text-white truncate font-heading">{t.name} {t.flag}</div>
-                  <div className="text-[11px] text-sky-400 truncate">{t.role}</div>
-                  <div className="text-[10px] text-slate-500 truncate">{t.companyType}</div>
-                </div>
+              {/* Title */}
+              <h2 className="text-xl sm:text-2xl font-bold text-[#0a0e1a] tracking-tight leading-snug group-hover:text-blue-600 transition-colors font-heading mb-2">
+                {cs.title}
+              </h2>
+
+              {/* Sector & Tech tags */}
+              <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
+                <span>{cs.sector}</span>
+                <span>•</span>
+                <span className="text-blue-600">{cs.tech}</span>
               </div>
-            </div>
+
+              {/* Impact statement */}
+              <p className="text-sm text-slate-700 font-sans leading-relaxed mb-4">
+                <strong className="text-slate-900 font-semibold">Impact Mesuré :</strong> {cs.impact}
+              </p>
+
+              {/* Date */}
+              <div className="mt-auto text-xs text-slate-400 font-sans pt-2 border-t border-slate-200">
+                {cs.date} · {cs.country === 'Morocco' ? 'Casablanca 🇲🇦' : 'Paris 🇫🇷'}
+              </div>
+            </article>
           ))}
         </div>
-      </div>
 
-      {/* 4. TRANSITION TO NEXT FACE */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4">
-        <button
-          onClick={() => onNavigateFace('secteurs')}
-          className="text-xs text-slate-400 hover:text-white transition-colors cursor-pointer"
-        >
-          ← Retour aux Secteurs
-        </button>
-
-        <button
-          onClick={() => onNavigateFace('simulateur-roi')}
-          className="link-cta-sqli text-sm font-bold cursor-pointer"
-        >
-          <span>Face Suivante : Executive Lab & Simulateur ROI</span>
-          <div className="icon-circle">
-            <ArrowRight className="w-4 h-4" />
+        {/* Bottom CTA */}
+        <div className="border border-[#e2dcd2] bg-white p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div>
+            <h3 className="text-2xl font-bold text-slate-900 font-heading">
+              Vous avez un projet de transformation ERP ou d'alignement fiscal ?
+            </h3>
+            <p className="text-sm text-slate-600 mt-1">
+              Bénéficiez d'une séance de cadrage confidentielle de 45 minutes avec un associé senior Clixa.
+            </p>
           </div>
-        </button>
-      </div>
+          <button
+            onClick={() => onOpenConsultation("Cadrage Projet Nouveau Client")}
+            className="bg-[#1f24e9] hover:bg-[#151ad0] text-white px-8 py-3.5 rounded-none font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer whitespace-nowrap flex items-center gap-2"
+          >
+            <span>Planifier un Débriefing Exécutif</span>
+            <ArrowUpRight className="w-4 h-4" />
+          </button>
+        </div>
 
+      </div>
     </div>
   );
 };

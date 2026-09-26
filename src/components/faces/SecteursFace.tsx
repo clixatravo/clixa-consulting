@@ -1,19 +1,5 @@
 import React, { useState } from 'react';
-import { SECTEURS } from '../../data/content';
-import { 
-  Building2, 
-  HardHat, 
-  Factory, 
-  Boxes, 
-  Briefcase, 
-  Stethoscope, 
-  Zap, 
-  CheckCircle2, 
-  ArrowUpRight, 
-  ArrowRight,
-  Layers,
-  Sparkles
-} from 'lucide-react';
+import { ChevronDown, ArrowUpRight, Check } from 'lucide-react';
 
 interface SecteursFaceProps {
   onOpenConsultation: (topic?: string) => void;
@@ -21,178 +7,303 @@ interface SecteursFaceProps {
 }
 
 export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, onNavigateFace }) => {
-  const [selectedSecteur, setSelectedSecteur] = useState<string>(SECTEURS[0].id);
+  const [selectedIndustry, setSelectedIndustry] = useState<string>('All');
+  const [selectedReg, setSelectedReg] = useState<string>('All');
+  const [selectedHub, setSelectedHub] = useState<string>('Morocco');
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
-  const getSecteurIcon = (iconName: string) => {
-    switch (iconName) {
-      case 'HardHat':
-        return <HardHat className="w-5 h-5" />;
-      case 'Factory':
-        return <Factory className="w-5 h-5" />;
-      case 'Boxes':
-        return <Boxes className="w-5 h-5" />;
-      case 'Briefcase':
-        return <Briefcase className="w-5 h-5" />;
-      case 'Stethoscope':
-        return <Stethoscope className="w-5 h-5" />;
-      case 'Zap':
-        return <Zap className="w-5 h-5" />;
-      default:
-        return <Building2 className="w-5 h-5" />;
+  const [appliedFilters, setAppliedFilters] = useState({
+    industry: 'All',
+    reg: 'All',
+    hub: 'All',
+  });
+
+  const sectors = [
+    {
+      id: 'btp-construction',
+      title: "BTP, Immobilier & Génie Civil : Pilotage de Chantiers & Sous-traitance",
+      industry: "BTP & Immobilier",
+      reg: "Attachements & Loi DGI",
+      hub: "Morocco",
+      date: "12 Oct 2026",
+      image: "https://images.unsplash.com/photo-1541888946425-d0fbb18615f8?auto=format&fit=crop&w=1200&q=80",
+      description: "Suivi budgétaire par affaire et par jalon de chantier, gestion des situations de travaux, retenues de garantie et traçabilité des engins.",
+      highlights: ["Comptabilité analytique par chantier", "Gestion des situations de travaux & UAT", "Pointage main d'œuvre mobile"]
+    },
+    {
+      id: 'industrie-fabrication',
+      title: "Industrie Manufacturière, Agro-Alimentaire & GPAO de Précision",
+      industry: "Industrie & Usinage",
+      reg: "Traçabilité HACCP / ISO",
+      hub: "Morocco",
+      date: "25 Sep 2026",
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80",
+      description: "Gestion des ordres de fabrication (OF), nomenclatures multiniveaux (BOM), traçabilité des lots et numéros de série avec terminaux codes-barres.",
+      highlights: ["Planification PDP / PIC / CBN", "Calcul précis des coûts de revient", "Maintenance préventive (GMAO)"]
+    },
+    {
+      id: 'negoce-distribution',
+      title: "Distribution, Négoce B2B & Supply Chain Multi-Entrepôts",
+      industry: "Distribution & Négoce",
+      reg: "Factur-X & Déclarations DGI",
+      hub: "France",
+      date: "14 Aug 2026",
+      image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1200&q=80",
+      description: "Optimisation des réapprovisionnements automatiques, gestion multi-devises, grilles tarifaires complexes et logistique expédition.",
+      highlights: ["Règles de réassort automatique", "Cross-docking & logistique codes-barres", "Gestion des remises arrières fournisseurs"]
+    },
+    {
+      id: 'sante-cliniques',
+      title: "Santé, Cliniques Privées & Équipements Médicaux",
+      industry: "Santé & Médical",
+      reg: "CNDP Données Sensibles",
+      hub: "Morocco",
+      date: "30 Jun 2026",
+      image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80",
+      description: "Sécurisation du dossier patient informatisé, facturation des actes selon les nomenclatures conventionnées et gestion de la pharmacie centrale.",
+      highlights: ["Facturation des conventions AMO / CNOPS", "Gestion de la pharmacie hospitalière", "Conformité CNDP données médicales"]
+    },
+    {
+      id: 'services-bpo',
+      title: "Services Professionnels, Cabinets & Centres BPO / IT",
+      industry: "Services & BPO",
+      reg: "Facturation au Temps Passé",
+      hub: "France",
+      date: "18 May 2026",
+      image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1200&q=80",
+      description: "Feuilles de temps collaboratives, facturation aux régies ou forfaits, gestion des notes de frais avec reconnaissance OCR et taux de staffing.",
+      highlights: ["Feuilles de temps & facturation automatique", "Suivi de la rentabilité des missions", "Gestion des notes de frais OCR"]
     }
+  ];
+
+  const handleApply = () => {
+    setAppliedFilters({
+      industry: selectedIndustry,
+      reg: selectedReg,
+      hub: selectedHub,
+    });
+    setOpenDropdown(null);
   };
 
-  const active = SECTEURS.find(s => s.id === selectedSecteur) || SECTEURS[0];
+  const handleReset = () => {
+    setSelectedIndustry('All');
+    setSelectedReg('All');
+    setSelectedHub('All');
+    setAppliedFilters({
+      industry: 'All',
+      reg: 'All',
+      hub: 'All',
+    });
+    setOpenDropdown(null);
+  };
+
+  const filtered = sectors.filter((s) => {
+    if (appliedFilters.industry !== 'All' && s.industry !== appliedFilters.industry) return false;
+    if (appliedFilters.reg !== 'All' && s.reg !== appliedFilters.reg) return false;
+    if (appliedFilters.hub !== 'All' && s.hub !== appliedFilters.hub) return false;
+    return true;
+  });
 
   return (
-    <div className="w-full animate-in fade-in duration-300 font-sans pt-28 pb-20">
-      
-      {/* 1. FACE HEADER & BREADCRUMB */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-        <div className="flex items-center gap-2 text-xs font-mono text-slate-400 mb-4">
-          <button onClick={() => onNavigateFace('accueil')} className="hover:text-white transition-colors cursor-pointer">
-            Accueil
-          </button>
-          <span>/</span>
-          <span className="text-sky-400 font-bold">Spécialisations Sectorielles Métiers</span>
-        </div>
-
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs font-semibold text-sky-400 mb-3 shadow-sm">
-            <Layers className="w-3.5 h-3.5 text-amber-400" />
-            <span className="font-heading uppercase tracking-wider text-[11px]">Expertise Métier Approfondie</span>
-          </div>
-
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight font-heading">
-            Des Solutions Calibrées pour Votre Industrie
+    <div className="w-full bg-[#FAF7F2] text-slate-900 font-sans min-h-screen pt-32 sm:pt-40 pb-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8">
+        
+        {/* 1. GIANT EDITORIAL TITLE (SQLI Standard: "Secteurs") */}
+        <div className="mb-10 sm:mb-14">
+          <h1 className="text-6xl sm:text-7xl lg:text-[84px] font-bold text-[#0a0e1a] tracking-tight leading-none font-heading">
+            Secteurs
           </h1>
-
-          <p className="text-base sm:text-lg text-slate-300 font-sans leading-relaxed mt-4">
-            Chaque secteur présente ses contraintes de marge, de conformité fiscale et de flux opérationnels. Nous configurons l'ERP Odoo et vos processus selon les pratiques d'excellence de votre industrie.
+          <p className="text-base sm:text-lg text-slate-600 font-normal mt-4 max-w-2xl leading-relaxed">
+            Une expertise sectorielle approfondie des contraintes réglementaires et processus opérationnels propres à chaque industrie.
           </p>
         </div>
-      </div>
 
-      {/* 2. SECTOR SELECTOR TABS */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-          {SECTEURS.map((sec) => {
-            const isSelected = sec.id === selectedSecteur;
-            return (
-              <button
-                key={sec.id}
-                onClick={() => setSelectedSecteur(sec.id)}
-                className={`p-4 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between gap-3 ${
-                  isSelected
-                    ? 'bg-slate-900/90 border-sky-400/80 shadow-lg shadow-sky-500/15'
-                    : 'bg-slate-950/70 border-white/[0.07] hover:border-white/[0.15] hover:bg-slate-900/50'
-                }`}
-              >
-                <div className={`p-2 rounded-xl border w-fit ${isSelected ? 'bg-sky-500/20 text-sky-300 border-sky-500/30' : 'bg-slate-900 text-slate-400 border-white/[0.08]'}`}>
-                  {getSecteurIcon(sec.icon)}
-                </div>
-                <div className="text-xs font-bold text-white line-clamp-2 font-heading">
-                  {sec.title.split(',')[0]}
-                </div>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* 3. ACTIVE SECTOR DOSSIER CARD */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-        <div key={selectedSecteur} className="p-8 sm:p-12 rounded-3xl bg-slate-900/70 border border-white/[0.09] shadow-2xl relative overflow-hidden backdrop-blur-xl animate-in fade-in duration-300">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center relative">
+        {/* 2. SQLI SIGNATURE FILTER BAR */}
+        <div className="mb-14 pb-8 border-b border-[#e2dcd2]">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm font-medium">
             
-            {/* Left Overview */}
-            <div className="lg:col-span-7 space-y-6">
-              <div className="flex items-center gap-3.5">
-                <div className="p-3.5 rounded-2xl bg-sky-500/10 border border-sky-500/20 text-sky-400">
-                  {getSecteurIcon(active.icon)}
+            {/* Filter: Industries ⌵ */}
+            <div className="relative">
+              <button
+                onClick={() => setOpenDropdown(openDropdown === 'industry' ? null : 'industry')}
+                className="flex items-center gap-1.5 py-1 text-slate-800 hover:text-black transition-colors cursor-pointer"
+              >
+                <span>Industries</span>
+                {selectedIndustry !== 'All' && <span className="text-xs text-blue-600 font-bold">({selectedIndustry})</span>}
+                <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'industry' ? 'rotate-180' : ''}`} />
+              </button>
+
+              {openDropdown === 'industry' && (
+                <div className="absolute left-0 mt-2 w-56 bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
+                  {['All', 'BTP & Immobilier', 'Industrie & Usinage', 'Distribution & Négoce', 'Santé & Médical', 'Services & BPO'].map((ind) => (
+                    <button
+                      key={ind}
+                      onClick={() => {
+                        setSelectedIndustry(ind);
+                        setOpenDropdown(null);
+                      }}
+                      className="w-full px-4 py-2 text-left text-xs hover:bg-slate-100 flex items-center justify-between cursor-pointer"
+                    >
+                      <span className={selectedIndustry === ind ? 'font-bold text-blue-600' : 'text-slate-700'}>{ind}</span>
+                      {selectedIndustry === ind && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                    </button>
+                  ))}
                 </div>
-                <div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white font-heading">
-                    {active.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-sky-300 font-medium mt-0.5">
-                    {active.subtitle}
-                  </p>
+              )}
+            </div>
+
+            {/* Filter: Réglementations ⌵ */}
+            <div className="relative">
+              <button
+                onClick={() => setOpenDropdown(openDropdown === 'reg' ? null : 'reg')}
+                className="flex items-center gap-1.5 py-1 text-slate-800 hover:text-black transition-colors cursor-pointer"
+              >
+                <span>Réglementations</span>
+                {selectedReg !== 'All' && <span className="text-xs text-blue-600 font-bold">({selectedReg})</span>}
+                <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'reg' ? 'rotate-180' : ''}`} />
+              </button>
+
+              {openDropdown === 'reg' && (
+                <div className="absolute left-0 mt-2 w-56 bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
+                  {['All', 'Attachements & Loi DGI', 'Traçabilité HACCP / ISO', 'Factur-X & Déclarations DGI', 'CNDP Données Sensibles', 'Facturation au Temps Passé'].map((r) => (
+                    <button
+                      key={r}
+                      onClick={() => {
+                        setSelectedReg(r);
+                        setOpenDropdown(null);
+                      }}
+                      className="w-full px-4 py-2 text-left text-xs hover:bg-slate-100 flex items-center justify-between cursor-pointer"
+                    >
+                      <span className={selectedReg === r ? 'font-bold text-blue-600' : 'text-slate-700'}>{r}</span>
+                      {selectedReg === r && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                    </button>
+                  ))}
                 </div>
+              )}
+            </div>
+
+            {/* Filter: Hubs ⌵ */}
+            <div className="relative">
+              <button
+                onClick={() => setOpenDropdown(openDropdown === 'hub' ? null : 'hub')}
+                className="flex items-center gap-1.5 py-1 text-slate-800 hover:text-black transition-colors cursor-pointer"
+              >
+                <span>Hubs</span>
+                <span className="text-xs font-bold text-slate-900">({selectedHub === 'All' ? 'All' : '1'})</span>
+                <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'hub' ? 'rotate-180' : ''}`} />
+              </button>
+
+              {openDropdown === 'hub' && (
+                <div className="absolute left-0 mt-2 w-48 bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
+                  {['All', 'Morocco', 'France'].map((h) => (
+                    <button
+                      key={h}
+                      onClick={() => {
+                        setSelectedHub(h);
+                        setOpenDropdown(null);
+                      }}
+                      className="w-full px-4 py-2 text-left text-xs hover:bg-slate-100 flex items-center justify-between cursor-pointer"
+                    >
+                      <span className={selectedHub === h ? 'font-bold text-blue-600' : 'text-slate-700'}>
+                        {h === 'Morocco' ? '🇲🇦 Casablanca CFC' : h === 'France' ? '🇫🇷 Paris' : 'All Hubs'}
+                      </span>
+                      {selectedHub === h && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Filter Buttons: Apply & Reset */}
+            <div className="flex items-center gap-2 sm:ml-auto">
+              <button
+                onClick={handleApply}
+                className="bg-[#1f24e9] hover:bg-[#151ad0] text-white px-7 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
+              >
+                Apply
+              </button>
+
+              <button
+                onClick={handleReset}
+                className="bg-[#0b101d] hover:bg-black text-white px-7 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
+              >
+                Reset
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        {/* 3. EDITORIAL SECTORS GRID (SQLI Standard: 2-Columns) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 mb-20">
+          {filtered.map((s) => (
+            <article 
+              key={s.id}
+              className="group cursor-pointer flex flex-col"
+              onClick={() => onOpenConsultation(`Consultation Secteur : ${s.industry}`)}
+            >
+              {/* Image */}
+              <div className="w-full aspect-[4/3] sm:aspect-[16/11] bg-slate-200 overflow-hidden mb-5">
+                <img
+                  src={s.image}
+                  alt={s.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  loading="lazy"
+                />
               </div>
 
-              <div className="space-y-3 pt-2">
-                <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-300 block">
-                  Défis critiques résolus par CLIXA :
-                </span>
-                {active.challenges.map((chal, cIdx) => (
-                  <div key={cIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-200">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                    <span>{chal}</span>
-                  </div>
-                ))}
+              {/* Title */}
+              <h2 className="text-xl sm:text-2xl font-bold text-[#0a0e1a] tracking-tight leading-snug group-hover:text-blue-600 transition-colors font-heading mb-2">
+                {s.title}
+              </h2>
+
+              {/* Category */}
+              <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
+                {s.industry} • <span className="text-blue-600">{s.reg}</span>
               </div>
 
-              {/* Feature Chips */}
-              <div className="pt-2 flex flex-wrap gap-2">
-                {active.features.map((feat, fIdx) => (
-                  <span
-                    key={fIdx}
-                    className="text-xs font-mono font-medium px-3.5 py-1.5 rounded-lg bg-slate-950/80 border border-white/[0.07] text-slate-200"
-                  >
-                    ✓ {feat}
+              {/* Description */}
+              <p className="text-sm text-slate-600 font-sans leading-relaxed mb-4">
+                {s.description}
+              </p>
+
+              {/* Highlights */}
+              <div className="flex flex-wrap gap-2 mb-4">
+                {s.highlights.map((h, i) => (
+                  <span key={i} className="text-[11px] bg-white border border-slate-200 px-2.5 py-1 text-slate-700">
+                    {h}
                   </span>
                 ))}
               </div>
-            </div>
 
-            {/* Right Action Callout */}
-            <div className="lg:col-span-5 p-8 rounded-2xl bg-slate-950/90 border border-white/[0.08] flex flex-col justify-between gap-6 shadow-xl">
-              <div>
-                <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-sky-400 block mb-2">
-                  Pratique Sectorielle Dédiée
-                </span>
-                <h4 className="text-lg font-bold text-white mb-2 font-heading">
-                  Vous dirigez une organisation dans ce secteur ?
-                </h4>
-                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-sans">
-                  Nos consultants possèdent une maîtrise directe de vos contraintes opérationnelles. Échangeons sur votre feuille de route, vos flux stocks/ventes et vos indicateurs clés.
-                </p>
+              {/* Date */}
+              <div className="mt-auto text-xs text-slate-400 font-sans pt-2 border-t border-slate-200">
+                {s.date} · {s.hub === 'Morocco' ? 'Casablanca 🇲🇦' : 'Paris 🇫🇷'}
               </div>
-
-              <button
-                onClick={() => onOpenConsultation(`Spécialisation Sectorielle: ${active.title}`)}
-                className="executive-btn-primary w-full inline-flex items-center justify-center gap-2 py-4 px-5 rounded-xl text-xs sm:text-sm font-bold text-white shadow-xl shadow-sky-500/20 transition-all cursor-pointer font-heading"
-              >
-                <span>Consulter un associé spécialiste</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </button>
-            </div>
-
-          </div>
+            </article>
+          ))}
         </div>
-      </div>
 
-      {/* 4. TRANSITION TO NEXT FACE */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4">
-        <button
-          onClick={() => onNavigateFace('expertises')}
-          className="text-xs text-slate-400 hover:text-white transition-colors cursor-pointer"
-        >
-          ← Retour aux Expertises
-        </button>
-
-        <button
-          onClick={() => onNavigateFace('cas-clients')}
-          className="link-cta-sqli text-sm font-bold cursor-pointer"
-        >
-          <span>Face Suivante : Études de Cas & ROI Vérifiés</span>
-          <div className="icon-circle">
-            <ArrowRight className="w-4 h-4" />
+        {/* Bottom Banner */}
+        <div className="border border-[#e2dcd2] bg-white p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div>
+            <h3 className="text-2xl font-bold text-slate-900 font-heading">
+              Vous appartenez à un secteur aux spécificités réglementaires fortes ?
+            </h3>
+            <p className="text-sm text-slate-600 mt-1">
+              Consultez notre référent sectoriel pour examiner vos contraintes de gestion et d'interfaçage.
+            </p>
           </div>
-        </button>
-      </div>
+          <button
+            onClick={() => onOpenConsultation("Diagnostic Spécifique Métier")}
+            className="bg-[#1f24e9] hover:bg-[#151ad0] text-white px-8 py-3.5 rounded-none font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer whitespace-nowrap flex items-center gap-2"
+          >
+            <span>Échanger avec un Référent Sectoriel</span>
+            <ArrowUpRight className="w-4 h-4" />
+          </button>
+        </div>
 
+      </div>
     </div>
   );
 };

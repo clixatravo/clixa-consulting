@@ -3,12 +3,12 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { ChatAssistant } from './components/ChatAssistant';
-import { FaceNavigator } from './components/FaceNavigator';
 
 import { AccueilFace } from './components/faces/AccueilFace';
 import { ExpertisesFace } from './components/faces/ExpertisesFace';
 import { SecteursFace } from './components/faces/SecteursFace';
 import { CaseStudiesFace } from './components/faces/CaseStudiesFace';
+import { InsightsFace } from './components/faces/InsightsFace';
 import { ExecutiveLabFace } from './components/faces/ExecutiveLabFace';
 import { MethodologieFace } from './components/faces/MethodologieFace';
 import { ContactFace } from './components/faces/ContactFace';
@@ -37,7 +37,7 @@ export const App: React.FC = () => {
 
   // Hash-based Face Router: matches SQLI URL / Face separation
   useEffect(() => {
-    const validFaces = ['accueil', 'expertises', 'secteurs', 'cas-clients', 'simulateur-roi', 'methode', 'contact'];
+    const validFaces = ['accueil', 'expertises', 'secteurs', 'cas-clients', 'insights', 'simulateur-roi', 'methode', 'contact'];
 
     const getHashFace = () => {
       const raw = window.location.hash.replace(/^#\/?/, '');
@@ -98,6 +98,13 @@ export const App: React.FC = () => {
             onNavigateFace={handleNavigateFace}
           />
         );
+      case 'insights':
+        return (
+          <InsightsFace
+            onOpenConsultation={handleOpenConsultation}
+            onNavigateFace={handleNavigateFace}
+          />
+        );
       case 'simulateur-roi':
         return (
           <ExecutiveLabFace
@@ -131,26 +138,20 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#050811] text-slate-100 flex flex-col selection:bg-sky-500 selection:text-white font-sans antialiased relative">
-      {/* 1. Header Exécutif avec navigation par Face */}
+    <div className="min-h-screen bg-[#FAF7F2] text-slate-900 flex flex-col selection:bg-blue-600 selection:text-white font-sans antialiased relative">
+      {/* 1. Header Exécutif avec navigation SQLI */}
       <Navbar
         currentFace={currentFace}
         onNavigateFace={handleNavigateFace}
         onOpenConsultation={handleOpenConsultation}
       />
 
-      {/* 2. Rail de Navigation Vertical (01 Accueil / 02 Expertises / 03 Secteurs...) */}
-      <FaceNavigator
-        activeFace={currentFace}
-        onNavigate={handleNavigateFace}
-      />
-
-      {/* 3. Main Face Viewport (Chaque Face est isolée, majestueuse & sans encombrement) */}
+      {/* 2. Main Face Viewport (Chaque Face est isolée, majestueuse & sans encombrement) */}
       <main className="flex-1 min-h-[80vh]">
         {renderActiveFace()}
       </main>
 
-      {/* 4. Footer Institutionnel SQLI Standard */}
+      {/* 3. Footer Institutionnel SQLI Standard */}
       <Footer onNavigateFace={handleNavigateFace} />
 
       {/* Assistant IA Exécutif */}

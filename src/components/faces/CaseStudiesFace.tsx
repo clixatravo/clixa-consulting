@@ -162,15 +162,21 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
             <div className="relative">
               <button
                 onClick={() => setOpenDropdown(openDropdown === 'sector' ? null : 'sector')}
-                className="flex items-center gap-1.5 py-1 text-slate-800 hover:text-black transition-colors cursor-pointer"
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-sm border transition-all cursor-pointer text-xs font-semibold ${
+                  openDropdown === 'sector'
+                    ? 'bg-blue-50 border-blue-600 text-blue-900 shadow-sm ring-1 ring-blue-600/30'
+                    : selectedSector !== 'All'
+                    ? 'bg-blue-50/70 border-blue-300 text-blue-800'
+                    : 'bg-white border-slate-200 text-slate-800 hover:border-slate-300 hover:bg-slate-50'
+                }`}
               >
                 <span>Secteurs</span>
-                {selectedSector !== 'All' && <span className="text-xs text-blue-600 font-bold">({selectedSector})</span>}
+                {selectedSector !== 'All' && <span className="text-xs text-blue-700 font-bold">({selectedSector})</span>}
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'sector' ? 'rotate-180' : ''}`} />
               </button>
 
               {openDropdown === 'sector' && (
-                <div className="absolute left-0 mt-2 w-56 bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
+                <div className="absolute left-0 mt-2 w-56 max-w-[calc(100vw-2.5rem)] bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
                   {['All', 'Industrie & BTP', 'Distribution & Négoce', 'Finance & Services', 'Santé & Cliniques', 'Agro-Industrie & Export', 'Retail & Boutiques'].map((sec) => (
                     <button
                       key={sec}
@@ -192,15 +198,21 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
             <div className="relative">
               <button
                 onClick={() => setOpenDropdown(openDropdown === 'tech' ? null : 'tech')}
-                className="flex items-center gap-1.5 py-1 text-slate-800 hover:text-black transition-colors cursor-pointer"
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-sm border transition-all cursor-pointer text-xs font-semibold ${
+                  openDropdown === 'tech'
+                    ? 'bg-blue-50 border-blue-600 text-blue-900 shadow-sm ring-1 ring-blue-600/30'
+                    : selectedTech !== 'All'
+                    ? 'bg-blue-50/70 border-blue-300 text-blue-800'
+                    : 'bg-white border-slate-200 text-slate-800 hover:border-slate-300 hover:bg-slate-50'
+                }`}
               >
                 <span>Technologies</span>
-                {selectedTech !== 'All' && <span className="text-xs text-blue-600 font-bold">({selectedTech})</span>}
+                {selectedTech !== 'All' && <span className="text-xs text-blue-700 font-bold">({selectedTech})</span>}
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'tech' ? 'rotate-180' : ''}`} />
               </button>
 
               {openDropdown === 'tech' && (
-                <div className="absolute left-0 mt-2 w-56 bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
+                <div className="absolute left-0 mt-2 w-56 max-w-[calc(100vw-2.5rem)] bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
                   {['All', 'Odoo 18 Enterprise', 'Facturation DGI & EDI', 'AMOA Big 4 & BI', 'ERP Spécifique & API', 'Odoo GPAO & Traçabilité', 'Odoo POS & Extranet'].map((t) => (
                     <button
                       key={t}
@@ -222,7 +234,13 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
             <div className="relative">
               <button
                 onClick={() => setOpenDropdown(openDropdown === 'country' ? null : 'country')}
-                className="flex items-center gap-1.5 py-1 text-slate-800 hover:text-black transition-colors cursor-pointer"
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-sm border transition-all cursor-pointer text-xs font-semibold ${
+                  openDropdown === 'country'
+                    ? 'bg-blue-50 border-blue-600 text-blue-900 shadow-sm ring-1 ring-blue-600/30'
+                    : selectedCountry !== 'All'
+                    ? 'bg-blue-50/70 border-blue-300 text-blue-800'
+                    : 'bg-white border-slate-200 text-slate-800 hover:border-slate-300 hover:bg-slate-50'
+                }`}
               >
                 <span>Hubs</span>
                 <span className="text-xs font-bold text-slate-900">({selectedCountry === 'All' ? 'All' : selectedCountry})</span>
@@ -230,7 +248,7 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
               </button>
 
               {openDropdown === 'country' && (
-                <div className="absolute left-0 mt-2 w-48 bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
+                <div className="absolute left-0 mt-2 w-48 max-w-[calc(100vw-2.5rem)] bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
                   {['All', 'Morocco', 'France'].map((ctry) => (
                     <button
                       key={ctry}
@@ -251,10 +269,10 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
             </div>
 
             {/* Filter Buttons: Apply & Reset */}
-            <div className="flex items-center gap-2.5 sm:ml-auto">
+            <div className="flex items-center gap-2.5 w-full sm:w-auto sm:ml-auto">
               <button
                 onClick={handleApply}
-                className={`relative px-7 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm flex items-center gap-2 ${
+                className={`flex-1 sm:flex-none relative px-7 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm flex items-center justify-center gap-2 ${
                   (selectedSector !== appliedFilters.sector || selectedTech !== appliedFilters.tech || selectedCountry !== appliedFilters.country)
                     ? 'bg-[#1f24e9] hover:bg-[#151ad0] text-white ring-2 ring-blue-500 ring-offset-1 shadow-blue-500/30'
                     : 'bg-[#1f24e9] hover:bg-[#151ad0] text-white'
@@ -268,7 +286,7 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
 
               <button
                 onClick={handleReset}
-                className={`px-6 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-all cursor-pointer border ${
+                className={`flex-1 sm:flex-none px-6 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-all cursor-pointer border flex items-center justify-center ${
                   (appliedFilters.sector !== 'All' || appliedFilters.tech !== 'All' || appliedFilters.country !== 'All' || selectedSector !== 'All' || selectedTech !== 'All' || selectedCountry !== 'All')
                     ? 'bg-slate-900 hover:bg-black text-white border-transparent'
                     : 'bg-white text-slate-400 border-slate-200 hover:border-slate-300 hover:text-slate-600'

@@ -140,15 +140,21 @@ export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, 
             <div className="relative">
               <button
                 onClick={() => setOpenDropdown(openDropdown === 'industry' ? null : 'industry')}
-                className="flex items-center gap-1.5 py-1 text-slate-800 hover:text-black transition-colors cursor-pointer"
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-sm border transition-all cursor-pointer text-xs font-semibold ${
+                  openDropdown === 'industry'
+                    ? 'bg-blue-50 border-blue-600 text-blue-900 shadow-sm ring-1 ring-blue-600/30'
+                    : selectedIndustry !== 'All'
+                    ? 'bg-blue-50/70 border-blue-300 text-blue-800'
+                    : 'bg-white border-slate-200 text-slate-800 hover:border-slate-300 hover:bg-slate-50'
+                }`}
               >
                 <span>Industries</span>
-                {selectedIndustry !== 'All' && <span className="text-xs text-blue-600 font-bold">({selectedIndustry})</span>}
+                {selectedIndustry !== 'All' && <span className="text-xs text-blue-700 font-bold">({selectedIndustry})</span>}
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'industry' ? 'rotate-180' : ''}`} />
               </button>
 
               {openDropdown === 'industry' && (
-                <div className="absolute left-0 mt-2 w-56 bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
+                <div className="absolute left-0 mt-2 w-56 max-w-[calc(100vw-2.5rem)] bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
                   {['All', 'BTP & Immobilier', 'Industrie & Usinage', 'Distribution & Négoce', 'Santé & Médical', 'Services & BPO', 'Agro-Industrie & Export'].map((ind) => (
                     <button
                       key={ind}
@@ -170,15 +176,21 @@ export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, 
             <div className="relative">
               <button
                 onClick={() => setOpenDropdown(openDropdown === 'reg' ? null : 'reg')}
-                className="flex items-center gap-1.5 py-1 text-slate-800 hover:text-black transition-colors cursor-pointer"
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-sm border transition-all cursor-pointer text-xs font-semibold ${
+                  openDropdown === 'reg'
+                    ? 'bg-blue-50 border-blue-600 text-blue-900 shadow-sm ring-1 ring-blue-600/30'
+                    : selectedReg !== 'All'
+                    ? 'bg-blue-50/70 border-blue-300 text-blue-800'
+                    : 'bg-white border-slate-200 text-slate-800 hover:border-slate-300 hover:bg-slate-50'
+                }`}
               >
                 <span>Réglementations</span>
-                {selectedReg !== 'All' && <span className="text-xs text-blue-600 font-bold">({selectedReg})</span>}
+                {selectedReg !== 'All' && <span className="text-xs text-blue-700 font-bold">({selectedReg})</span>}
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'reg' ? 'rotate-180' : ''}`} />
               </button>
 
               {openDropdown === 'reg' && (
-                <div className="absolute left-0 mt-2 w-56 bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
+                <div className="absolute left-0 mt-2 w-56 max-w-[calc(100vw-2.5rem)] bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
                   {['All', 'Attachements & Loi DGI', 'Traçabilité HACCP / ISO', 'Factur-X & Déclarations DGI', 'CNDP Données Sensibles', 'Facturation au Temps Passé'].map((r) => (
                     <button
                       key={r}
@@ -200,7 +212,13 @@ export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, 
             <div className="relative">
               <button
                 onClick={() => setOpenDropdown(openDropdown === 'hub' ? null : 'hub')}
-                className="flex items-center gap-1.5 py-1 text-slate-800 hover:text-black transition-colors cursor-pointer"
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-sm border transition-all cursor-pointer text-xs font-semibold ${
+                  openDropdown === 'hub'
+                    ? 'bg-blue-50 border-blue-600 text-blue-900 shadow-sm ring-1 ring-blue-600/30'
+                    : selectedHub !== 'All'
+                    ? 'bg-blue-50/70 border-blue-300 text-blue-800'
+                    : 'bg-white border-slate-200 text-slate-800 hover:border-slate-300 hover:bg-slate-50'
+                }`}
               >
                 <span>Hubs</span>
                 <span className="text-xs font-bold text-slate-900">({selectedHub === 'All' ? 'All' : '1'})</span>
@@ -208,7 +226,7 @@ export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, 
               </button>
 
               {openDropdown === 'hub' && (
-                <div className="absolute left-0 mt-2 w-48 bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
+                <div className="absolute left-0 mt-2 w-48 max-w-[calc(100vw-2.5rem)] bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
                   {['All', 'Morocco', 'France'].map((h) => (
                     <button
                       key={h}
@@ -229,10 +247,10 @@ export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, 
             </div>
 
             {/* Filter Buttons: Apply & Reset */}
-            <div className="flex items-center gap-2.5 sm:ml-auto">
+            <div className="flex items-center gap-2.5 w-full sm:w-auto sm:ml-auto">
               <button
                 onClick={handleApply}
-                className={`relative px-7 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm flex items-center gap-2 ${
+                className={`flex-1 sm:flex-none relative px-7 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm flex items-center justify-center gap-2 ${
                   (selectedIndustry !== appliedFilters.industry || selectedReg !== appliedFilters.reg || selectedHub !== appliedFilters.hub)
                     ? 'bg-[#1f24e9] hover:bg-[#151ad0] text-white ring-2 ring-blue-500 ring-offset-1 shadow-blue-500/30'
                     : 'bg-[#1f24e9] hover:bg-[#151ad0] text-white'
@@ -246,7 +264,7 @@ export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, 
 
               <button
                 onClick={handleReset}
-                className={`px-6 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-all cursor-pointer border ${
+                className={`flex-1 sm:flex-none px-6 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-all cursor-pointer border flex items-center justify-center ${
                   (appliedFilters.industry !== 'All' || appliedFilters.reg !== 'All' || appliedFilters.hub !== 'All' || selectedIndustry !== 'All' || selectedReg !== 'All' || selectedHub !== 'All')
                     ? 'bg-slate-900 hover:bg-black text-white border-transparent'
                     : 'bg-white text-slate-400 border-slate-200 hover:border-slate-300 hover:text-slate-600'

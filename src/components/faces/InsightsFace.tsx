@@ -212,18 +212,25 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
           <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm font-medium">
             
             {/* Filter: Content type ⌵ */}
+            {/* Filter: Content type ⌵ */}
             <div className="relative">
               <button
                 onClick={() => setOpenDropdown(openDropdown === 'contentType' ? null : 'contentType')}
-                className="flex items-center gap-1.5 py-1 text-slate-800 hover:text-black transition-colors cursor-pointer"
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-sm border transition-all cursor-pointer text-xs font-semibold ${
+                  openDropdown === 'contentType'
+                    ? 'bg-blue-50 border-blue-600 text-blue-900 shadow-sm ring-1 ring-blue-600/30'
+                    : selectedContentType !== 'All'
+                    ? 'bg-blue-50/70 border-blue-300 text-blue-800'
+                    : 'bg-white border-slate-200 text-slate-800 hover:border-slate-300 hover:bg-slate-50'
+                }`}
               >
                 <span>Content type</span>
-                {selectedContentType !== 'All' && <span className="text-xs text-blue-600 font-bold">({selectedContentType})</span>}
+                {selectedContentType !== 'All' && <span className="text-xs text-blue-700 font-bold">({selectedContentType})</span>}
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'contentType' ? 'rotate-180' : ''}`} />
               </button>
 
               {openDropdown === 'contentType' && (
-                <div className="absolute left-0 mt-2 w-48 bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
+                <div className="absolute left-0 mt-2 w-48 max-w-[calc(100vw-2.5rem)] bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
                   {['All', 'Article', 'Whitepaper', 'Regulatory', 'Benchmark'].map((type) => (
                     <button
                       key={type}
@@ -245,15 +252,21 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
             <div className="relative">
               <button
                 onClick={() => setOpenDropdown(openDropdown === 'topics' ? null : 'topics')}
-                className="flex items-center gap-1.5 py-1 text-slate-800 hover:text-black transition-colors cursor-pointer"
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-sm border transition-all cursor-pointer text-xs font-semibold ${
+                  openDropdown === 'topics'
+                    ? 'bg-blue-50 border-blue-600 text-blue-900 shadow-sm ring-1 ring-blue-600/30'
+                    : selectedTopic !== 'All'
+                    ? 'bg-blue-50/70 border-blue-300 text-blue-800'
+                    : 'bg-white border-slate-200 text-slate-800 hover:border-slate-300 hover:bg-slate-50'
+                }`}
               >
                 <span>Topics</span>
-                {selectedTopic !== 'All' && <span className="text-xs text-blue-600 font-bold">({selectedTopic})</span>}
+                {selectedTopic !== 'All' && <span className="text-xs text-blue-700 font-bold">({selectedTopic})</span>}
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'topics' ? 'rotate-180' : ''}`} />
               </button>
 
               {openDropdown === 'topics' && (
-                <div className="absolute left-0 mt-2 w-52 bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
+                <div className="absolute left-0 mt-2 w-52 max-w-[calc(100vw-2.5rem)] bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
                   {['All', 'Technology', 'ERP Odoo', 'Fiscalité DGI', 'Gouvernance AMOA', 'Cybersécurité'].map((top) => (
                     <button
                       key={top}
@@ -275,15 +288,21 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
             <div className="relative">
               <button
                 onClick={() => setOpenDropdown(openDropdown === 'countries' ? null : 'countries')}
-                className="flex items-center gap-1.5 py-1 text-slate-800 hover:text-black transition-colors cursor-pointer"
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-sm border transition-all cursor-pointer text-xs font-semibold ${
+                  openDropdown === 'countries'
+                    ? 'bg-blue-50 border-blue-600 text-blue-900 shadow-sm ring-1 ring-blue-600/30'
+                    : selectedCountry !== 'All'
+                    ? 'bg-blue-50/70 border-blue-300 text-blue-800'
+                    : 'bg-white border-slate-200 text-slate-800 hover:border-slate-300 hover:bg-slate-50'
+                }`}
               >
                 <span>Countries</span>
-                {selectedCountry !== 'All' && <span className="text-xs text-blue-600 font-bold">({selectedCountry})</span>}
+                {selectedCountry !== 'All' && <span className="text-xs text-blue-700 font-bold">({selectedCountry})</span>}
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'countries' ? 'rotate-180' : ''}`} />
               </button>
 
               {openDropdown === 'countries' && (
-                <div className="absolute left-0 mt-2 w-48 bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
+                <div className="absolute left-0 mt-2 w-48 max-w-[calc(100vw-2.5rem)] bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
                   {['All', 'Morocco', 'France'].map((ctry) => (
                     <button
                       key={ctry}
@@ -307,15 +326,21 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
             <div className="relative">
               <button
                 onClick={() => setOpenDropdown(openDropdown === 'languages' ? null : 'languages')}
-                className="flex items-center gap-1.5 py-1 text-slate-800 hover:text-black transition-colors cursor-pointer"
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-sm border transition-all cursor-pointer text-xs font-semibold ${
+                  openDropdown === 'languages'
+                    ? 'bg-blue-50 border-blue-600 text-blue-900 shadow-sm ring-1 ring-blue-600/30'
+                    : selectedLanguage !== 'All'
+                    ? 'bg-blue-50/70 border-blue-300 text-blue-800'
+                    : 'bg-white border-slate-200 text-slate-800 hover:border-slate-300 hover:bg-slate-50'
+                }`}
               >
                 <span>Languages</span>
-                {selectedLanguage !== 'All' && <span className="text-xs text-blue-600 font-bold">({selectedLanguage})</span>}
+                {selectedLanguage !== 'All' && <span className="text-xs text-blue-700 font-bold">({selectedLanguage})</span>}
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'languages' ? 'rotate-180' : ''}`} />
               </button>
 
               {openDropdown === 'languages' && (
-                <div className="absolute left-0 mt-2 w-44 bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
+                <div className="absolute left-0 mt-2 w-44 max-w-[calc(100vw-2.5rem)] bg-white border border-slate-200 shadow-xl py-2 z-30 animate-in fade-in zoom-in-95 duration-100">
                   {['All', 'EN', 'FR'].map((lng) => (
                     <button
                       key={lng}
@@ -336,10 +361,14 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
             </div>
 
             {/* Filter Buttons: Apply & Reset */}
-            <div className="flex items-center gap-2 sm:ml-auto">
+            <div className="flex items-center gap-2.5 w-full sm:w-auto sm:ml-auto">
               <button
                 onClick={handleApply}
-                className="relative bg-[#1f24e9] hover:bg-[#151ad0] text-white px-7 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm flex items-center gap-2"
+                className={`flex-1 sm:flex-none relative px-7 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm flex items-center justify-center gap-2 ${
+                  hasFilterChanges
+                    ? 'bg-[#1f24e9] hover:bg-[#151ad0] text-white ring-2 ring-blue-500 ring-offset-1 shadow-blue-500/30'
+                    : 'bg-[#1f24e9] hover:bg-[#151ad0] text-white'
+                }`}
               >
                 <span>Apply</span>
                 {hasFilterChanges && (
@@ -349,7 +378,7 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
 
               <button
                 onClick={handleReset}
-                className={`px-7 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-all cursor-pointer border ${
+                className={`flex-1 sm:flex-none px-6 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-all cursor-pointer border flex items-center justify-center ${
                   hasAnyFilterActive
                     ? 'bg-slate-900 hover:bg-black text-white border-transparent'
                     : 'bg-white text-slate-400 border-slate-200 hover:border-slate-300 hover:text-slate-600'

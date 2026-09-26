@@ -162,7 +162,7 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
             <div className="relative">
               <button
                 onClick={() => setOpenDropdown(openDropdown === 'sector' ? null : 'sector')}
-                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-sm border transition-all cursor-pointer text-xs font-semibold ${
+                className={`filter-pro-btn flex items-center gap-1.5 px-3.5 py-2 rounded-sm border transition-all cursor-pointer text-xs font-semibold ${
                   openDropdown === 'sector'
                     ? 'bg-blue-50 border-blue-600 text-blue-900 shadow-sm ring-1 ring-blue-600/30'
                     : selectedSector !== 'All'
@@ -198,7 +198,7 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
             <div className="relative">
               <button
                 onClick={() => setOpenDropdown(openDropdown === 'tech' ? null : 'tech')}
-                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-sm border transition-all cursor-pointer text-xs font-semibold ${
+                className={`filter-pro-btn flex items-center gap-1.5 px-3.5 py-2 rounded-sm border transition-all cursor-pointer text-xs font-semibold ${
                   openDropdown === 'tech'
                     ? 'bg-blue-50 border-blue-600 text-blue-900 shadow-sm ring-1 ring-blue-600/30'
                     : selectedTech !== 'All'
@@ -234,7 +234,7 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
             <div className="relative">
               <button
                 onClick={() => setOpenDropdown(openDropdown === 'country' ? null : 'country')}
-                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-sm border transition-all cursor-pointer text-xs font-semibold ${
+                className={`filter-pro-btn flex items-center gap-1.5 px-3.5 py-2 rounded-sm border transition-all cursor-pointer text-xs font-semibold ${
                   openDropdown === 'country'
                     ? 'bg-blue-50 border-blue-600 text-blue-900 shadow-sm ring-1 ring-blue-600/30'
                     : selectedCountry !== 'All'
@@ -272,7 +272,7 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
             <div className="flex items-center gap-2.5 w-full sm:w-auto sm:ml-auto">
               <button
                 onClick={handleApply}
-                className={`flex-1 sm:flex-none relative px-7 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm flex items-center justify-center gap-2 ${
+                className={`face-cta-forward btn-pro-hover flex-1 sm:flex-none relative px-7 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-sm flex items-center justify-center gap-2 ${
                   (selectedSector !== appliedFilters.sector || selectedTech !== appliedFilters.tech || selectedCountry !== appliedFilters.country)
                     ? 'bg-[#1f24e9] hover:bg-[#151ad0] text-white ring-2 ring-blue-500 ring-offset-1 shadow-blue-500/30'
                     : 'bg-[#1f24e9] hover:bg-[#151ad0] text-white'
@@ -286,7 +286,7 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
 
               <button
                 onClick={handleReset}
-                className={`flex-1 sm:flex-none px-6 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-all cursor-pointer border flex items-center justify-center ${
+                className={`btn-pro-hover flex-1 sm:flex-none px-6 py-2.5 rounded-none font-bold text-xs uppercase tracking-wider transition-all cursor-pointer border flex items-center justify-center ${
                   (appliedFilters.sector !== 'All' || appliedFilters.tech !== 'All' || appliedFilters.country !== 'All' || selectedSector !== 'All' || selectedTech !== 'All' || selectedCountry !== 'All')
                     ? 'bg-slate-900 hover:bg-black text-white border-transparent'
                     : 'bg-white text-slate-400 border-slate-200 hover:border-slate-300 hover:text-slate-600'
@@ -383,7 +383,7 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
           {filteredCases.map((cs) => (
             <article 
               key={cs.id}
-              className="group cursor-pointer flex flex-col bg-white border border-[#e2dcd2] p-6 hover:border-blue-500 hover:shadow-xl transition-all duration-300"
+              className="case-study-card group cursor-pointer flex flex-col bg-white border border-[#e2dcd2] p-6 transition-all duration-300"
               onClick={() => onOpenConsultation(`Dossier Cas Client : ${cs.client}`)}
             >
               {/* Magnetic Photo Frame with Light-Sweep Animation & Floating Badges */}
@@ -463,7 +463,7 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
           </div>
           <button
             onClick={() => onOpenConsultation("Diagnostic Stratégique Exécutif")}
-            className="bg-[#1f24e9] hover:bg-[#151ad0] text-white px-8 py-4 rounded-none font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer whitespace-nowrap flex items-center gap-2 shadow-sm"
+            className="face-cta-forward btn-pro-hover bg-[#1f24e9] hover:bg-[#151ad0] text-white px-8 py-4 rounded-none font-bold text-xs uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap flex items-center gap-2 shadow-sm"
           >
             <span>Démarrer un cadrage confidentiel</span>
             <ArrowUpRight className="w-4 h-4" />

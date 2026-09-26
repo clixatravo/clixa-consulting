@@ -34,7 +34,7 @@
 
   button, a, [role="button"], input[type="submit"], input[type="button"] {
     touch-action: manipulation;
-    -webkit-tap-highlight-color: rgba(31, 36, 233, 0.12);
+    -webkit-tap-highlight-color: rgba(31, 36, 233, 0.18);
     user-select: none;
     -webkit-user-select: none;
   }
@@ -44,19 +44,27 @@
     button:active, 
     a:active, 
     [role="button"]:active {
-      transform: scale(0.965);
-      filter: brightness(0.93);
-      transition: transform 0.08s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.08s ease;
+      transform: scale(0.965) !important;
+      filter: brightness(0.96) !important;
+      box-shadow: 0 0 0 2.5px #1f24e9, 0 8px 24px -4px rgba(31, 36, 233, 0.4) !important;
+      transition: transform 0.08s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.08s ease, box-shadow 0.08s ease;
     }
   }
 
   button, a {
-    transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), 
-                box-shadow 0.15s cubic-bezier(0.16, 1, 0.3, 1), 
+    transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1), 
                 background-color 0.15s ease, 
                 border-color 0.15s ease,
                 color 0.15s ease,
                 filter 0.15s ease;
+  }
+
+  button:focus-visible,
+  a:focus-visible,
+  [role="button"]:focus-visible {
+    outline: 2px solid #1f24e9 !important;
+    outline-offset: 2px !important;
   }
 
   button:active, a:active {
@@ -326,49 +334,190 @@
   animation: popTowardViewer 3.5s ease-in-out infinite;
 }
 
-.face-cta-forward {
+.face-cta-forward,
+.btn-pro-hover {
   position: relative;
-  transition: transform 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-              box-shadow 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+  overflow: hidden;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
               background-color 0.2s ease,
-              border-color 0.2s ease;
+              border-color 0.2s ease,
+              filter 0.2s ease;
   will-change: transform, box-shadow;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.face-cta-forward:hover {
+/* Light-beam Shimmer that triggers immediately on hover / focus / active */
+.face-cta-forward::after,
+.btn-pro-hover::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -130%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 100%
+  );
+  transform: skewX(-25deg);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.face-cta-forward:hover::after,
+.face-cta-forward:focus-visible::after,
+.btn-pro-hover:hover::after,
+.btn-pro-hover:focus-visible::after,
+.btn-pro-hover:active::after {
+  left: 200%;
+  transition: left 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.face-cta-forward:hover,
+.btn-pro-hover:hover {
   transform: perspective(600px) translateZ(18px) scale(1.045) translateY(-3px) !important;
-  box-shadow: 0 18px 40px -8px rgba(31, 36, 233, 0.42), 0 0 0 1px rgba(31, 36, 233, 0.2) !important;
+  box-shadow: 0 16px 36px -6px rgba(31, 36, 233, 0.45), 0 0 0 2px rgba(31, 36, 233, 0.6) !important;
+  filter: brightness(1.05);
 }
 
-.face-cta-forward:active {
+.face-cta-forward:active,
+.btn-pro-hover:active {
   transform: scale(0.97) translateY(0) !important;
-  box-shadow: 0 6px 16px -4px rgba(31, 36, 233, 0.3) !important;
+  box-shadow: 0 4px 14px -2px rgba(31, 36, 233, 0.4), 0 0 0 2px rgba(31, 36, 233, 0.8) !important;
+  filter: brightness(0.95);
 }
 
-/* Desktop Navbar Face links forward pop */
+/* Desktop Navbar Face links: Luminous pill & forward elevation */
 .nav-face-link {
   position: relative;
-  transition: transform 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.15s ease;
   display: inline-flex;
   align-items: center;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+              color 0.18s ease,
+              background-color 0.18s ease,
+              box-shadow 0.18s ease;
+  will-change: transform, color;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.nav-face-link:hover {
-  transform: scale(1.12) translateY(-2px);
+.nav-face-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  background: rgba(31, 36, 233, 0.08);
+  border: 1px solid rgba(31, 36, 233, 0.25);
+  box-shadow: 0 0 14px rgba(31, 36, 233, 0.14);
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+.nav-face-link:hover::before,
+.nav-face-link:focus-visible::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.nav-face-link:hover,
+.nav-face-link:focus-visible {
+  transform: translateY(-2px) scale(1.06);
   color: #1f24e9 !important;
-  text-shadow: 0 4px 14px rgba(31, 36, 233, 0.25);
+  text-shadow: 0 2px 12px rgba(31, 36, 233, 0.25);
 }
 
-/* Mobile Drawer Face Buttons */
+.nav-face-link:active {
+  transform: scale(0.98);
+}
+
+/* Dark mode navbar styling */
+header.is-dark .nav-face-link::before {
+  background: rgba(56, 189, 248, 0.14);
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
+}
+header.is-dark .nav-face-link:hover,
+header.is-dark .nav-face-link:focus-visible {
+  color: #38bdf8 !important;
+  text-shadow: 0 2px 12px rgba(56, 189, 248, 0.4);
+}
+
+/* Mobile Drawer Face Buttons - Immediate Active & Hover Feedback */
 .mobile-drawer-face-btn {
-  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-              background-color 0.2s ease, 
-              padding-left 0.2s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  border-left-width: 4px;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), 
+              background-color 0.18s ease, 
+              border-color 0.18s ease,
+              box-shadow 0.18s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .mobile-drawer-face-btn:hover,
+.mobile-drawer-face-btn:focus-visible,
 .mobile-drawer-face-btn:active {
-  transform: scale(1.035) translateX(8px);
+  background-color: rgba(31, 36, 233, 0.08) !important;
+  border-color: rgba(31, 36, 233, 0.2) !important;
+  border-left-color: #1f24e9 !important;
+  transform: translateX(6px) scale(1.025);
+  box-shadow: 0 6px 18px -4px rgba(31, 36, 233, 0.18);
+  color: #1f24e9 !important;
+}
+
+/* Filter Pro Buttons (Secteurs, Technologies, Hubs) */
+.filter-pro-btn {
+  position: relative;
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease,
+              background-color 0.2s ease;
+  will-change: transform, box-shadow;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.filter-pro-btn:hover,
+.filter-pro-btn:focus-visible {
+  transform: translateY(-2px) scale(1.02);
+  border-color: #1f24e9 !important;
+  box-shadow: 0 6px 20px -3px rgba(31, 36, 233, 0.25), 0 0 0 1px #1f24e9 !important;
+  background-color: #eff6ff !important;
+}
+
+.filter-pro-btn:active {
+  transform: scale(0.97) translateY(0);
+}
+
+/* Case Study Cards Hover / Touch Elevation */
+.case-study-card {
+  position: relative;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease;
+  will-change: transform, box-shadow;
+}
+
+.case-study-card:hover,
+.case-study-card:focus-visible {
+  transform: translateY(-6px) scale(1.012);
+  border-color: #1f24e9 !important;
+  box-shadow: 0 24px 48px -12px rgba(31, 36, 233, 0.18), 0 12px 24px -8px rgba(0, 0, 0, 0.08) !important;
+}
+
+.case-study-card:active {
+  transform: scale(0.99) translateY(-2px);
 }
 
 /* Hide scrollbar utility */

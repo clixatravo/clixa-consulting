@@ -103,7 +103,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 font-sans ${
           isDarkHero
-            ? 'bg-[#050811]/90 backdrop-blur-md border-b border-white/[0.08] text-white'
+            ? 'is-dark bg-[#050811]/90 backdrop-blur-md border-b border-white/[0.08] text-white'
             : 'bg-[#FAF7F2]/98 backdrop-blur-md border-b border-[#e7e2d8] text-slate-900 shadow-sm'
         }`}
       >
@@ -216,22 +216,22 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
             </button>
 
             {/* Desktop Navigation Links (Forward-pop on hover) */}
-            <nav className="hidden lg:flex items-center gap-5 xl:gap-7">
+            <nav className="hidden lg:flex items-center gap-3 xl:gap-5">
               {navLinks.map((link) => {
                 const isActive = currentFace === link.id;
                 return (
                   <button
                     key={link.id}
                     onClick={() => handleNavClick(link.id)}
-                    className={`nav-face-link text-sm font-semibold cursor-pointer whitespace-nowrap relative py-1 px-1 ${
+                    className={`nav-face-link text-sm font-semibold cursor-pointer whitespace-nowrap relative py-1.5 px-3 rounded-md transition-all ${
                       isActive
-                        ? (isDarkHero ? 'text-white font-bold' : 'text-blue-700 font-bold')
+                        ? (isDarkHero ? 'text-white font-bold bg-white/10 shadow-sm' : 'text-blue-700 font-bold bg-blue-50/80 shadow-sm')
                         : (isDarkHero ? 'text-slate-300 hover:text-white' : 'text-slate-800 hover:text-blue-600')
                     }`}
                   >
                     <span>{link.label}</span>
                     {isActive && (
-                      <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-full" />
+                      <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-blue-600 rounded-full" />
                     )}
                   </button>
                 );
@@ -336,16 +336,17 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
                 <button
                   key={link.id}
                   onClick={() => handleNavClick(link.id)}
-                  className={`mobile-drawer-face-btn w-full text-left py-2.5 px-3 text-lg font-bold transition-all cursor-pointer flex items-center justify-between rounded-sm ${
-                    isActive ? 'text-blue-600 bg-blue-50/70 border border-blue-200' : 'text-slate-800 hover:text-black hover:bg-slate-100/60'
+                  className={`mobile-drawer-face-btn group w-full text-left py-3 px-4 text-base sm:text-lg font-bold transition-all cursor-pointer flex items-center justify-between rounded-md ${
+                    isActive ? 'text-blue-600 bg-blue-50/90 border-blue-300 shadow-sm' : 'text-slate-800 hover:text-blue-600 hover:bg-blue-50/40'
                   }`}
                 >
-                  <span>{link.label}</span>
-                  {isActive ? (
-                    <span className="w-2 h-2 rounded-full bg-blue-600" />
-                  ) : (
-                    <ArrowUpRight className="w-4 h-4 text-slate-400 opacity-60" />
-                  )}
+                  <span className="flex items-center gap-2.5">
+                    <span className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${isActive ? 'bg-blue-600 scale-125 ring-2 ring-blue-400/40' : 'bg-slate-300 group-hover:bg-blue-500 group-hover:scale-110'}`} />
+                    <span>{link.label}</span>
+                  </span>
+                  <ArrowUpRight className={`w-4 h-4 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1 group-active:translate-x-1 ${
+                    isActive ? 'text-blue-600' : 'text-slate-400 group-hover:text-blue-600'
+                  }`} />
                 </button>
               );
             })}

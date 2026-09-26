@@ -201,7 +201,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
             <div className="animation-scroll fade-in-bottom delay-300 pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
               <button
                 onClick={() => onOpenConsultation("Cadrage Stratégique & Organisation")}
-                className="face-cta-forward animate-forward-breath inline-flex items-center justify-center gap-3 px-8 py-4 rounded-none text-sm sm:text-base font-bold text-white transition-all cursor-pointer font-heading shadow-md"
+                className="face-cta-forward btn-pro-hover animate-forward-breath inline-flex items-center justify-center gap-3 px-8 py-4 rounded-none text-sm sm:text-base font-bold text-white transition-all cursor-pointer font-heading shadow-md"
                 style={{ background: '#1f24e9' }}
               >
                 <span>Démarrer un cadrage stratégique</span>
@@ -210,7 +210,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
               
               <button
                 onClick={() => onNavigateFace('expertises')}
-                className="face-cta-forward inline-flex items-center justify-center gap-2 px-7 py-4 rounded-none text-sm sm:text-base font-semibold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 hover:border-blue-400 transition-all shadow-sm cursor-pointer"
+                className="face-cta-forward btn-pro-hover inline-flex items-center justify-center gap-2 px-7 py-4 rounded-none text-sm sm:text-base font-semibold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 hover:border-blue-400 transition-all shadow-sm cursor-pointer"
               >
                 <span>Découvrir nos Expertises</span>
                 <ArrowRight className="w-4 h-4 text-blue-600" />
@@ -543,7 +543,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
               <div className="pt-2">
                 <button
                   onClick={() => onNavigateFace('cas-clients')}
-                  className="face-cta-forward link-cta-sqli text-blue-600 hover:text-blue-800 text-sm font-bold flex items-center gap-2 cursor-pointer"
+                  className="face-cta-forward btn-pro-hover link-cta-sqli text-blue-600 hover:text-blue-800 text-sm font-bold flex items-center gap-2 cursor-pointer py-1.5 px-3 rounded-md"
                 >
                   <span>Voir tous les cas clients</span>
                   <div className="icon-circle bg-blue-50 border-blue-200 text-blue-600">
@@ -557,7 +557,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
             <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div
                 onClick={() => onNavigateFace('cas-clients')}
-                className="group cursor-pointer flex flex-col bg-white border border-[#e2dcd2] p-5 hover:border-blue-500 hover:shadow-xl transition-all duration-300"
+                className="case-study-card group cursor-pointer flex flex-col bg-white border border-[#e2dcd2] p-5 transition-all duration-300"
               >
                 <div className="photo-frame w-full aspect-[16/10] bg-slate-900 mb-4 relative">
                   <img
@@ -605,7 +605,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
 
               <div
                 onClick={() => onNavigateFace('cas-clients')}
-                className="group cursor-pointer flex flex-col bg-white border border-[#e2dcd2] p-5 hover:border-blue-500 hover:shadow-xl transition-all duration-300"
+                className="case-study-card group cursor-pointer flex flex-col bg-white border border-[#e2dcd2] p-5 transition-all duration-300"
               >
                 <div className="photo-frame w-full aspect-[16/10] bg-slate-900 mb-4 relative">
                   <img
@@ -705,7 +705,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
             <div className="pt-3 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-4">
               <button
                 onClick={() => onOpenConsultation("Cadrage Stratégique Général")}
-                className="face-cta-forward animate-forward-breath w-full sm:w-auto px-8 py-4 text-sm font-bold text-white font-heading flex items-center justify-center gap-2.5 cursor-pointer shadow-md transition-all"
+                className="face-cta-forward btn-pro-hover animate-forward-breath w-full sm:w-auto px-8 py-4 text-sm font-bold text-white font-heading flex items-center justify-center gap-2.5 cursor-pointer shadow-md transition-all"
                 style={{ background: '#1f24e9' }}
               >
                 <span>Prendre un rendez-vous stratégique</span>
@@ -714,7 +714,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
 
               <button
                 onClick={() => onNavigateFace('contact')}
-                className="face-cta-forward w-full sm:w-auto px-7 py-4 text-sm font-semibold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 font-sans flex items-center justify-center gap-2 cursor-pointer shadow-sm transition-all"
+                className="face-cta-forward btn-pro-hover w-full sm:w-auto px-7 py-4 text-sm font-semibold text-slate-800 bg-white hover:bg-slate-50 border border-slate-300 font-sans flex items-center justify-center gap-2 cursor-pointer shadow-sm transition-all"
               >
                 <span>Voir nos adresses à Casablanca & Toulouse</span>
                 <ArrowRight className="w-4 h-4 text-blue-600" />

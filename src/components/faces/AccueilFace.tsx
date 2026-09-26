@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   ArrowUpRight, 
   Sparkles, 
@@ -10,20 +10,21 @@ import {
   TrendingUp, 
   ArrowRight, 
   Award,
-  ChevronRight,
   Clock,
   Building2,
   FileCheck2,
   Cpu,
-  Lock,
   Play,
   Pause,
   Volume2,
   VolumeX,
   FileText,
-  Workflow
+  GraduationCap,
+  Bot
 } from 'lucide-react';
 import { BRAND, KEY_METRICS, EXPERTISES, CASE_STUDIES } from '../../data/content';
+import { FORMATIONS_CATALOGUE } from '../../data/formations';
+import { RobotIcon } from '../RobotIcon';
 
 interface AccueilFaceProps {
   onOpenConsultation: (topic?: string) => void;
@@ -33,12 +34,36 @@ interface AccueilFaceProps {
 export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, onNavigateFace }) => {
   const [videoPlaying, setVideoPlaying] = useState(true);
   const [videoMuted, setVideoMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      if (videoPlaying) {
+        videoRef.current.play().catch(() => {});
+      } else {
+        videoRef.current.pause();
+      }
+    }
+  }, [videoPlaying]);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = videoMuted;
+    }
+  }, [videoMuted]);
+
+  const togglePlay = () => setVideoPlaying(!videoPlaying);
+  const toggleMute = () => setVideoMuted(!videoMuted);
+
+  const openAiAssistant = (prompt?: string) => {
+    window.dispatchEvent(new CustomEvent('clixa:open-chat', { detail: { prompt } }));
+  };
 
   const trustMarqueeItems = [
     { icon: Cpu, label: "Écosystème ERP Odoo 17 & 18", desc: "Intégration & Paramétrage Métier", tag: "ERP Certifié" },
     { icon: FileCheck2, label: "Facturation Électronique", desc: "Conformité DGI (MA) & DGFIP (FR)", tag: "Agrément Fiscal" },
     { icon: ShieldCheck, label: "Standards AMOA Big 4", desc: "Cadrage, Spécifications & Recette", tag: "Gouvernance SI" },
-    { icon: Lock, label: "Secret Professionnel (NDA)", desc: "Confidentialité Totale CNDP / RGPD", tag: "Données Sécurisées" },
+    { icon: GraduationCap, label: "CLIXA Institute (clixa.africa)", desc: "12 Formations Exécutives & PMP®", tag: "Certifications" },
     { icon: Award, label: "Double Hub Casablanca & Paris", desc: "Casablanca Finance City & Paris", tag: "Présence Directe" },
     { icon: TrendingUp, label: "Pilotage Financier & BFR", desc: "Tableaux de bord DAF & Trésorerie", tag: "Performance" },
     { icon: Globe, label: "Solutions Web & Extranets", desc: "Portails clients & Automatisation API", tag: "Digitalisation" },
@@ -86,29 +111,32 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
           </defs>
         </svg>
 
-        {/* 🎬 LOOPING BACKGROUND TRAILER VIDEO (SQLI node-home-page__head__media) */}
+        {/* 🎬 LOOPING BACKGROUND TRAILER VIDEO (HTML5 Direct 60FPS Video with zero black flashes) */}
         <div className="node-home-page__head__media">
           <div className="video-in-place video-in-place--decorative">
-            {videoPlaying ? (
-              <iframe
-                src={`https://www.youtube-nocookie.com/embed/IoMvKj3iOBA?autoplay=1&mute=${videoMuted ? '1' : '0'}&loop=1&playlist=IoMvKj3iOBA&controls=0&showinfo=0&rel=0&iv_load_policy=3&disablekb=1&playsinline=1`}
-                title="SQLI Digital & Technology Trailer"
-                className="w-full h-full object-cover scale-[1.05] opacity-35 transition-opacity duration-1000"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            <video
+              ref={videoRef}
+              autoPlay
+              loop
+              muted={videoMuted}
+              playsInline
+              className="w-full h-full object-cover scale-[1.05] opacity-35 transition-opacity duration-1000"
+            >
+              <source 
+                src="https://assets.mixkit.co/videos/preview/mixkit-software-developer-working-on-code-screen-close-up-1728-large.mp4" 
+                type="video/mp4" 
               />
-            ) : (
-              <div className="w-full h-full bg-[#070c1a] opacity-40" />
-            )}
+            </video>
           </div>
         </div>
 
-        {/* Cinematic Dark Gradient Shade Overlay (SQLI node-home-page__head__shade) */}
+        {/* Cinematic Dark Gradient Shade Overlay */}
         <div className="node-home-page__head__shade" />
 
         {/* Subtle Ambient Grid */}
         <div className="absolute inset-0 bg-executive-grid opacity-15 pointer-events-none z-1" />
 
-        {/* Main Content Container (SQLI node-home-page__head__wrapper) */}
+        {/* Main Content Container */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           
           <div className="max-w-4xl space-y-6 text-left">
@@ -134,7 +162,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
             {/* High-Impact Editorial Subtitle */}
             <p className="text-base sm:text-xl text-slate-300 max-w-3xl font-normal leading-relaxed font-sans">
               Nous accompagnons les comités de direction au Maroc et en Europe pour <strong className="text-white font-semibold">structurer leurs processus</strong>,{' '}
-              <strong className="text-white font-semibold">intégrer l'ERP Odoo sur-mesure</strong> et{' '}
+              <strong className="text-white font-semibold">intégrer l'ERP Odoo sur-mesure</strong>, former leurs cadres via <strong className="text-white font-semibold">CLIXA Institute</strong> et{' '}
               <strong className="text-white font-semibold">sécuriser 100% de conformité fiscale DGI & DGFIP</strong>.
             </p>
 
@@ -151,11 +179,11 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
               </button>
               
               <button
-                onClick={() => onNavigateFace('cas-clients')}
+                onClick={() => onNavigateFace('formations')}
                 className="executive-btn-secondary inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-sm sm:text-base font-semibold text-slate-200 transition-all shadow-sm active:scale-[0.98] cursor-pointer"
               >
-                <span>Explorer nos réalisations</span>
-                <ArrowRight className="w-4 h-4 text-sky-400" />
+                <GraduationCap className="w-4 h-4 text-sky-400" />
+                <span>Formations Exécutives Institute</span>
               </button>
             </div>
 
@@ -185,7 +213,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
           <div className="h-3 w-px bg-white/[0.1] mx-1" />
 
           <button
-            onClick={() => setVideoPlaying(!videoPlaying)}
+            onClick={togglePlay}
             className="hover:text-white transition-colors p-1 cursor-pointer flex items-center gap-1"
             title={videoPlaying ? "Mettre en pause" : "Lancer le trailer"}
           >
@@ -194,7 +222,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
           </button>
 
           <button
-            onClick={() => setVideoMuted(!videoMuted)}
+            onClick={toggleMute}
             className="hover:text-white transition-colors p-1 cursor-pointer"
             title={videoMuted ? "Activer le son" : "Couper le son"}
           >
@@ -204,7 +232,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
 
       </section>
 
-      {/* 2. SQLI INFINITE CONTINUOUS MARQUEE SLIDER (client-logo-slider__marquee) */}
+      {/* 2. SQLI INFINITE CONTINUOUS MARQUEE SLIDER */}
       <section className="border-b border-white/[0.08] bg-[#070b16] py-10 overflow-hidden relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 text-center">
           <span className="text-[11px] font-mono uppercase tracking-widest text-slate-400 font-semibold">
@@ -244,7 +272,108 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
         </div>
       </section>
 
-      {/* 3. SQLI PUSH-SERVICES SPLIT 2-COLUMN SECTION (push-services) */}
+      {/* 3. 🔥 DEDICATED CLIXA INSTITUTE FORMATIONS SECTION ON HOME */}
+      <section className="py-24 bg-[#0a0f1d] border-b border-white/[0.08] relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-semibold text-sky-400 mb-3">
+                <GraduationCap className="w-3.5 h-3.5" />
+                <span>CLIXA Institute (www.clixa.africa)</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight font-heading">
+                Nos 12 Formations Exécutives & Certifiantes
+              </h2>
+              <p className="text-slate-400 text-sm sm:text-base mt-2 max-w-2xl">
+                Parcours certifiants 100% en ligne en classes virtuelles en direct. Conçus pour les cadres dirigeants et certifiés par nos comités d'experts.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => onNavigateFace('formations')}
+                className="px-6 py-3 bg-[#1f24e9] hover:bg-[#151ad0] text-white text-xs font-bold uppercase tracking-wider transition-colors flex items-center gap-2 cursor-pointer"
+              >
+                <span>Catalogue des 12 formations</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {FORMATIONS_CATALOGUE.slice(0, 4).map((f) => (
+              <div 
+                key={f.id}
+                onClick={() => onNavigateFace('formations')}
+                className="p-6 bg-slate-900/60 border border-white/[0.08] hover:border-sky-500/40 hover:bg-slate-900/90 transition-all cursor-pointer group flex flex-col justify-between"
+              >
+                <div>
+                  <div className="text-[10px] font-mono text-sky-400 uppercase font-semibold mb-2">
+                    {f.specialisation}
+                  </div>
+                  <h3 className="text-base font-bold text-white group-hover:text-sky-300 transition-colors font-heading mb-2">
+                    {f.titre}
+                  </h3>
+                  <p className="text-xs text-slate-400 font-sans line-clamp-2 mb-4">
+                    {f.positionnement}
+                  </p>
+                </div>
+
+                <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between">
+                  <span className="text-sm font-bold text-white font-mono">
+                    {f.prixComptant} {f.devise}
+                  </span>
+                  <span className="text-xs text-sky-400 font-semibold group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                    Détails <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Interactive AI Briefing Card */}
+          <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-blue-950/60 via-slate-900/80 to-slate-950 border border-sky-500/30 flex flex-col lg:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-sky-600 to-cyan-500 text-white flex items-center justify-center shrink-0 shadow-lg shadow-sky-500/20">
+                <RobotIcon className="w-6 h-6" />
+              </div>
+              <div>
+                <h4 className="text-base sm:text-lg font-bold text-white font-heading">
+                  Une question sur les dates, tarifs ou sessions live de nos formations ?
+                </h4>
+                <p className="text-xs text-slate-300">
+                  Notre Assistant IA connaît en temps réel les places disponibles, les programmes détaillés et les échéances de paiement.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 shrink-0">
+              <button
+                onClick={() => openAiAssistant("Prochaine session et prix de la formation DAF ?")}
+                className="px-3.5 py-2 bg-slate-900 border border-white/[0.1] hover:border-sky-400 text-xs font-semibold text-slate-200 transition-colors cursor-pointer"
+              >
+                Session DAF ?
+              </button>
+              <button
+                onClick={() => openAiAssistant("Comment se déroule la préparation PMP® ?")}
+                className="px-3.5 py-2 bg-slate-900 border border-white/[0.1] hover:border-sky-400 text-xs font-semibold text-slate-200 transition-colors cursor-pointer"
+              >
+                Certification PMP® ?
+              </button>
+              <button
+                onClick={() => openAiAssistant()}
+                className="px-4 py-2 bg-sky-500 hover:bg-sky-400 text-slate-950 text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
+              >
+                Ouvrir l'Assistant IA
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 4. SQLI PUSH-SERVICES SPLIT 2-COLUMN SECTION (push-services) */}
       <section className="py-24 bg-[#050811] border-b border-white/[0.08] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
@@ -309,7 +438,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
         </div>
       </section>
 
-      {/* 4. SQLI PUSH-NEWS / INSIGHTS (push-news) */}
+      {/* 5. SQLI PUSH-NEWS / INSIGHTS (push-news) */}
       <section className="py-24 bg-[#060913] border-b border-white/[0.08] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
@@ -331,10 +460,10 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
 
               <div className="pt-2">
                 <button
-                  onClick={() => onNavigateFace('simulateur-roi')}
+                  onClick={() => onNavigateFace('insights')}
                   className="link-cta-sqli cursor-pointer text-base"
                 >
-                  <span>Accéder à l'Executive Lab</span>
+                  <span>Accéder à tous les Insights</span>
                   <div className="icon-circle">
                     <ArrowUpRight className="w-4 h-4" />
                   </div>
@@ -347,7 +476,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
               {insightsArticles.map((article, idx) => (
                 <article
                   key={idx}
-                  onClick={() => onNavigateFace('simulateur-roi')}
+                  onClick={() => onNavigateFace('insights')}
                   className="p-7 rounded-3xl bg-slate-900/60 border border-white/[0.08] hover:border-sky-500/40 hover:bg-slate-900/80 transition-all duration-300 cursor-pointer group space-y-3"
                 >
                   <div className="flex items-center justify-between text-xs text-slate-400">
@@ -377,7 +506,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
         </div>
       </section>
 
-      {/* 5. SQLI PUSH-USE-CASES (push-use-cases) */}
+      {/* 6. SQLI PUSH-USE-CASES */}
       <section className="py-24 bg-[#050811] border-b border-white/[0.08] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
@@ -450,7 +579,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
         </div>
       </section>
 
-      {/* 6. 4 KEY EXECUTIVE FIGURES (Bloomberg Style) */}
+      {/* 7. 4 KEY EXECUTIVE FIGURES */}
       <section className="py-16 bg-[#060913] border-b border-white/[0.08]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
@@ -474,7 +603,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
         </div>
       </section>
 
-      {/* 7. CALL TO ACTION C-LEVEL BANNER */}
+      {/* 8. CALL TO ACTION C-LEVEL BANNER */}
       <section className="py-24 bg-gradient-to-b from-[#050811] to-[#03060d]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-white/[0.1] text-xs font-semibold text-sky-400">

@@ -6,8 +6,10 @@ import {
   ChevronDown,
   ArrowUpRight,
   MessageCircle,
-  Check
+  Check,
+  Bot
 } from 'lucide-react';
+import { RobotIcon } from './RobotIcon';
 import { BRAND } from '../data/content';
 
 interface NavbarProps {
@@ -66,6 +68,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
   const navLinks = [
     { id: 'expertises', label: currentLang === 'EN' ? 'Expertise' : 'Expertises' },
     { id: 'cas-clients', label: currentLang === 'EN' ? 'Case Studies' : 'Cas Clients' },
+    { id: 'formations', label: 'Formations' },
     { id: 'insights', label: 'Insights' },
     { id: 'secteurs', label: currentLang === 'EN' ? 'Secteurs' : 'Secteurs' },
     { id: 'methode', label: currentLang === 'EN' ? 'About' : 'À Propos' },
@@ -77,12 +80,18 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
     onNavigateFace(faceId);
   };
 
+  const openAiAssistant = () => {
+    window.dispatchEvent(new CustomEvent('clixa:open-chat'));
+  };
+
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
     const q = searchQuery.toLowerCase();
     
-    if (q.includes('odoo') || q.includes('erp') || q.includes('amoa') || q.includes('tech') || q.includes('expertise')) {
+    if (q.includes('formation') || q.includes('pmp') || q.includes('institute') || q.includes('cours') || q.includes('certif') || q.includes('daf')) {
+      onNavigateFace('formations');
+    } else if (q.includes('odoo') || q.includes('erp') || q.includes('amoa') || q.includes('tech') || q.includes('expertise')) {
       onNavigateFace('expertises');
     } else if (q.includes('case') || q.includes('cas') || q.includes('client') || q.includes('projet') || q.includes('study')) {
       onNavigateFace('cas-clients');
@@ -196,7 +205,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
 
         {/* 2. MAIN HEADER ROW (sqli typography & clean horizontal links) */}
         <div className="max-w-7xl mx-auto px-4 sm:px-8 py-4">
-          <div className="flex items-center justify-between gap-6">
+          <div className="flex items-center justify-between gap-4 lg:gap-6">
             
             {/* SQLI-Style Lowercase Brand Logo */}
             <button
@@ -215,7 +224,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
             </button>
 
             {/* Desktop Navigation Links (Simple, clean, well-aligned) */}
-            <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+            <nav className="hidden lg:flex items-center gap-5 xl:gap-7">
               {navLinks.map((link) => {
                 const isActive = currentFace === link.id;
                 return (
@@ -237,8 +246,25 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
               })}
             </nav>
 
-            {/* SQLI-Style Clean Underline Search Input */}
-            <div className="hidden md:flex items-center gap-4 shrink-0">
+            {/* Right Suite: Assistant IA Button + Clean Underline Search Input */}
+            <div className="hidden md:flex items-center gap-3 lg:gap-4 shrink-0">
+              
+              {/* 🤖 Dedicated C-Suite Chatbot Header Button */}
+              <button
+                onClick={openAiAssistant}
+                className={`px-3 py-1.5 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 rounded-none border ${
+                  isDarkHero
+                    ? 'bg-sky-500/20 text-sky-300 border-sky-400/40 hover:bg-sky-500/30 shadow-sm'
+                    : 'bg-blue-50 text-blue-800 border-blue-300 hover:bg-blue-100 hover:border-blue-500 shadow-sm'
+                }`}
+                title="Poser une question à l'Assistant IA Clixa sur nos expertises et formations"
+              >
+                <RobotIcon className="w-4 h-4" />
+                <span className="font-heading">Assistant IA</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              </button>
+
+              {/* SQLI-Style Search Underline */}
               <form 
                 onSubmit={handleSearchSubmit}
                 className={`relative flex items-center border-b transition-all duration-200 pb-1 ${
@@ -255,7 +281,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
                   onFocus={() => setSearchFocused(true)}
                   onBlur={() => setSearchFocused(false)}
                   placeholder="I am searching for"
-                  className={`w-36 lg:w-44 bg-transparent text-xs sm:text-sm focus:outline-none transition-all placeholder:text-slate-500 ${
+                  className={`w-32 lg:w-40 bg-transparent text-xs sm:text-sm focus:outline-none transition-all placeholder:text-slate-500 ${
                     isDarkHero ? 'text-white' : 'text-slate-900'
                   }`}
                 />
@@ -273,6 +299,14 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
 
             {/* Mobile Hamburger Button */}
             <div className="flex items-center gap-2 lg:hidden">
+              <button
+                onClick={openAiAssistant}
+                className="p-2 text-xs font-bold text-sky-400 bg-slate-900 border border-slate-700 flex items-center gap-1"
+                aria-label="Assistant IA"
+              >
+                <RobotIcon className="w-4 h-4" />
+                <span>IA</span>
+              </button>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className={`p-2 rounded-md transition-colors cursor-pointer ${
@@ -343,7 +377,18 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
               );
             })}
 
-            <div className="pt-8 border-t border-[#e7e2d8] space-y-3">
+            <div className="pt-6 border-t border-[#e7e2d8] space-y-3">
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  openAiAssistant();
+                }}
+                className="w-full py-3.5 bg-blue-600 text-white font-bold text-sm rounded-none hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+              >
+                <RobotIcon className="w-4 h-4" />
+                <span>Interroger l'Assistant IA</span>
+              </button>
+
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);

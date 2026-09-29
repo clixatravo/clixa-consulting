@@ -25,12 +25,58 @@ export const ContactFace: React.FC<ContactFaceProps> = ({ onOpenConsultation, on
   const [company, setCompany] = useState('');
   const [topic, setTopic] = useState('Intégration ERP Odoo');
   const [message, setMessage] = useState('');
+  const [website, setWebsite] = useState(''); // honeypot anti-robots
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Même repli que la modale : si l'API mail n'est pas configurée ou
+  // injoignable, on ouvre un mailto pré-rempli pour ne perdre aucune demande.
+  const openMailtoFallback = () => {
+    const subject = encodeURIComponent(`[Site] ${topic} - ${name} (${company})`);
+    const bodyText = encodeURIComponent(
+      `Projet : ${topic}\nNom : ${name}\nEntreprise : ${company}\nEmail : ${email}\n` +
+        `Telephone : ${phone || 'non renseigne'}\n\nMessage :\n${message || '-'}`
+    );
+    window.location.href = `mailto:${BRAND.contactEmail}?subject=${subject}&body=${bodyText}`;
+  };
+
+  // Avant : le formulaire affichait le succès sans rien envoyer.
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email) return;
-    setSubmitted(true);
+    if (!name || !email || !company) return;
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, phone, company, topic, message, website }),
+      });
+
+      if (res.ok) {
+        setSubmitted(true);
+        return;
+      }
+
+      if (res.status === 404 || res.status === 503) {
+        openMailtoFallback();
+        setSubmitted(true);
+        return;
+      }
+
+      const data = await res.json().catch(() => ({}));
+      setError(
+        data.error ||
+          "L'envoi a échoué. Contactez-nous directement par téléphone ou WhatsApp."
+      );
+    } catch {
+      openMailtoFallback();
+      setSubmitted(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -40,7 +86,7 @@ export const ContactFace: React.FC<ContactFaceProps> = ({ onOpenConsultation, on
         {/* 1. GIANT EDITORIAL TITLE (SQLI Standard: "Contact us") */}
         <div className="mb-10 sm:mb-14">
           <h1 className="text-6xl sm:text-7xl lg:text-[84px] font-bold text-[#0a0e1a] tracking-tight leading-none font-heading">
-            Contact us
+            Contactez-nous
           </h1>
           <p className="text-base sm:text-lg text-slate-600 font-normal mt-4 max-w-2xl leading-relaxed">
             Échangez directement avec un associé pour un cadrage confidentiel de vos enjeux de gouvernance SI, d'intégration ERP Odoo ou de conformité DGI.
@@ -194,10 +240,11 @@ export const ContactFace: React.FC<ContactFaceProps> = ({ onOpenConsultation, on
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                        Entreprise & Fonction
+                        Entreprise & Fonction *
                       </label>
                       <input
                         type="text"
+                        required
                         value={company}
                         onChange={(e) => setCompany(e.target.value)}
                         placeholder="Ex: Directeur Général / DAF"
@@ -249,11 +296,30 @@ export const ContactFace: React.FC<ContactFaceProps> = ({ onOpenConsultation, on
                     />
                   </div>
 
+                  {/* Honeypot : invisible pour les humains */}
+                  <input
+                    type="text"
+                    name="website"
+                    value={website}
+                    onChange={(e) => setWebsite(e.target.value)}
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    className="hidden"
+                  />
+
+                  {error && (
+                    <p role="alert" className="text-sm text-red-700 bg-red-50 border border-red-200 px-4 py-3">
+                      {error}
+                    </p>
+                  )}
+
                   <button
                     type="submit"
-                    className="w-full bg-[#1f24e9] hover:bg-[#151ad0] text-white py-4 rounded-none font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer flex items-center justify-center gap-2 shadow-sm"
+                    disabled={loading}
+                    className="w-full bg-[#1f24e9] hover:bg-[#151ad0] disabled:opacity-60 disabled:cursor-wait text-white py-4 rounded-none font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer flex items-center justify-center gap-2 shadow-sm"
                   >
-                    <span>Transmettre la demande de cadrage</span>
+                    <span>{loading ? 'Envoi en cours…' : 'Transmettre la demande de cadrage'}</span>
                     <ArrowUpRight className="w-4 h-4" />
                   </button>
                 </form>

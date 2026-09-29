@@ -1,4 +1,5 @@
 import { useScrollReveal } from '../../hooks/useScrollReveal';
+import { libelle } from '../../data/libelles';
 import React, { useState } from 'react';
 import { ChevronDown, ArrowUpRight, Check } from 'lucide-react';
 
@@ -113,7 +114,7 @@ export const ExpertisesFace: React.FC<ExpertisesFaceProps> = ({ onOpenConsultati
         {/* 1. GIANT EDITORIAL TITLE (SQLI Standard: "Expertise") */}
         <div className="mb-10 sm:mb-14">
           <h1 className="text-6xl sm:text-7xl lg:text-[84px] font-bold text-[#0a0e1a] tracking-tight leading-none font-heading">
-            Expertise
+            Expertises
           </h1>
           <p className="text-base sm:text-lg text-slate-600 font-normal mt-4 max-w-2xl leading-relaxed">
             Architecture SI, intégration ERP Odoo, gouvernance AMOA et conformité fiscale pour bâtir des organisations résilientes et hautement rentables.
@@ -137,7 +138,7 @@ export const ExpertisesFace: React.FC<ExpertisesFaceProps> = ({ onOpenConsultati
                 }`}
               >
                 <span>Domaines</span>
-                {selectedDomain !== 'All' && <span className="text-xs text-blue-700 font-bold">({selectedDomain})</span>}
+                {selectedDomain !== 'All' && <span className="text-xs text-blue-700 font-bold">({libelle(selectedDomain)})</span>}
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'domain' ? 'rotate-180' : ''}`} />
               </button>
 
@@ -152,7 +153,7 @@ export const ExpertisesFace: React.FC<ExpertisesFaceProps> = ({ onOpenConsultati
                       }}
                       className="w-full px-4 py-2 text-left text-xs hover:bg-slate-100 flex items-center justify-between cursor-pointer"
                     >
-                      <span className={selectedDomain === dom ? 'font-bold text-blue-600' : 'text-slate-700'}>{dom}</span>
+                      <span className={selectedDomain === dom ? 'font-bold text-blue-600' : 'text-slate-700'}>{libelle(dom)}</span>
                       {selectedDomain === dom && <Check className="w-3.5 h-3.5 text-blue-600" />}
                     </button>
                   ))}
@@ -173,7 +174,7 @@ export const ExpertisesFace: React.FC<ExpertisesFaceProps> = ({ onOpenConsultati
                 }`}
               >
                 <span>Technologies</span>
-                {selectedTech !== 'All' && <span className="text-xs text-blue-700 font-bold">({selectedTech})</span>}
+                {selectedTech !== 'All' && <span className="text-xs text-blue-700 font-bold">({libelle(selectedTech)})</span>}
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'tech' ? 'rotate-180' : ''}`} />
               </button>
 
@@ -188,7 +189,7 @@ export const ExpertisesFace: React.FC<ExpertisesFaceProps> = ({ onOpenConsultati
                       }}
                       className="w-full px-4 py-2 text-left text-xs hover:bg-slate-100 flex items-center justify-between cursor-pointer"
                     >
-                      <span className={selectedTech === t ? 'font-bold text-blue-600' : 'text-slate-700'}>{t}</span>
+                      <span className={selectedTech === t ? 'font-bold text-blue-600' : 'text-slate-700'}>{libelle(t)}</span>
                       {selectedTech === t && <Check className="w-3.5 h-3.5 text-blue-600" />}
                     </button>
                   ))}
@@ -209,7 +210,7 @@ export const ExpertisesFace: React.FC<ExpertisesFaceProps> = ({ onOpenConsultati
                 }`}
               >
                 <span>Hubs</span>
-                <span className="text-xs font-bold text-slate-900">({selectedHub === 'All' ? 'All' : '1'})</span>
+                <span className="text-xs font-bold text-slate-900">({selectedHub === 'All' ? 'Tous' : '1'})</span>
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'hub' ? 'rotate-180' : ''}`} />
               </button>
 
@@ -225,7 +226,7 @@ export const ExpertisesFace: React.FC<ExpertisesFaceProps> = ({ onOpenConsultati
                       className="w-full px-4 py-2 text-left text-xs hover:bg-slate-100 flex items-center justify-between cursor-pointer"
                     >
                       <span className={selectedHub === h ? 'font-bold text-blue-600' : 'text-slate-700'}>
-                        {h === 'Morocco' ? '🇲🇦 Casablanca CFC' : h === 'France' ? '🇫🇷 Toulouse' : 'All Hubs'}
+                        {h === 'Morocco' ? '🇲🇦 Casablanca CFC' : h === 'France' ? '🇫🇷 Toulouse' : 'Tous les hubs'}
                       </span>
                       {selectedHub === h && <Check className="w-3.5 h-3.5 text-blue-600" />}
                     </button>
@@ -244,7 +245,7 @@ export const ExpertisesFace: React.FC<ExpertisesFaceProps> = ({ onOpenConsultati
                     : 'bg-[#1f24e9] hover:bg-[#151ad0] text-white'
                 }`}
               >
-                <span>Apply</span>
+                <span>Appliquer</span>
                 {(selectedDomain !== appliedFilters.domain || selectedTech !== appliedFilters.tech || selectedHub !== appliedFilters.hub) && (
                   <span className="w-2 h-2 rounded-full bg-amber-300 animate-ping inline-block" />
                 )}
@@ -259,7 +260,7 @@ export const ExpertisesFace: React.FC<ExpertisesFaceProps> = ({ onOpenConsultati
                 }`}
                 title="Réinitialiser tous les filtres"
               >
-                Reset
+                Réinitialiser
               </button>
             </div>
 
@@ -281,7 +282,7 @@ export const ExpertisesFace: React.FC<ExpertisesFaceProps> = ({ onOpenConsultati
                       }}
                       className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-800 border border-blue-200 font-semibold hover:bg-blue-100 transition-colors cursor-pointer text-[11px]"
                     >
-                      <span>Domaine: {appliedFilters.domain}</span>
+                      <span>Domaine: {libelle(appliedFilters.domain)}</span>
                       <span className="font-bold">✕</span>
                     </button>
                   )}
@@ -293,7 +294,7 @@ export const ExpertisesFace: React.FC<ExpertisesFaceProps> = ({ onOpenConsultati
                       }}
                       className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-800 border border-blue-200 font-semibold hover:bg-blue-100 transition-colors cursor-pointer text-[11px]"
                     >
-                      <span>Tech: {appliedFilters.tech}</span>
+                      <span>Tech: {libelle(appliedFilters.tech)}</span>
                       <span className="font-bold">✕</span>
                     </button>
                   )}

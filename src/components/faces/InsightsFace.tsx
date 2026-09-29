@@ -1,4 +1,5 @@
 import { useScrollReveal } from '../../hooks/useScrollReveal';
+import { libelle } from '../../data/libelles';
 import React, { useState } from 'react';
 import { ChevronDown, ArrowUpRight, Calculator, Zap, Check, ArrowRight } from 'lucide-react';
 
@@ -224,8 +225,8 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
                     : 'bg-white border-slate-200 text-slate-800 hover:border-slate-300 hover:bg-slate-50'
                 }`}
               >
-                <span>Content type</span>
-                {selectedContentType !== 'All' && <span className="text-xs text-blue-700 font-bold">({selectedContentType})</span>}
+                <span>Format</span>
+                {selectedContentType !== 'All' && <span className="text-xs text-blue-700 font-bold">({libelle(selectedContentType)})</span>}
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'contentType' ? 'rotate-180' : ''}`} />
               </button>
 
@@ -240,7 +241,7 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
                       }}
                       className="w-full px-4 py-2 text-left text-xs hover:bg-slate-100 flex items-center justify-between cursor-pointer"
                     >
-                      <span className={selectedContentType === type ? 'font-bold text-blue-600' : 'text-slate-700'}>{type}</span>
+                      <span className={selectedContentType === type ? 'font-bold text-blue-600' : 'text-slate-700'}>{libelle(type)}</span>
                       {selectedContentType === type && <Check className="w-3.5 h-3.5 text-blue-600" />}
                     </button>
                   ))}
@@ -260,8 +261,8 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
                     : 'bg-white border-slate-200 text-slate-800 hover:border-slate-300 hover:bg-slate-50'
                 }`}
               >
-                <span>Topics</span>
-                {selectedTopic !== 'All' && <span className="text-xs text-blue-700 font-bold">({selectedTopic})</span>}
+                <span>Sujets</span>
+                {selectedTopic !== 'All' && <span className="text-xs text-blue-700 font-bold">({libelle(selectedTopic)})</span>}
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'topics' ? 'rotate-180' : ''}`} />
               </button>
 
@@ -276,7 +277,7 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
                       }}
                       className="w-full px-4 py-2 text-left text-xs hover:bg-slate-100 flex items-center justify-between cursor-pointer"
                     >
-                      <span className={selectedTopic === top ? 'font-bold text-blue-600' : 'text-slate-700'}>{top}</span>
+                      <span className={selectedTopic === top ? 'font-bold text-blue-600' : 'text-slate-700'}>{libelle(top)}</span>
                       {selectedTopic === top && <Check className="w-3.5 h-3.5 text-blue-600" />}
                     </button>
                   ))}
@@ -296,8 +297,8 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
                     : 'bg-white border-slate-200 text-slate-800 hover:border-slate-300 hover:bg-slate-50'
                 }`}
               >
-                <span>Countries</span>
-                {selectedCountry !== 'All' && <span className="text-xs text-blue-700 font-bold">({selectedCountry})</span>}
+                <span>Pays</span>
+                {selectedCountry !== 'All' && <span className="text-xs text-blue-700 font-bold">({libelle(selectedCountry)})</span>}
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'countries' ? 'rotate-180' : ''}`} />
               </button>
 
@@ -313,7 +314,7 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
                       className="w-full px-4 py-2 text-left text-xs hover:bg-slate-100 flex items-center justify-between cursor-pointer"
                     >
                       <span className={selectedCountry === ctry ? 'font-bold text-blue-600' : 'text-slate-700'}>
-                        {ctry === 'Morocco' ? '🇲🇦 Morocco' : ctry === 'France' ? '🇫🇷 France' : 'All Countries'}
+                        {ctry === 'Morocco' ? '🇲🇦 Maroc' : ctry === 'France' ? '🇫🇷 France' : 'Tous les pays'}
                       </span>
                       {selectedCountry === ctry && <Check className="w-3.5 h-3.5 text-blue-600" />}
                     </button>
@@ -334,8 +335,8 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
                     : 'bg-white border-slate-200 text-slate-800 hover:border-slate-300 hover:bg-slate-50'
                 }`}
               >
-                <span>Languages</span>
-                {selectedLanguage !== 'All' && <span className="text-xs text-blue-700 font-bold">({selectedLanguage})</span>}
+                <span>Langues</span>
+                {selectedLanguage !== 'All' && <span className="text-xs text-blue-700 font-bold">({libelle(selectedLanguage)})</span>}
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'languages' ? 'rotate-180' : ''}`} />
               </button>
 
@@ -351,7 +352,7 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
                       className="w-full px-4 py-2 text-left text-xs hover:bg-slate-100 flex items-center justify-between cursor-pointer"
                     >
                       <span className={selectedLanguage === lng ? 'font-bold text-blue-600' : 'text-slate-700'}>
-                        {lng === 'EN' ? 'English' : lng === 'FR' ? 'French' : 'All Languages'}
+                        {lng === 'EN' ? 'Anglais' : lng === 'FR' ? 'Français' : 'Toutes les langues'}
                       </span>
                       {selectedLanguage === lng && <Check className="w-3.5 h-3.5 text-blue-600" />}
                     </button>
@@ -370,7 +371,7 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
                     : 'bg-[#1f24e9] hover:bg-[#151ad0] text-white'
                 }`}
               >
-                <span>Apply</span>
+                <span>Appliquer</span>
                 {hasFilterChanges && (
                   <span className="w-2 h-2 rounded-full bg-amber-300 animate-ping inline-block" />
                 )}
@@ -385,7 +386,7 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
                 }`}
                 title="Réinitialiser tous les filtres"
               >
-                Reset
+                Réinitialiser
               </button>
             </div>
 
@@ -407,7 +408,7 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
                       }}
                       className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-800 border border-blue-200 font-semibold hover:bg-blue-100 transition-colors cursor-pointer text-[11px]"
                     >
-                      <span>Format: {appliedFilters.contentType}</span>
+                      <span>Format: {libelle(appliedFilters.contentType)}</span>
                       <span className="font-bold">✕</span>
                     </button>
                   )}
@@ -419,7 +420,7 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
                       }}
                       className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-800 border border-blue-200 font-semibold hover:bg-blue-100 transition-colors cursor-pointer text-[11px]"
                     >
-                      <span>Sujet: {appliedFilters.topic}</span>
+                      <span>Sujet: {libelle(appliedFilters.topic)}</span>
                       <span className="font-bold">✕</span>
                     </button>
                   )}
@@ -443,7 +444,7 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
                       }}
                       className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-800 border border-blue-200 font-semibold hover:bg-blue-100 transition-colors cursor-pointer text-[11px]"
                     >
-                      <span>Langue: {appliedFilters.language}</span>
+                      <span>Langue: {libelle(appliedFilters.language)}</span>
                       <span className="font-bold">✕</span>
                     </button>
                   )}
@@ -506,7 +507,7 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
                 </div>
                 <div className="absolute bottom-3.5 right-3.5 z-10 pointer-events-none">
                   <span className={`text-xs font-bold px-3 py-1 shadow-md ${getPillBadgeStyle(article.contentType)}`}>
-                    {article.contentType}
+                    {libelle(article.contentType)}
                   </span>
                 </div>
               </div>
@@ -519,7 +520,7 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
               {/* Subtitle / Category */}
               {article.category && (
                 <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
-                  <span className="text-blue-600 font-bold">{article.topic}</span> • <span>{article.category}</span>
+                  <span className="text-blue-600 font-bold">{libelle(article.topic)}</span> • <span>{article.category}</span>
                 </div>
               )}
 

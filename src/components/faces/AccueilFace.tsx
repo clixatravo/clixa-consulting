@@ -534,7 +534,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
               </div>
 
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0a1628] tracking-tight leading-tight font-heading">
-                Case Studies
+                Cas Clients
               </h2>
 
               <p className="text-sm sm:text-base text-slate-600 font-sans leading-relaxed">

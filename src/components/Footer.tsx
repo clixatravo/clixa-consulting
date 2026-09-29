@@ -17,9 +17,32 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateFace }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleNewsletter = (e: React.FormEvent) => {
+  // Avant : l'inscription affichait un succès sans rien transmettre.
+  // Elle passe désormais par /api/contact, avec repli mailto si l'API mail
+  // n'est pas configurée.
+  const handleNewsletter = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newsletterEmail) return;
+    const topic = 'Inscription à la Note Stratégique';
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: newsletterEmail,
+          email: newsletterEmail,
+          company: 'Abonnement newsletter',
+          topic,
+          message: `Demande d'inscription à la note stratégique trimestrielle : ${newsletterEmail}`,
+        }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    } catch {
+      const subject = encodeURIComponent(`[Site] ${topic}`);
+      const body = encodeURIComponent(`Merci d'inscrire ${newsletterEmail} à la note stratégique CLIXA.`);
+      window.location.href = `mailto:${BRAND.contactEmail}?subject=${subject}&body=${body}`;
+    }
     setNewsletterSuccess(true);
   };
 

@@ -1,4 +1,5 @@
 import { useScrollReveal } from '../../hooks/useScrollReveal';
+import { libelle } from '../../data/libelles';
 import React, { useState } from 'react';
 import { ChevronDown, ArrowUpRight, Check } from 'lucide-react';
 
@@ -149,7 +150,7 @@ export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, 
                 }`}
               >
                 <span>Industries</span>
-                {selectedIndustry !== 'All' && <span className="text-xs text-blue-700 font-bold">({selectedIndustry})</span>}
+                {selectedIndustry !== 'All' && <span className="text-xs text-blue-700 font-bold">({libelle(selectedIndustry)})</span>}
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'industry' ? 'rotate-180' : ''}`} />
               </button>
 
@@ -164,7 +165,7 @@ export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, 
                       }}
                       className="w-full px-4 py-2 text-left text-xs hover:bg-slate-100 flex items-center justify-between cursor-pointer"
                     >
-                      <span className={selectedIndustry === ind ? 'font-bold text-blue-600' : 'text-slate-700'}>{ind}</span>
+                      <span className={selectedIndustry === ind ? 'font-bold text-blue-600' : 'text-slate-700'}>{libelle(ind)}</span>
                       {selectedIndustry === ind && <Check className="w-3.5 h-3.5 text-blue-600" />}
                     </button>
                   ))}
@@ -185,7 +186,7 @@ export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, 
                 }`}
               >
                 <span>Réglementations</span>
-                {selectedReg !== 'All' && <span className="text-xs text-blue-700 font-bold">({selectedReg})</span>}
+                {selectedReg !== 'All' && <span className="text-xs text-blue-700 font-bold">({libelle(selectedReg)})</span>}
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'reg' ? 'rotate-180' : ''}`} />
               </button>
 
@@ -200,7 +201,7 @@ export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, 
                       }}
                       className="w-full px-4 py-2 text-left text-xs hover:bg-slate-100 flex items-center justify-between cursor-pointer"
                     >
-                      <span className={selectedReg === r ? 'font-bold text-blue-600' : 'text-slate-700'}>{r}</span>
+                      <span className={selectedReg === r ? 'font-bold text-blue-600' : 'text-slate-700'}>{libelle(r)}</span>
                       {selectedReg === r && <Check className="w-3.5 h-3.5 text-blue-600" />}
                     </button>
                   ))}
@@ -221,7 +222,7 @@ export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, 
                 }`}
               >
                 <span>Hubs</span>
-                <span className="text-xs font-bold text-slate-900">({selectedHub === 'All' ? 'All' : '1'})</span>
+                <span className="text-xs font-bold text-slate-900">({selectedHub === 'All' ? 'Tous' : '1'})</span>
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'hub' ? 'rotate-180' : ''}`} />
               </button>
 
@@ -237,7 +238,7 @@ export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, 
                       className="w-full px-4 py-2 text-left text-xs hover:bg-slate-100 flex items-center justify-between cursor-pointer"
                     >
                       <span className={selectedHub === h ? 'font-bold text-blue-600' : 'text-slate-700'}>
-                        {h === 'Morocco' ? '🇲🇦 Casablanca CFC' : h === 'France' ? '🇫🇷 Toulouse' : 'All Hubs'}
+                        {h === 'Morocco' ? '🇲🇦 Casablanca CFC' : h === 'France' ? '🇫🇷 Toulouse' : 'Tous les hubs'}
                       </span>
                       {selectedHub === h && <Check className="w-3.5 h-3.5 text-blue-600" />}
                     </button>
@@ -256,7 +257,7 @@ export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, 
                     : 'bg-[#1f24e9] hover:bg-[#151ad0] text-white'
                 }`}
               >
-                <span>Apply</span>
+                <span>Appliquer</span>
                 {(selectedIndustry !== appliedFilters.industry || selectedReg !== appliedFilters.reg || selectedHub !== appliedFilters.hub) && (
                   <span className="w-2 h-2 rounded-full bg-amber-300 animate-ping inline-block" />
                 )}
@@ -271,7 +272,7 @@ export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, 
                 }`}
                 title="Réinitialiser tous les filtres"
               >
-                Reset
+                Réinitialiser
               </button>
             </div>
 
@@ -293,7 +294,7 @@ export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, 
                       }}
                       className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-800 border border-blue-200 font-semibold hover:bg-blue-100 transition-colors cursor-pointer text-[11px]"
                     >
-                      <span>Secteur: {appliedFilters.industry}</span>
+                      <span>Secteur: {libelle(appliedFilters.industry)}</span>
                       <span className="font-bold">✕</span>
                     </button>
                   )}
@@ -305,7 +306,7 @@ export const SecteursFace: React.FC<SecteursFaceProps> = ({ onOpenConsultation, 
                       }}
                       className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-800 border border-blue-200 font-semibold hover:bg-blue-100 transition-colors cursor-pointer text-[11px]"
                     >
-                      <span>Réglementation: {appliedFilters.reg}</span>
+                      <span>Réglementation: {libelle(appliedFilters.reg)}</span>
                       <span className="font-bold">✕</span>
                     </button>
                   )}

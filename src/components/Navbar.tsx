@@ -22,7 +22,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [countryDropdownOpen, setCountryDropdownOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<'Morocco' | 'France'>('Morocco');
-  const [currentLang, setCurrentLang] = useState<'EN' | 'FR'>('EN');
   const [searchQuery, setSearchQuery] = useState('');
   const [searchFocused, setSearchFocused] = useState(false);
   
@@ -65,12 +64,12 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
   const isDarkHero = false; // Hero is now light steel blue — navbar always light
 
   const navLinks = [
-    { id: 'expertises', label: currentLang === 'EN' ? 'Expertise' : 'Expertises' },
-    { id: 'cas-clients', label: currentLang === 'EN' ? 'Case Studies' : 'Cas Clients' },
+    { id: 'expertises', label: 'Expertises' },
+    { id: 'cas-clients', label: 'Cas Clients' },
     { id: 'insights', label: 'Insights' },
-    { id: 'secteurs', label: currentLang === 'EN' ? 'Secteurs' : 'Secteurs' },
-    { id: 'methode', label: currentLang === 'EN' ? 'About' : 'À Propos' },
-    { id: 'contact', label: currentLang === 'EN' ? 'Contact us' : 'Contact' },
+    { id: 'secteurs', label: 'Secteurs' },
+    { id: 'methode', label: 'À Propos' },
+    { id: 'contact', label: 'Contact' },
   ];
 
   const handleNavClick = (faceId: string) => {
@@ -120,10 +119,10 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
                     ? 'bg-slate-900 text-white border border-white/[0.1] hover:bg-slate-800'
                     : 'bg-[#0c1222] text-white hover:bg-black'
                 }`}
-                aria-label="Select Country"
+                aria-label="Choisir un hub"
               >
                 <span className="w-2 h-2 rounded-full bg-red-600 inline-block shadow-sm" />
-                <span>{selectedCountry}</span>
+                <span>{selectedCountry === 'Morocco' ? 'Maroc' : 'France'}</span>
                 <ChevronDown className={`w-3 h-3 text-slate-300 transition-transform duration-200 ${countryDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
 
@@ -143,7 +142,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
                     <div className="flex items-center gap-2">
                       <span className="text-sm">🇲🇦</span>
                       <div>
-                        <div className="font-bold text-slate-900">Morocco</div>
+                        <div className="font-bold text-slate-900">Maroc</div>
                         <div className="text-[10px] text-slate-600">Casablanca Finance City</div>
                       </div>
                     </div>
@@ -170,28 +169,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
                 </div>
               )}
             </div>
-
-            {/* Language Switch: English | French */}
-            <div className={`flex items-center gap-1.5 text-xs font-semibold ${isDarkHero ? 'text-slate-300' : 'text-slate-800'}`}>
-              <button
-                onClick={() => setCurrentLang('EN')}
-                className={`transition-colors cursor-pointer ${
-                  currentLang === 'EN' ? (isDarkHero ? 'text-white underline font-bold' : 'text-slate-900 underline font-bold') : 'hover:text-sky-500'
-                }`}
-              >
-                English
-              </button>
-              <span className="text-slate-400">|</span>
-              <button
-                onClick={() => setCurrentLang('FR')}
-                className={`transition-colors cursor-pointer ${
-                  currentLang === 'FR' ? (isDarkHero ? 'text-white underline font-bold' : 'text-slate-900 underline font-bold') : 'hover:text-sky-500'
-                }`}
-              >
-                French
-              </button>
-            </div>
-
           </div>
         </div>
 
@@ -203,7 +180,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
             <button
               onClick={() => handleNavClick('accueil')}
               className="group cursor-pointer text-left shrink-0"
-              aria-label="Clixa Home"
+              aria-label="Accueil Clixa"
             >
               <div className="flex items-baseline gap-1">
                 <span className={`text-3xl sm:text-4xl font-extrabold tracking-tighter lowercase font-heading transition-colors ${
@@ -257,7 +234,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onFocus={() => setSearchFocused(true)}
                   onBlur={() => setSearchFocused(false)}
-                  placeholder="I am searching for"
+                  placeholder="Rechercher…"
                   className={`w-32 lg:w-40 bg-transparent text-xs sm:text-sm focus:outline-none transition-all placeholder:text-slate-500 ${
                     isDarkHero ? 'text-white' : 'text-slate-900'
                   }`}
@@ -267,7 +244,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
                   className={`p-1 cursor-pointer transition-colors ${
                     isDarkHero ? 'text-slate-300 hover:text-white' : 'text-slate-700 hover:text-black'
                   }`}
-                  aria-label="Search"
+                  aria-label="Rechercher"
                 >
                   <Search className="w-4 h-4" />
                 </button>
@@ -281,7 +258,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
                 className={`p-2 rounded-md transition-colors cursor-pointer ${
                   isDarkHero ? 'text-white bg-slate-900' : 'text-slate-900 bg-slate-200'
                 }`}
-                aria-label="Toggle Menu"
+                aria-label="Ouvrir le menu"
               >
                 {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
@@ -307,7 +284,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
             <button
               onClick={() => setMobileMenuOpen(false)}
               className="p-2 rounded-md bg-slate-200 text-slate-800"
-              aria-label="Close menu"
+              aria-label="Fermer le menu"
             >
               <X className="w-5 h-5" />
             </button>
@@ -320,7 +297,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="I am searching for"
+                placeholder="Rechercher…"
                 className="w-full bg-transparent text-sm focus:outline-none text-slate-900"
               />
               <button type="submit" className="p-1 text-slate-700">
@@ -373,22 +350,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
                   }`}
                 >
                   🇫🇷 Toulouse
-                </button>
-              </div>
-
-              <div className="flex items-center gap-2 text-xs font-bold">
-                <button
-                  onClick={() => setCurrentLang('FR')}
-                  className={`cursor-pointer ${currentLang === 'FR' ? 'text-blue-600 underline font-bold' : 'text-slate-500 hover:text-black'}`}
-                >
-                  FR
-                </button>
-                <span className="text-slate-300">|</span>
-                <button
-                  onClick={() => setCurrentLang('EN')}
-                  className={`cursor-pointer ${currentLang === 'EN' ? 'text-blue-600 underline font-bold' : 'text-slate-500 hover:text-black'}`}
-                >
-                  EN
                 </button>
               </div>
             </div>

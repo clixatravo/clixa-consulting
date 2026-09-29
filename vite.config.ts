@@ -32,15 +32,15 @@ const SITE_URL = resolveSiteUrl()
 const IS_PRODUCTION_DEPLOY =
   !process.env.VERCEL_ENV || process.env.VERCEL_ENV === 'production'
 
+// Routes réelles du routeur par hash (App.tsx : #/expertises, #/contact…).
 const SECTIONS = [
   { path: '/', priority: '1.0', changefreq: 'weekly' },
-  { path: '/#expertises', priority: '0.9', changefreq: 'monthly' },
-  { path: '/#secteurs', priority: '0.8', changefreq: 'monthly' },
-  { path: '/#cas-clients', priority: '0.8', changefreq: 'monthly' },
-  { path: '/#facturation', priority: '0.8', changefreq: 'monthly' },
-  { path: '/#diagnostic', priority: '0.7', changefreq: 'monthly' },
-  { path: '/#methode', priority: '0.7', changefreq: 'monthly' },
-  { path: '/#faq', priority: '0.7', changefreq: 'monthly' },
+  { path: '/#/expertises', priority: '0.9', changefreq: 'monthly' },
+  { path: '/#/cas-clients', priority: '0.8', changefreq: 'monthly' },
+  { path: '/#/secteurs', priority: '0.8', changefreq: 'monthly' },
+  { path: '/#/insights', priority: '0.7', changefreq: 'monthly' },
+  { path: '/#/methode', priority: '0.7', changefreq: 'monthly' },
+  { path: '/#/contact', priority: '0.7', changefreq: 'monthly' },
 ]
 
 /** Injecte l'adresse du site dans index.html et génère robots.txt et

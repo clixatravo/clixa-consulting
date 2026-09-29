@@ -1,4 +1,5 @@
 import { useScrollReveal } from '../../hooks/useScrollReveal';
+import { libelle } from '../../data/libelles';
 import React, { useState } from 'react';
 import { ChevronDown, ArrowUpRight, Check, Sparkles, Building2, TrendingUp, ShieldCheck } from 'lucide-react';
 
@@ -147,7 +148,7 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
             <span className="font-heading uppercase tracking-wider text-[11px] font-bold">Résultats & ROI Mesurés</span>
           </div>
           <h1 className="text-6xl sm:text-7xl lg:text-[84px] font-bold text-[#0a0e1a] tracking-tight leading-none font-heading">
-            Case Studies
+            Cas Clients
           </h1>
           <p className="text-base sm:text-lg text-slate-600 font-normal mt-4 max-w-3xl leading-relaxed">
             Dossiers d'impact exécutif et transformations numériques réussies pour les comités de direction et leaders industriels au Maroc et en Europe.
@@ -171,7 +172,7 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
                 }`}
               >
                 <span>Secteurs</span>
-                {selectedSector !== 'All' && <span className="text-xs text-blue-700 font-bold">({selectedSector})</span>}
+                {selectedSector !== 'All' && <span className="text-xs text-blue-700 font-bold">({libelle(selectedSector)})</span>}
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'sector' ? 'rotate-180' : ''}`} />
               </button>
 
@@ -186,7 +187,7 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
                       }}
                       className="w-full px-4 py-2 text-left text-xs hover:bg-slate-100 flex items-center justify-between cursor-pointer"
                     >
-                      <span className={selectedSector === sec ? 'font-bold text-blue-600' : 'text-slate-700'}>{sec}</span>
+                      <span className={selectedSector === sec ? 'font-bold text-blue-600' : 'text-slate-700'}>{libelle(sec)}</span>
                       {selectedSector === sec && <Check className="w-3.5 h-3.5 text-blue-600" />}
                     </button>
                   ))}
@@ -207,7 +208,7 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
                 }`}
               >
                 <span>Technologies</span>
-                {selectedTech !== 'All' && <span className="text-xs text-blue-700 font-bold">({selectedTech})</span>}
+                {selectedTech !== 'All' && <span className="text-xs text-blue-700 font-bold">({libelle(selectedTech)})</span>}
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'tech' ? 'rotate-180' : ''}`} />
               </button>
 
@@ -222,7 +223,7 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
                       }}
                       className="w-full px-4 py-2 text-left text-xs hover:bg-slate-100 flex items-center justify-between cursor-pointer"
                     >
-                      <span className={selectedTech === t ? 'font-bold text-blue-600' : 'text-slate-700'}>{t}</span>
+                      <span className={selectedTech === t ? 'font-bold text-blue-600' : 'text-slate-700'}>{libelle(t)}</span>
                       {selectedTech === t && <Check className="w-3.5 h-3.5 text-blue-600" />}
                     </button>
                   ))}
@@ -243,7 +244,7 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
                 }`}
               >
                 <span>Hubs</span>
-                <span className="text-xs font-bold text-slate-900">({selectedCountry === 'All' ? 'All' : selectedCountry})</span>
+                <span className="text-xs font-bold text-slate-900">({selectedCountry === 'All' ? 'Tous' : libelle(selectedCountry)})</span>
                 <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${openDropdown === 'country' ? 'rotate-180' : ''}`} />
               </button>
 
@@ -259,7 +260,7 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
                       className="w-full px-4 py-2 text-left text-xs hover:bg-slate-100 flex items-center justify-between cursor-pointer"
                     >
                       <span className={selectedCountry === ctry ? 'font-bold text-blue-600' : 'text-slate-700'}>
-                        {ctry === 'Morocco' ? '🇲🇦 Casablanca CFC' : ctry === 'France' ? '🇫🇷 Toulouse' : 'All Hubs'}
+                        {ctry === 'Morocco' ? '🇲🇦 Casablanca CFC' : ctry === 'France' ? '🇫🇷 Toulouse' : 'Tous les hubs'}
                       </span>
                       {selectedCountry === ctry && <Check className="w-3.5 h-3.5 text-blue-600" />}
                     </button>
@@ -278,7 +279,7 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
                     : 'bg-[#1f24e9] hover:bg-[#151ad0] text-white'
                 }`}
               >
-                <span>Apply</span>
+                <span>Appliquer</span>
                 {(selectedSector !== appliedFilters.sector || selectedTech !== appliedFilters.tech || selectedCountry !== appliedFilters.country) && (
                   <span className="w-2 h-2 rounded-full bg-amber-300 animate-ping inline-block" />
                 )}
@@ -293,7 +294,7 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
                 }`}
                 title="Réinitialiser tous les filtres"
               >
-                Reset
+                Réinitialiser
               </button>
             </div>
 
@@ -315,7 +316,7 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
                       }}
                       className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-800 border border-blue-200 font-semibold hover:bg-blue-100 transition-colors cursor-pointer text-[11px]"
                     >
-                      <span>Secteur: {appliedFilters.sector}</span>
+                      <span>Secteur: {libelle(appliedFilters.sector)}</span>
                       <span className="font-bold">✕</span>
                     </button>
                   )}
@@ -327,7 +328,7 @@ export const CaseStudiesFace: React.FC<CaseStudiesFaceProps> = ({ onOpenConsulta
                       }}
                       className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-800 border border-blue-200 font-semibold hover:bg-blue-100 transition-colors cursor-pointer text-[11px]"
                     >
-                      <span>Tech: {appliedFilters.tech}</span>
+                      <span>Tech: {libelle(appliedFilters.tech)}</span>
                       <span className="font-bold">✕</span>
                     </button>
                   )}

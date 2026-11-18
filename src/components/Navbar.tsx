@@ -67,6 +67,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
     { id: 'expertises', label: 'Expertises' },
     { id: 'cas-clients', label: 'Cas Clients' },
     { id: 'insights', label: 'Insights' },
+    { id: 'facturation-electronique', label: 'Facturation 2026' },
     { id: 'secteurs', label: 'Secteurs' },
     { id: 'methode', label: 'À Propos' },
     { id: 'contact', label: 'Contact' },
@@ -193,14 +194,14 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
             </button>
 
             {/* Desktop Navigation Links (Forward-pop on hover) */}
-            <nav className="hidden lg:flex items-center gap-3 xl:gap-5">
+            <nav className="hidden lg:flex items-center gap-1 xl:gap-5">
               {navLinks.map((link) => {
                 const isActive = currentFace === link.id;
                 return (
                   <button
                     key={link.id}
                     onClick={() => handleNavClick(link.id)}
-                    className={`nav-face-link text-sm font-semibold cursor-pointer whitespace-nowrap relative py-1.5 px-3 rounded-md transition-all ${
+                    className={`nav-face-link text-sm font-semibold cursor-pointer whitespace-nowrap relative py-1.5 px-2 xl:px-3 rounded-md transition-all ${
                       isActive
                         ? (isDarkHero ? 'text-white font-bold bg-white/10 shadow-sm' : 'text-blue-700 font-bold bg-blue-50/80 shadow-sm')
                         : (isDarkHero ? 'text-slate-300 hover:text-white' : 'text-slate-800 hover:text-blue-600')
@@ -216,7 +217,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentFace, onNavigateFace, onO
             </nav>
 
             {/* Right Suite: Clean Underline Search Input */}
-            <div className="hidden md:flex items-center gap-3 lg:gap-4 shrink-0">
+            <div className="hidden md:flex lg:hidden xl:flex items-center gap-3 lg:gap-4 shrink-0">
               
               {/* SQLI-Style Search Underline */}
               <form 

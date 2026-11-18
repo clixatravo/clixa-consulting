@@ -19,6 +19,8 @@ interface Article {
   country: 'Morocco' | 'France' | 'Global';
   language: 'EN' | 'FR';
   summary?: string;
+  /** Face à ouvrir quand l'article a sa propre page ; sinon, prise de rendez-vous. */
+  page?: string;
 }
 
 export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, onNavigateFace }) => {
@@ -93,6 +95,7 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
     },
     {
       id: 'reforme-dgi-2026',
+      page: 'facturation-electronique',
       title: "Réforme de la Facturation Électronique au Maroc : Guide stratégique pour Comités de Direction",
       category: "Réglementation Fiscale DGI",
       date: "24 Aug 2026",
@@ -489,7 +492,11 @@ export const InsightsFace: React.FC<InsightsFaceProps> = ({ onOpenConsultation, 
             <article 
               key={article.id} 
               className="group cursor-pointer flex flex-col bg-white border border-[#e2dcd2] p-6 hover:border-blue-500 hover:shadow-xl transition-all duration-300"
-              onClick={() => onOpenConsultation(`Question sur l'article : ${article.title}`)}
+              onClick={() =>
+                article.page
+                  ? onNavigateFace(article.page)
+                  : onOpenConsultation(`Question sur l'article : ${article.title}`)
+              }
             >
               {/* Photo Frame with light sweep and dynamic floating badges */}
               <div className="photo-frame w-full aspect-[16/10] bg-slate-900 mb-5 relative">

@@ -103,7 +103,8 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
       title: "Réforme de la Facturation Électronique au Maroc : Guide stratégique pour Comités de Direction",
       desc: "Anticiper les obligations légales DGI 2025/2026, fiabiliser les télédéclarations et sécuriser les interfaçages API.",
       date: "Août 2026",
-      readTime: "6 min"
+      readTime: "6 min",
+      page: "facturation-electronique"
     },
     {
       tag: "Gouvernance & AMOA",
@@ -491,7 +492,7 @@ export const AccueilFace: React.FC<AccueilFaceProps> = ({ onOpenConsultation, on
               {insightsArticles.map((article, idx) => (
                 <article
                   key={idx}
-                  onClick={() => onNavigateFace('insights')}
+                  onClick={() => onNavigateFace(article.page ?? 'insights')}
                   className="p-7 bg-white border border-[#e2dcd2] hover:border-blue-500 hover:shadow-md transition-all duration-200 cursor-pointer group space-y-3"
                 >
                   <div className="flex items-center justify-between text-xs text-slate-500">

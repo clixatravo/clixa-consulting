@@ -351,7 +351,11 @@ export const ExpertisesFace: React.FC<ExpertisesFaceProps> = ({ onOpenConsultati
             <article 
               key={exp.id}
               className="group cursor-pointer flex flex-col bg-white border border-[#e2dcd2] p-6 hover:border-blue-500 hover:shadow-xl transition-all duration-300"
-              onClick={() => onOpenConsultation(`Consultation Expertise : ${exp.title}`)}
+              onClick={() =>
+                exp.id === 'dgi-fiscalite'
+                  ? onNavigateFace('facturation-electronique')
+                  : onOpenConsultation(`Consultation Expertise : ${exp.title}`)
+              }
             >
               {/* Magnetic Photo Frame with Light-Sweep Animation & Badges */}
               <div className="photo-frame w-full aspect-[16/10] bg-slate-900 mb-5 relative">

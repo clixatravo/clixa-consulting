@@ -177,7 +177,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateFace }) => {
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => navigateTo('expertises')} className="hover:text-sky-400 transition-colors cursor-pointer text-left">
+                  <button onClick={() => navigateTo('facturation-electronique')} className="hover:text-sky-400 transition-colors cursor-pointer text-left">
                     Facturation Électronique DGI/DGFIP
                   </button>
                 </li>

@@ -14,6 +14,22 @@ import { MethodologieFace } from './components/faces/MethodologieFace';
 import { ContactFace } from './components/faces/ContactFace';
 import { FacturationElectroniqueFace } from './components/faces/FacturationElectroniqueFace';
 
+const FACES = ['accueil', 'expertises', 'secteurs', 'cas-clients', 'insights', 'simulateur-roi', 'methode', 'contact', 'facturation-electronique'];
+
+/** Faces servies sur un vrai chemin plutôt que dans le hash (voir vite.config.ts). */
+const CHEMINS: Record<string, string> = {
+  'facturation-electronique': '/facturation-electronique',
+};
+
+const getFaceFromLocation = (): string => {
+  const parChemin = Object.keys(CHEMINS).find(
+    (face) => window.location.pathname.replace(/\/+$/, '') === CHEMINS[face]
+  );
+  if (parChemin) return parChemin;
+  const raw = window.location.hash.replace(/^#\/?/, '');
+  return FACES.includes(raw) ? raw : 'accueil';
+};
+
 /* Modale de consultation chargée dynamiquement */
 const ContactModal = lazy(() => import('./components/ContactModal').then((m) => ({ default: m.ContactModal })));
 
@@ -36,28 +52,33 @@ export const App: React.FC = () => {
     }
   }, []);
 
-  // Hash-based Face Router: matches SQLI URL / Face separation
+  // Routeur des faces. La plupart vivent dans le hash (#/expertises…) ;
+  // celles de CHEMINS ont une vraie adresse pour être indexées par Google,
+  // qui ignore tout ce qui suit le #.
   useEffect(() => {
-    const validFaces = ['accueil', 'expertises', 'secteurs', 'cas-clients', 'insights', 'simulateur-roi', 'methode', 'contact', 'facturation-electronique'];
-
-    const getHashFace = () => {
-      const raw = window.location.hash.replace(/^#\/?/, '');
-      if (validFaces.includes(raw)) {
-        return raw;
+    const syncFace = () => {
+      const face = getFaceFromLocation();
+      // Ancienne adresse #/facturation-electronique : on bascule vers le chemin.
+      const chemin = CHEMINS[face];
+      if (chemin && window.location.pathname !== chemin) {
+        window.history.replaceState(null, '', chemin);
       }
-      return 'accueil';
+      setCurrentFace(face);
     };
 
-    setCurrentFace(getHashFace());
+    syncFace();
 
-    const handleHashChange = () => {
-      const face = getHashFace();
-      setCurrentFace(face);
+    const handleLocationChange = () => {
+      syncFace();
       window.scrollTo({ top: 0, behavior: 'instant' });
     };
 
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener('hashchange', handleLocationChange);
+    window.addEventListener('popstate', handleLocationChange);
+    return () => {
+      window.removeEventListener('hashchange', handleLocationChange);
+      window.removeEventListener('popstate', handleLocationChange);
+    };
   }, []);
 
   const handleOpenConsultation = (topic?: string) => {
@@ -71,8 +92,11 @@ export const App: React.FC = () => {
   };
 
   const handleNavigateFace = (faceId: string) => {
+    const url = CHEMINS[faceId] ?? `/#/${faceId}`;
+    if (window.location.pathname + window.location.hash !== url) {
+      window.history.pushState(null, '', url);
+    }
     setCurrentFace(faceId);
-    window.location.hash = `#/${faceId}`;
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
 

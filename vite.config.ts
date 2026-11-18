@@ -1,6 +1,8 @@
 import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { join } from 'node:path'
 
 declare const process: { env: Record<string, string | undefined> };
 
@@ -38,7 +40,7 @@ const SECTIONS = [
   { path: '/#/expertises', priority: '0.9', changefreq: 'monthly' },
   { path: '/#/cas-clients', priority: '0.8', changefreq: 'monthly' },
   { path: '/#/secteurs', priority: '0.8', changefreq: 'monthly' },
-  { path: '/#/facturation-electronique', priority: '0.8', changefreq: 'monthly' },
+  { path: '/facturation-electronique', priority: '0.9', changefreq: 'monthly' },
   { path: '/#/insights', priority: '0.7', changefreq: 'monthly' },
   { path: '/#/methode', priority: '0.7', changefreq: 'monthly' },
   { path: '/#/contact', priority: '0.7', changefreq: 'monthly' },
@@ -87,9 +89,58 @@ const siteUrlPlugin = (): Plugin => ({
   },
 })
 
+/**
+ * Pages servies sur un vrai chemin. Google ignore ce qui suit le # : une
+ * face accessible seulement par #/… n'apparaît jamais comme page distincte
+ * dans les résultats. Pour chacune, on écrit au build un
+ * <chemin>/index.html, copie de index.html avec son propre titre, sa
+ * description et son adresse canonique. Vercel sert ce fichier avant la
+ * réécriture SPA, et App.tsx affiche la face correspondant au chemin.
+ */
+const PAGES_INDEXEES = [
+  {
+    chemin: '/facturation-electronique',
+    titre: 'Facturation électronique au Maroc 2026 : le guide | CLIXA Consulting',
+    description:
+      "Réforme DGI de la facturation électronique au Maroc : article 145 du CGI, calendrier 2026 par vagues, format XML, signature électronique, archivage et feuille de route pour se mettre en conformité.",
+  },
+]
+
+const echapper = (texte: string) => texte.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
+
+const pagesIndexeesPlugin = (): Plugin => {
+  let outDir = 'dist'
+  return {
+    name: 'clixa-pages-indexees',
+    apply: 'build',
+    configResolved(config) {
+      outDir = config.build.outDir
+    },
+    closeBundle() {
+      const html = readFileSync(join(outDir, 'index.html'), 'utf8')
+      for (const page of PAGES_INDEXEES) {
+        const url = `${SITE_URL}${page.chemin}`
+        const titre = echapper(page.titre)
+        const description = echapper(page.description)
+        const rendu = html
+          .replace(/<title>[^<]*<\/title>/, `<title>${titre}</title>`)
+          .replace(/(<meta name="description" content=")[^"]*"/, `$1${description}"`)
+          .replace(/(<link rel="canonical" href=")[^"]*"/, `$1${url}"`)
+          .replace(/(<meta (?:property|name)="(?:og|twitter):url" content=")[^"]*"/g, `$1${url}"`)
+          .replace(/(<meta (?:property|name)="(?:og|twitter):title" content=")[^"]*"/g, `$1${titre}"`)
+          .replace(/(<meta (?:property|name)="(?:og|twitter):description" content=")[^"]*"/g, `$1${description}"`)
+          .replace('<meta property="og:type" content="website" />', '<meta property="og:type" content="article" />')
+        const dossier = join(outDir, page.chemin)
+        mkdirSync(dossier, { recursive: true })
+        writeFileSync(join(dossier, 'index.html'), rendu)
+      }
+    },
+  }
+}
+
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(), siteUrlPlugin()],
+  plugins: [react(), tailwindcss(), siteUrlPlugin(), pagesIndexeesPlugin()],
   define: {
     __SITE_URL__: JSON.stringify(SITE_URL),
   },

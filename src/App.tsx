@@ -12,6 +12,7 @@ import { InsightsFace } from './components/faces/InsightsFace';
 import { ExecutiveLabFace } from './components/faces/ExecutiveLabFace';
 import { MethodologieFace } from './components/faces/MethodologieFace';
 import { ContactFace } from './components/faces/ContactFace';
+import { FacturationElectroniqueFace } from './components/faces/FacturationElectroniqueFace';
 
 /* Modale de consultation chargée dynamiquement */
 const ContactModal = lazy(() => import('./components/ContactModal').then((m) => ({ default: m.ContactModal })));
@@ -37,7 +38,7 @@ export const App: React.FC = () => {
 
   // Hash-based Face Router: matches SQLI URL / Face separation
   useEffect(() => {
-    const validFaces = ['accueil', 'expertises', 'secteurs', 'cas-clients', 'insights', 'simulateur-roi', 'methode', 'contact'];
+    const validFaces = ['accueil', 'expertises', 'secteurs', 'cas-clients', 'insights', 'simulateur-roi', 'methode', 'contact', 'facturation-electronique'];
 
     const getHashFace = () => {
       const raw = window.location.hash.replace(/^#\/?/, '');
@@ -115,6 +116,13 @@ export const App: React.FC = () => {
       case 'methode':
         return (
           <MethodologieFace
+            onOpenConsultation={handleOpenConsultation}
+            onNavigateFace={handleNavigateFace}
+          />
+        );
+      case 'facturation-electronique':
+        return (
+          <FacturationElectroniqueFace
             onOpenConsultation={handleOpenConsultation}
             onNavigateFace={handleNavigateFace}
           />

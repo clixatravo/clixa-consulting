@@ -38,6 +38,7 @@ const SECTIONS = [
   { path: '/#/expertises', priority: '0.9', changefreq: 'monthly' },
   { path: '/#/cas-clients', priority: '0.8', changefreq: 'monthly' },
   { path: '/#/secteurs', priority: '0.8', changefreq: 'monthly' },
+  { path: '/#/facturation-electronique', priority: '0.8', changefreq: 'monthly' },
   { path: '/#/insights', priority: '0.7', changefreq: 'monthly' },
   { path: '/#/methode', priority: '0.7', changefreq: 'monthly' },
   { path: '/#/contact', priority: '0.7', changefreq: 'monthly' },
